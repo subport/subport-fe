@@ -27,3 +27,7 @@ dist-ssr
 # env
 
 .env
+
+# mkcret
+localhost-key.pem
+localhost.pem

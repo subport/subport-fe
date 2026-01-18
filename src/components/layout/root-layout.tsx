@@ -1,0 +1,58 @@
+import type { ReactNode } from 'react';
+import { Outlet, useMatches } from 'react-router-dom';
+import GlobalHeader from './global-header';
+import { cn } from '@/lib/utils';
+import BottomNavigation from './bottom-navigation';
+import Provider from '../providers';
+
+type LayoutConfig = {
+  header?: { header?: boolean; title?: string; right?: ReactNode };
+  bottomNavigation?: boolean;
+};
+
+function RootLayout() {
+  const matches = useMatches();
+
+  const layout = [...matches]
+    .reverse()
+    .map((match) => {
+      const handle = (match as { handle?: LayoutConfig }).handle;
+      if (!handle) return undefined;
+
+      const { header, bottomNavigation } = handle as LayoutConfig;
+      if (header || typeof bottomNavigation === 'boolean') {
+        return { header, bottomNavigation };
+      }
+      return undefined;
+    })
+    .find(Boolean);
+
+  return (
+    <Provider>
+      <div className="h-svh w-full">
+        <div className="bg-background-black relative mx-auto flex h-full max-w-107.5 flex-col text-white">
+          {layout?.header && (
+            <GlobalHeader
+              title={layout.header.title}
+              right={layout.header.right}
+            />
+          )}
+
+          <main
+            className={cn(
+              'scrollbar-hide flex-1 overflow-scroll p-6',
+              layout?.bottomNavigation && 'pb-26',
+              layout?.header && 'pt-0',
+            )}
+          >
+            <Outlet />
+          </main>
+
+          {layout?.bottomNavigation && <BottomNavigation />}
+        </div>
+      </div>
+    </Provider>
+  );
+}
+
+export default RootLayout;

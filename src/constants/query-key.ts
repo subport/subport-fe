@@ -2,6 +2,7 @@ export const QUERY_KEY = {
   subscriptions: {
     all: ['subscribe'],
     byId: (id: string) => ['subscribe', id],
+    types: ['subscribe', 'type'],
   },
 
   plans: {

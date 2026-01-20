@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 
 import RootLayout from '@/components/layout/root-layout';
 import { RequireAuth, RequireGuest } from '@/components/layout/private-route';
@@ -9,6 +9,7 @@ import LoginSuccessPage from './pages/login-success-page';
 import AddSubscribePage from './pages/add-subscribe-page';
 import AddSubscribeFormPage from './pages/add-subscribe-form-page';
 import MyPage from './pages/my-page';
+import AddCustomSubscribePage from './pages/add-custom-subscribe-page';
 
 const router = createBrowserRouter([
   {
@@ -44,10 +45,22 @@ const router = createBrowserRouter([
                 header: true,
                 title: '구독추가',
                 right: (
-                  <span className="bg-box-black rounded-full px-3.5 py-2.5 text-xs">
+                  <Link
+                    to="/add-custom-subscribe"
+                    className="bg-box-black rounded-full px-3.5 py-2.5 text-xs"
+                  >
                     직접입력
-                  </span>
+                  </Link>
                 ),
+              },
+            },
+          },
+          {
+            path: '/add-custom-subscribe',
+            element: <AddCustomSubscribePage />,
+            handle: {
+              header: {
+                header: true,
               },
             },
           },

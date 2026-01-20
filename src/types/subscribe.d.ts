@@ -11,3 +11,9 @@ export type subscribeListRes = {
 export type subscribeItemRes = {
   type: string;
 } & subscribeItem;
+
+export type AddCustomSubscribeReq = {
+  image: File | null;
+  name: string;
+  type: string;
+};

@@ -15,7 +15,7 @@ function AddSubscribeFormPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <p className="mr-auto mb-5 w-[50%] text-xl/loose font-semibold break-keep">
+      <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
         구독 서비스 정보를 입력해주세요
       </p>
 

@@ -98,7 +98,7 @@ function DatePicker({ onChange }: { onChange: (value: DateState) => void }) {
         >
           <Picker
             height={selectDate ? 100 : 0}
-            aria-hidden
+            aria-hidden={!selectDate}
             wheelMode="natural"
             value={pickerValue}
             onChange={(nextValue) => {

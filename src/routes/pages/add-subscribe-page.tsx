@@ -1,4 +1,4 @@
-import { cn, formatNumberWithComma } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useNavigate } from 'react-router-dom';
 import useGetSubscriptions from '@/hooks/queries/use-get-subscriptions';
@@ -92,7 +92,7 @@ function AddSubscribePage() {
                 <div className="flex flex-col font-semibold">
                   <p>{subscribe.name}</p>
                   {selectSubscribe && (
-                    <span>{`${formatNumberWithComma(getSelectSubscribe(subscribe.id).price)} 원`}</span>
+                    <span>{`${formatKRWInput(getSelectSubscribe(subscribe.id).price)} 원`}</span>
                   )}
                 </div>
               </div>

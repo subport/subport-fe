@@ -10,6 +10,7 @@ import AddSubscribePage from './pages/add-subscribe-page';
 import AddSubscribeFormPage from './pages/add-subscribe-form-page';
 import MyPage from './pages/my-page';
 import AddCustomSubscribePage from './pages/add-custom-subscribe-page';
+import AddPlanPage from './pages/add-plan-page';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
           {
             path: '/add-subscribe/:id',
             element: <AddSubscribeFormPage />,
+            handle: { header: true },
+          },
+          {
+            path: '/add-subscribe/:id/add-plan',
+            element: <AddPlanPage />,
             handle: { header: true },
           },
           {

@@ -50,7 +50,7 @@ function PlanListBottomModal({
               </Link>
             </div>
             <Link
-              to="/add-subscribe"
+              to={`/add-subscribe/${id}/add-plan`}
               className="bg-box-black block rounded-full px-3.5 py-2.5 text-xs"
             >
               직접입력
@@ -72,7 +72,7 @@ function PlanListBottomModal({
                 <div>
                   <p className="mb-2 text-xl font-semibold">{plan.name}</p>
                   <span className="text-sub-font-black">
-                    {`${plan.durationMonths > 1 ? `${plan.durationMonths}개월` : '월'} ${Number(plan.amount).toLocaleString()}원`}
+                    {`${plan.durationMonths > 1 ? `${plan.durationMonths}개월` : '월'} ${Number(plan.amount).toLocaleString()}${plan.amountUnit === 'KRW' ? '₩' : '$'}`}
                   </span>
                 </div>
                 <RadioGroupItem value={plan.id.toString()} />

@@ -32,7 +32,7 @@ function AddCustomSubscribePage() {
     },
   });
 
-  const { data: types, isPending: isGetTypesPending } = useGetSubscribeTypes();
+  const { data: types } = useGetSubscribeTypes();
 
   const { mutate: addCustomSubscribe, isPending: isAddCustomSubscribePending } =
     useAddCustomSubscribeMutate();

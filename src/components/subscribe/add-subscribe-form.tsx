@@ -8,7 +8,7 @@ import {
 import useGetSubscriptionsById from '@/hooks/queries/use-get-subscriptions-by-id';
 import { useEffect, useState } from 'react';
 import { Checkbox } from '../ui/checkbox';
-import { cn, formatNumberWithComma } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/lib/utils';
 import { Button } from '../ui/button';
 import PlanListBottomModal from '../modal/plan-list-bottom-modal';
 
@@ -143,13 +143,11 @@ function AddSubscribeForm({ id }: { id: string }) {
                       className="w-full text-right text-xl outline-none"
                       onChange={(e) => {
                         if (e.target.value.length > 8) return;
-                        field.onChange(
-                          formatNumberWithComma(e.target.value, 999999999),
-                        );
+                        field.onChange(formatKRWInput(e.target.value));
                       }}
                       value={field.value ?? '0'}
                     />
-                    <div className="text-sub-font-black text-sm">원</div>
+                    <div className="text-sub-font-black text-lg">원</div>
                   </div>
                 </FieldWrapper>
               )}
@@ -222,7 +220,7 @@ function AddSubscribeForm({ id }: { id: string }) {
                         }}
                         value={field.value ?? 1}
                       />
-                      <div className="text-sub-font-black shrink-0 text-sm whitespace-nowrap">
+                      <div className="text-sub-font-black shrink-0 text-lg whitespace-nowrap">
                         일전
                       </div>
                     </div>

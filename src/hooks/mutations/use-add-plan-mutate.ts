@@ -12,10 +12,14 @@ function useAddPlanMutate(callbacks?: useMutationCallbacks) {
     onSuccess: (data, variables) => {
       callbacks?.onSuccess?.(data);
       queryClient.setQueryData<PlanItem[]>(
-        QUERY_KEY.plans.list(variables.id.toString()),
+        QUERY_KEY.plans.list(variables.subscribeId.toString()),
         (prev) => {
           if (!prev) throw new Error('멤버십 목록을 불러오지 못했습니다');
-          return [...prev, variables];
+
+          return [
+            ...prev,
+            { ...variables, id: data.id, defaultProvided: false },
+          ];
         },
       );
     },

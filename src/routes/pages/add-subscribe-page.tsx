@@ -23,9 +23,11 @@ function AddSubscribePage() {
     });
   const selectedIds = new Set(addSubscriptions.map((s) => s.subscriptionId));
   const getSelectSubscribe = (id: number) => {
+    console.log(id);
     const selectSubscribe = addSubscriptions.filter(
       (subscribe) => subscribe.subscriptionId === id,
     );
+    console.log(selectSubscribe);
 
     return selectSubscribe[0];
   };
@@ -92,7 +94,7 @@ function AddSubscribePage() {
                 <div className="flex flex-col font-semibold">
                   <p>{subscribe.name}</p>
                   {selectSubscribe && (
-                    <span>{`${formatKRWInput(getSelectSubscribe(subscribe.id).price)} 원`}</span>
+                    <span>{`${formatKRWInput(getSelectSubscribe(subscribe.id).price.toString())}${getSelectSubscribe(subscribe.id).amountUnit === 'KRW' ? '원' : '$'}`}</span>
                   )}
                 </div>
               </div>

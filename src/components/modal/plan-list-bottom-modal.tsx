@@ -156,6 +156,7 @@ function PlanListBottomModal({
                   id: selectedPlan.id.toString(),
                   name: selectedPlan.name,
                   price: selectedPlan.amount,
+                  amountUnit: selectedPlan.amountUnit as 'USD' | 'KRW',
                 });
                 onClose();
               }}

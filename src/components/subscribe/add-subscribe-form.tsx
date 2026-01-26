@@ -21,6 +21,7 @@ export type PlanType = {
   id: string;
   name: string;
   price?: number;
+  amountUnit: 'KRW' | 'USD';
 };
 
 function AddSubscribeForm({ id }: { id: string }) {
@@ -69,6 +70,7 @@ function AddSubscribeForm({ id }: { id: string }) {
       price: formData.dutchPay
         ? (formData.dutchPayAmount as string)
         : (selectPlan!.price as unknown as string),
+      amountUnit: selectPlan!.amountUnit,
     });
 
     navigate('/subscribe/add', { replace: true });

@@ -4,6 +4,7 @@ import { combine, devtools } from 'zustand/middleware';
 
 type AddSubscribeState = AddSubscribeRequestType & {
   price: string;
+  amountUnit: 'KRW' | 'USD';
 };
 
 const initialState = {

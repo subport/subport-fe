@@ -4,6 +4,7 @@ export type PlanItem = {
   amount: number;
   amountUnit: string;
   durationMonths: number;
+  defaultProvided: boolean;
 };
 
 export type PlanList = {

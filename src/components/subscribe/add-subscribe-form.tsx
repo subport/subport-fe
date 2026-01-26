@@ -71,7 +71,7 @@ function AddSubscribeForm({ id }: { id: string }) {
         : (selectPlan!.price as unknown as string),
     });
 
-    navigate('/add-subscribe', { replace: true });
+    navigate('/subscribe/add', { replace: true });
   };
 
   if (!subscribe) return <p>Loading</p>;

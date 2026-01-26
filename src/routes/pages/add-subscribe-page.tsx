@@ -71,7 +71,7 @@ function AddSubscribePage() {
                   return;
                 }
 
-                navigate(`/add-subscribe/${subscribe.id}`);
+                navigate(`/subscribe/add/${subscribe.id}`);
               }}
               className={cn(
                 'flex cursor-pointer items-center justify-between rounded-xl p-4 text-sm transition-all',

@@ -14,7 +14,7 @@ function BottomNavigation() {
             fill={pathname === '/' ? '#6FCFC3' : '#ffffff'}
           />
         </Link>
-        <Link to="/add-subscribe" className="rounded-2xl bg-[#B2B4B6] p-2">
+        <Link to="/subscribe/add" className="rounded-2xl bg-[#B2B4B6] p-2">
           <AddIcon fill="#ffffff" />
         </Link>
         <Link to="/my">

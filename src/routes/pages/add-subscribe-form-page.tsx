@@ -9,7 +9,7 @@ function AddSubscribeFormPage() {
   useEffect(() => {
     // TODO : 구독 목록에 없는 ID라면 add-subscribe 페이지로 이동
     if (!id) {
-      navigate('/add-subscribe');
+      navigate('/subscribe/add');
     }
   }, [id, navigate]);
 

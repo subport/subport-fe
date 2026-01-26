@@ -11,7 +11,7 @@ function MainPage() {
           월<span className="mr-1 ml-2 text-xl font-bold">15000</span>원
         </p>
         <Link
-          to="/add-subscribe"
+          to="/subscribe/add"
           className="hover:bg-primary/90 bg-primary text-primary-foreground block w-full rounded-2xl py-4.5 text-center text-lg font-bold transition-colors"
         >
           첫 구독 등록하기

@@ -1,290 +1,35 @@
-import { Button } from '@/components/ui/button';
-import ErrorMessage from '@/components/ui/error-message';
-import FieldWrapper from '@/components/ui/field-wrapper';
+import type { PlanFormValues } from '@/components/plan/plan-form';
+import PlanForm from '@/components/plan/plan-form';
+
 import useAddPlanMutate from '@/hooks/mutations/use-add-plan-mutate';
-import { cn, deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
-import { ChevronUp } from 'lucide-react';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Picker from 'react-mobile-picker';
+import { deleteComma } from '@/lib/utils';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
-type AddPlanFormValues = {
-  name: string;
-  amount: string;
-  amountUnit: 'KRW' | 'USD';
-  durationMonths: number;
-};
-
-const AMOUNT_UNITS = [
-  {
-    label: '원',
-    value: 'KRW' as const,
-  },
-  {
-    label: '달러',
-    value: 'USD' as const,
-  },
-];
-
-type AmountUnitState = {
-  amountUnit: 'KRW' | 'USD';
-};
-
 function AddPlanPage() {
-  const { id } = useParams();
+  const { subscribeId } = useParams();
   const navigate = useNavigate();
   const { mutate: addPlan, isPending: isAddPlanPending } = useAddPlanMutate({
     onSuccess: () => {
-      navigate(`/add-subscribe/${id}`, { replace: true });
+      navigate(`/subscribe/add/${subscribeId}`, { replace: true });
     },
   });
 
-  const [openPicker, setOpenPicker] = useState(false);
-  const [selectAmountUnit, setSelectAmountUnit] = useState<AmountUnitState>({
-    amountUnit: 'KRW',
-  });
-
-  const form = useForm<AddPlanFormValues>({
-    mode: 'all',
-    defaultValues: {
-      name: '',
-      amount: '0',
-      amountUnit: 'KRW',
-      durationMonths: 1,
-    },
-  });
-
-  const onSubmit = (formData: AddPlanFormValues) => {
+  const onSubmit = (formData: PlanFormValues) => {
     addPlan({
       ...formData,
-      id: Number(id),
-      amount:
-        formData.amountUnit === 'KRW'
-          ? Number(deleteComma(formData.amount))
-          : Number(formData.amount),
+      subscribeId: Number(subscribeId),
+      amount: Number(deleteComma(formData.amount)),
     });
   };
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <>
       <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
         멤버십 정보를 입력해주세요
       </p>
-
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        id="add-plan"
-        className="h-full flex-1 space-y-4"
-      >
-        <Controller
-          control={form.control}
-          name="name"
-          rules={{
-            validate: (v) =>
-              v.trim().length > 0 || '서비스 이름은 최소 1글자 이상입니다.',
-            required: {
-              value: true,
-              message: '서비스 이름을 입력해주세요',
-            },
-            maxLength: {
-              value: 10,
-              message: '서비스 이름은 최대 10글자 입니다',
-            },
-            minLength: {
-              value: 1,
-              message: '서비스 이름은 최소 1글자 이상입니다',
-            },
-          }}
-          render={({ field, fieldState }) => (
-            <div className="space-y-2">
-              <FieldWrapper
-                label="멤버십 이름"
-                id="name"
-                error={!!fieldState.error}
-              >
-                <input
-                  className="w-full text-lg outline-none"
-                  placeholder="멤버십 이름을 입력해주세요"
-                  {...field}
-                  onFocus={() => {
-                    if (fieldState.error) {
-                      form.clearErrors('name');
-                    }
-                  }}
-                />
-              </FieldWrapper>
-              {fieldState.error && (
-                <ErrorMessage message={fieldState.error!.message!} />
-              )}
-            </div>
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="amount"
-          rules={{
-            validate: (v) =>
-              Number(deleteComma(v)) > 0 || '멤버십 가격을 입력해주세요',
-          }}
-          render={({ field, fieldState }) => (
-            <div className="space-y-2">
-              <FieldWrapper label="가격" id="amount" error={!!fieldState.error}>
-                <div className="w-full">
-                  <div className="flex w-full items-center gap-2">
-                    <input
-                      inputMode="numeric"
-                      min={0}
-                      type="text"
-                      id="amount"
-                      name="amount"
-                      className="min-w-0 flex-1 text-right text-xl outline-none"
-                      value={field.value ?? ''}
-                      onChange={(e) => {
-                        if (selectAmountUnit.amountUnit === 'KRW') {
-                          if (e.target.value.length > 8) return;
-
-                          field.onChange(formatKRWInput(e.target.value));
-                        }
-
-                        if (selectAmountUnit.amountUnit === 'USD') {
-                          if (e.target.value.length > 6) return;
-
-                          field.onChange(formatUSDInput(e.target.value));
-                        }
-                      }}
-                    />
-                    <div
-                      onClick={() => setOpenPicker((prev) => !prev)}
-                      className="flex cursor-pointer items-center gap-1"
-                    >
-                      <div className="text-sub-font-black text-lg">
-                        {selectAmountUnit.amountUnit === 'KRW' ? '원' : '달러'}
-                      </div>
-                      <ChevronUp
-                        className={cn(
-                          'stroke-sub-font-black size-5 rotate-180 transition-all',
-                          openPicker && 'rotate-0',
-                        )}
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={cn(
-                      openPicker
-                        ? 'border-background-black mt-2 border-t pt-2'
-                        : '',
-                      'w-full',
-                    )}
-                  >
-                    <Picker
-                      height={openPicker ? 65 : 0}
-                      wheelMode="natural"
-                      value={selectAmountUnit}
-                      onChange={(nextValue) => {
-                        setSelectAmountUnit(nextValue);
-                        form.setValue('amountUnit', nextValue.amountUnit);
-                        form.setValue('amount', '0', { shouldValidate: true });
-                      }}
-                      className="[&>div:last-child]:bg-background-black transition-all [&>div:last-child]:rounded-lg [&>div:last-child>div]:hidden"
-                    >
-                      <Picker.Column name="amountUnit" className="z-10">
-                        {AMOUNT_UNITS.map((unit) => (
-                          <Picker.Item value={unit.value} key={unit.value}>
-                            {({ selected }) => (
-                              <div
-                                className={cn(
-                                  selected
-                                    ? 'text-white'
-                                    : 'text-sub-font-black',
-                                  'w-full px-4 text-right text-lg',
-                                )}
-                              >
-                                {unit.label}
-                              </div>
-                            )}
-                          </Picker.Item>
-                        ))}
-                      </Picker.Column>
-                    </Picker>
-                  </div>
-                </div>
-              </FieldWrapper>
-              {fieldState.error && (
-                <ErrorMessage message={fieldState.error.message!} />
-              )}
-            </div>
-          )}
-        />
-
-        <Controller
-          rules={{
-            required: { value: true, message: '결제주기를 입력해주세요.' },
-          }}
-          control={form.control}
-          name="durationMonths"
-          render={({ field, fieldState }) => (
-            <div className="space-y-2">
-              <FieldWrapper
-                error={!!fieldState.error}
-                label="결제주기"
-                id="durationMonths"
-              >
-                <div className="flex w-full items-center gap-2">
-                  <input
-                    value={field.value || ''}
-                    inputMode="numeric"
-                    min={0}
-                    type="number"
-                    id="reminderDaysBeforeEnd"
-                    className="min-w-0 flex-1 text-right text-xl outline-none"
-                    onChange={(e) => {
-                      const raw = e.target.value.replace(/\D/g, '');
-                      if (raw === '') {
-                        field.onChange('');
-                        form.setError('durationMonths', {
-                          message: '결제주기는 최소 1개월 이상 입니다.',
-                        });
-                        return;
-                      }
-                      const next = Number(raw);
-                      if (next < 1 || next > 60) return;
-                      form.clearErrors('durationMonths');
-                      field.onChange(next);
-                    }}
-                    onBlur={() => {
-                      if (!field.value || field.value === 0) {
-                        form.setError('durationMonths', {
-                          message: '결제주기를 입력해주세요',
-                        });
-                      }
-                    }}
-                    onFocus={() => {
-                      if (fieldState.error) {
-                        form.clearErrors('durationMonths');
-                      }
-                    }}
-                  />
-                  <div className="text-sub-font-black text-lg">개월</div>
-                </div>
-              </FieldWrapper>
-              {fieldState.error && (
-                <ErrorMessage message={fieldState.error!.message!} />
-              )}
-            </div>
-          )}
-        />
-      </form>
-
-      <Button
-        form="add-plan"
-        disabled={!form.formState.isValid || isAddPlanPending}
-      >
-        저장하기
-      </Button>
-    </div>
+      <PlanForm onSubmit={onSubmit} disabled={isAddPlanPending} />
+    </>
   );
 }
 

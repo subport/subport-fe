@@ -103,7 +103,7 @@ function CustomSubscribeImageSelectModal({
             <button
               key={image.id}
               type="button"
-              className="bg-box-black flex aspect-square items-center justify-center rounded-lg"
+              className="bg-box-black flex aspect-square cursor-pointer items-center justify-center rounded-lg"
               aria-label={`${image.id} emoticon`}
               onClick={() => handleSelect(image)}
             >
@@ -121,7 +121,7 @@ function CustomSubscribeImageSelectModal({
               imageInputRef.current.click();
             }}
             type="button"
-            className="bg-box-black flex aspect-square items-center justify-center rounded-lg"
+            className="bg-box-black flex aspect-square cursor-pointer items-center justify-center rounded-lg"
           >
             <Plus strokeWidth={2} className="size-10" />
           </button>

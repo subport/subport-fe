@@ -14,6 +14,8 @@ import AddPlanPage from './pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from './pages/plan-editor-page';
+import SubscribeEditorPage from './pages/subscribe-editor-page';
+import EditCustomSubscribePage from './pages/edit-custom-subscribe-page';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,20 @@ const router = createBrowserRouter([
             path: '/subscribe',
             children: [
               {
+                path: 'edit',
+                element: <SubscribeEditorPage />,
+                handle: { header: { header: true, title: '구독 서비스 관리' } },
+              },
+              {
+                path: 'edit/:subscribeId',
+                element: <EditCustomSubscribePage />,
+                handle: {
+                  header: {
+                    header: true,
+                  },
+                },
+              },
+              {
                 path: 'add',
                 element: <AddSubscribePage />,
                 handle: {
@@ -53,10 +69,10 @@ const router = createBrowserRouter([
                     title: '구독추가',
                     right: (
                       <Link
-                        to="/subscribe/add/custom"
-                        className="bg-box-black rounded-full px-3.5 py-2.5 text-xs"
+                        to="/subscribe/edit"
+                        className="bg-box-black block rounded-full px-5 py-2 text-xs"
                       >
-                        직접입력
+                        관리
                       </Link>
                     ),
                   },
@@ -76,6 +92,7 @@ const router = createBrowserRouter([
                   },
                 },
               },
+
               {
                 path: 'add/:subscribeId/plan',
                 element: <PlanPageLayout />,
@@ -117,5 +134,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function Router() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }

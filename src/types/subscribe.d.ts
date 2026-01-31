@@ -2,6 +2,7 @@ export type subscribeItem = {
   id: number;
   name: string;
   logoImageUrl: string;
+  defaultProvided: boolean;
 };
 
 export type subscribeListRes = {

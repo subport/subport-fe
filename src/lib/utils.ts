@@ -1,3 +1,4 @@
+import type { AddCustomSubscribeReq } from '@/types/subscribe';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -45,4 +46,25 @@ export function formatUSDInput(raw: string) {
 
 export function deleteComma(v: string) {
   return v.split(',').join('');
+}
+
+export function buildCustomSubscribeFormData(
+  subscribeInfo: AddCustomSubscribeReq,
+) {
+  const formData = new FormData();
+
+  if (subscribeInfo.image) {
+    formData.append('image', subscribeInfo.image);
+  }
+  formData.append(
+    'request',
+    new Blob(
+      [JSON.stringify({ name: subscribeInfo.name, type: subscribeInfo.type })],
+      {
+        type: 'application/json',
+      },
+    ),
+  );
+
+  return formData;
 }

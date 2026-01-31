@@ -73,7 +73,7 @@ function AddSubscribeForm({ id }: { id: string }) {
       amountUnit: selectPlan!.amountUnit,
     });
 
-    navigate('/subscribe/add', { replace: true });
+    navigate(-1);
   };
 
   if (!subscribe) return <p>Loading</p>;

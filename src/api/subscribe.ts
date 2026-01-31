@@ -6,9 +6,12 @@ import {
   type subscribeItemRes,
   type subscribeListRes,
 } from '@/types/subscribe';
+import { buildCustomSubscribeFormData } from '@/lib/utils';
 
-export const getSubscriptions = async () => {
-  const response = await client.get<subscribeListRes>('/api/subscriptions');
+export const getSubscriptions = async (searchTerm: string) => {
+  const response = await client.get<subscribeListRes>(
+    `/api/subscriptions?name=${encodeURIComponent(searchTerm)}`,
+  );
 
   return response.data.subscriptions;
 };
@@ -33,20 +36,7 @@ export const addSubscribe = async (subscribeInfo: AddSubscribeRequestType) => {
 export const addCustomSubscribe = async (
   subscribeInfo: AddCustomSubscribeReq,
 ) => {
-  const formData = new FormData();
-
-  if (subscribeInfo.image) {
-    formData.append('image', subscribeInfo.image);
-  }
-  formData.append(
-    'request',
-    new Blob(
-      [JSON.stringify({ name: subscribeInfo.name, type: subscribeInfo.type })],
-      {
-        type: 'application/json',
-      },
-    ),
-  );
+  const formData = buildCustomSubscribeFormData(subscribeInfo);
 
   const response = await client.post<{ id: number }>(
     '/api/subscriptions',
@@ -55,8 +45,31 @@ export const addCustomSubscribe = async (
   return response.data;
 };
 
+export const updatedCustomSubscribe = async ({
+  subscribeInfo,
+  subscribeId,
+}: {
+  subscribeInfo: AddCustomSubscribeReq;
+  subscribeId: string;
+}) => {
+  const formData = buildCustomSubscribeFormData(subscribeInfo);
+
+  const response = await client.put<{ id: number }>(
+    `/api/subscriptions/${subscribeId}`,
+    formData,
+  );
+
+  return response.data;
+};
+
 export const getSubscribeTypes = async () => {
   const response = await client.get<string[]>('/api/subscriptions/types');
 
   return response.data;
+};
+
+export const deleteCustomSubscribe = async (subscribeId: string) => {
+  const response = await client.delete(`/api/subscriptions/${subscribeId}`);
+
+  return response;
 };

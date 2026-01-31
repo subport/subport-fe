@@ -4,6 +4,8 @@ import GlobalHeader from './global-header';
 import { cn } from '@/lib/utils';
 import BottomNavigation from './bottom-navigation';
 import Provider from '../providers';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Toaster } from '../ui/sonner';
 
 type LayoutConfig = {
   header?: { header?: boolean; title?: string; right?: ReactNode };
@@ -51,6 +53,9 @@ function RootLayout() {
           {layout?.bottomNavigation && <BottomNavigation />}
         </div>
       </div>
+      <Toaster />
+
+      <ReactQueryDevtools />
     </Provider>
   );
 }

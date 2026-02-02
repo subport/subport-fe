@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 function BottomNavigation() {
   const { pathname } = useLocation();
   return (
-    <div className="bottom-nav absolute bottom-0 left-0 z-10 w-full rounded-[40px] bg-white/10 py-3 backdrop-blur-2xl">
+    <div className="bottom-nav absolute bottom-0 left-0 z-10 w-full rounded-[40px] bg-white/10 py-3 backdrop-blur-md">
       <div className="flex items-center justify-center gap-12">
         <Link to="/">
           <HomeIcon

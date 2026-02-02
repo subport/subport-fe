@@ -24,7 +24,7 @@ function Switch({
         )}
       >
         {children && (
-          <span className="text-background-black block px-4.5 py-2.5 text-xs font-semibold">
+          <span className="text-background-black block w-17.5 py-2.5 text-xs font-semibold">
             {children}
           </span>
         )}

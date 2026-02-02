@@ -1,10 +1,12 @@
 import type { AddSubscribeRequestType } from '@/schema/add-subscribe-schema';
 import { client } from './client';
 
-import {
-  type AddCustomSubscribeReq,
-  type subscribeItemRes,
-  type subscribeListRes,
+import type {
+  MemberSubscriptionsRes,
+  AddCustomSubscribeReq,
+  subscribeItemRes,
+  subscribeListRes,
+  MemberSubscriptionsParams,
 } from '@/types/subscribe';
 import { buildCustomSubscribeFormData } from '@/lib/utils';
 
@@ -72,4 +74,18 @@ export const deleteCustomSubscribe = async (subscribeId: string) => {
   const response = await client.delete(`/api/subscriptions/${subscribeId}`);
 
   return response;
+};
+
+export const getMemberSubscriptions = async <
+  P extends MemberSubscriptionsParams,
+>(
+  params: P,
+) => {
+  const sortBy = params.active ? params.sortBy : ('name' as const);
+
+  const response = await client.get<MemberSubscriptionsRes<typeof sortBy>>(
+    `/api/member-subscriptions?active=${encodeURIComponent(params.active)}&sortBy=${sortBy}`,
+  );
+
+  return response.data;
 };

@@ -20,4 +20,9 @@ export const QUERY_KEY = {
     ],
     byId: (subscribeId: string) => ['member-subscriptions', subscribeId],
   },
+
+  my: {
+    profile: ['my', 'profile'],
+    account: ['my', 'account'],
+  },
 };

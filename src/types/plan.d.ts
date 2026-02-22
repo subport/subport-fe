@@ -2,7 +2,7 @@ export type PlanItem = {
   id: number;
   name: string;
   amount: number;
-  amountUnit: string;
+  amountUnit: 'KRW' | 'USD';
   durationMonths: number;
   defaultProvided: boolean;
 };

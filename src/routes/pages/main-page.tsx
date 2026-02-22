@@ -1,4 +1,4 @@
-import GroupedSubscribeList from '@/components/subscribe/member-subscribe/grouped-subscribe-list';
+﻿import GroupedSubscribeList from '@/components/subscribe/member-subscribe/grouped-subscribe-list';
 import SubscribeList from '@/components/subscribe/member-subscribe/subscribe-list';
 import SubscribeListSkeleton from '@/components/subscribe/member-subscribe/subscribe-list-skeleton';
 import {
@@ -47,7 +47,7 @@ function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { active, sortBy } = parseParams(searchParams);
-
+  console.log(active);
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
     useGetMemberSubscriptions({ active, sortBy });
 
@@ -95,35 +95,38 @@ function MainPage() {
 
       <div className="flex-1">
         {active && (
-          <div className="mb-4 flex items-center justify-between">
-            <p className="flex items-end text-lg">
-              월
-              <span className="mr-0.5 ml-1 text-2xl/tight font-semibold">
-                {formatKRWInput(
-                  subscriptions?.currentMonthTotalAmount.toString() || '0',
-                )}
-              </span>
-              원
-            </p>
+          <>
+            <p className="mb-2 text-sm">이번 달 결제 예정 금액</p>
+            <div className="mb-4 flex items-center justify-between">
+              <p className="flex items-end text-lg">
+                월
+                <span className="mr-0.5 ml-1 text-2xl/tight font-semibold">
+                  {formatKRWInput(
+                    subscriptions?.currentMonthTotalAmount.toString() || '0',
+                  )}
+                </span>
+                원
+              </p>
 
-            <Select
-              onValueChange={(sortBy: MemberSubscriptionSort) =>
-                handleChangeSort(sortBy)
-              }
-              defaultValue={sortBy}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent defaultValue={sortBy} position="popper">
-                {SUBSCIRBE_SORTS.map((sort) => (
-                  <SelectItem key={sort.value} value={sort.value}>
-                    {sort.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+              <Select
+                onValueChange={(sortBy: MemberSubscriptionSort) =>
+                  handleChangeSort(sortBy)
+                }
+                defaultValue={sortBy}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent defaultValue={sortBy} position="popper">
+                  {SUBSCIRBE_SORTS.map((sort) => (
+                    <SelectItem key={sort.value} value={sort.value}>
+                      {sort.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </>
         )}
 
         {isGetSubscriptionsPending ? (
@@ -139,7 +142,7 @@ function MainPage() {
               </Link>
             )}
 
-            {!active && (
+            {!active && subscriptions!.subscriptions.length === 0 && (
               <p className="text-sub-font-black flex h-full items-center justify-center">
                 비활성화된 구독 서비스가 존재하지 않습니다.
               </p>
@@ -162,7 +165,7 @@ function MainPage() {
               />
             )}
 
-            {sortBy !== 'type' && (
+            {sortBy !== 'type' && active && (
               <SubscribeList
                 subscribeList={
                   subscriptions!.subscriptions as MemberSubscriptions

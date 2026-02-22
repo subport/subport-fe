@@ -13,21 +13,28 @@ import { Button } from '../ui/button';
 import PlanListBottomModal from '../modal/plan-list-bottom-modal';
 
 import DatePicker from '../form/date-picker';
-import ErrorMessage from '../ui/error-message';
-import { useAddSubscribe } from '@/store/use-subscribe-store';
-import { format } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
-export type PlanType = {
-  id: string;
-  name: string;
+import { addMonths, format } from 'date-fns';
+import type { PlanItem } from '@/types/plan';
+
+export type PlanType = Pick<PlanItem, 'id' | 'name' | 'amountUnit'> & {
   price?: number;
-  amountUnit: 'KRW' | 'USD';
 };
 
-function AddSubscribeForm({ id }: { id: string }) {
-  const navigate = useNavigate();
+type SubscribeFormProps = {
+  id: string;
+  onSubmit: (
+    subscribeInfo: AddSubscribeType & {
+      subscriptionId: number;
+      price: string;
+      amountUnit: 'KRW' | 'USD';
+    },
+  ) => void;
+
+  defaultValues?: AddSubscribeType;
+};
+
+function AddSubscribeForm({ id, onSubmit, defaultValues }: SubscribeFormProps) {
   const { data: subscribe } = useGetSubscriptionsById(id);
-  const addSubscribe = useAddSubscribe();
   const [plan, setPlan] = useState(false);
   const [selectPlan, setSelctPlan] = useState<PlanType>();
   const [dutchPay, setDutchPay] = useState(false);
@@ -35,16 +42,16 @@ function AddSubscribeForm({ id }: { id: string }) {
   const form = useForm({
     resolver: zodResolver(addSubscribeSchema),
     defaultValues: {
-      dutchPay: false,
-      dutchPayAmount: '0',
-      memo: '',
-      startDate: format(new Date(), 'yyyy-MM-dd'),
-      planId: undefined,
-      reminderDaysBeforeEnd: 1,
+      dutchPay: defaultValues?.dutchPay ?? false,
+      dutchPayAmount: defaultValues?.dutchPayAmount ?? '0',
+      memo: defaultValues?.memo ?? '',
+      startDate: defaultValues?.startDate ?? format(new Date(), 'yyyy-MM-dd'),
+      planId: defaultValues?.planId ?? undefined,
     },
   });
 
   const onSelectPlan = (plan: PlanType) => {
+    console.log('subscribe-form-page', plan);
     setSelctPlan(plan);
     form.setValue('planId', Number(plan.id), { shouldValidate: true });
   };
@@ -58,31 +65,27 @@ function AddSubscribeForm({ id }: { id: string }) {
   const dutchPayAmount = form.watch('dutchPayAmount');
   const isDutchPayAmountValid = !dutchPay || dutchPayAmount !== '0';
 
-  const onSubmit = (formData: AddSubscribeType) => {
-    addSubscribe({
+  const handleSubmit = (formData: AddSubscribeType) => {
+    onSubmit({
       subscriptionId: Number(id),
       dutchPay: formData.dutchPay,
       dutchPayAmount: formData.dutchPay ? formData.dutchPayAmount : null,
       planId: formData.planId,
       memo: formData.memo,
-      reminderDaysBeforeEnd: formData.reminderDaysBeforeEnd,
       startDate: formData.startDate,
       price: formData.dutchPay
         ? (formData.dutchPayAmount as string)
         : (selectPlan!.price as unknown as string),
       amountUnit: selectPlan!.amountUnit,
     });
-
-    navigate(-1);
   };
-
   if (!subscribe) return <p>Loading</p>;
 
   return (
     <>
       <form
         id="add-subscribe-form"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="scrollbar-hide flex-1 overflow-scroll"
       >
         <div className="mb-10 space-y-4">
@@ -109,10 +112,11 @@ function AddSubscribeForm({ id }: { id: string }) {
           />
 
           <PlanListBottomModal
+            id={id}
             open={plan}
             onClose={() => setPlan((prev) => !prev)}
             onSelect={onSelectPlan}
-            defaultValue={selectPlan?.id}
+            defaultValue={selectPlan?.id.toString()}
           />
 
           <div className="flex items-center gap-2">
@@ -161,6 +165,8 @@ function AddSubscribeForm({ id }: { id: string }) {
             render={() => (
               <FieldWrapper label="결제 시작일" id="startDate">
                 <DatePicker
+                  minDate={addMonths(new Date(), -12)}
+                  maxDate={new Date()}
                   onChange={({ year, month, day }) => {
                     const startDate = new Date(
                       Number(year),
@@ -180,61 +186,6 @@ function AddSubscribeForm({ id }: { id: string }) {
                 />
               </FieldWrapper>
             )}
-          />
-
-          <Controller
-            rules={{
-              required: '알림주기는 최소 1일전 입니다.',
-              min: { value: 1, message: '알림주기는 최소 1일전 입니다.' },
-            }}
-            name="reminderDaysBeforeEnd"
-            control={form.control}
-            render={({ field, fieldState }) => {
-              return (
-                <div>
-                  <FieldWrapper
-                    error={fieldState.invalid}
-                    label="알림주기"
-                    id="reminderDaysBeforeEnd"
-                    className={fieldState.invalid ? 'mb-2' : undefined}
-                  >
-                    <div className="flex w-full items-center gap-2">
-                      <input
-                        {...field}
-                        inputMode="numeric"
-                        min={0}
-                        type="number"
-                        id="reminderDaysBeforeEnd"
-                        className="min-w-0 flex-1 text-right text-xl outline-none"
-                        onChange={(e) => {
-                          const raw = e.target.value.replace(/\D/g, '');
-                          if (raw === '') {
-                            field.onChange('');
-                            form.setError('reminderDaysBeforeEnd', {
-                              message: '알림주기는 최소 1일전 입니다.',
-                            });
-                            return;
-                          }
-                          const next = Number(raw);
-                          if (next < 1 || next > 10) return;
-                          form.clearErrors('reminderDaysBeforeEnd');
-                          field.onChange(next);
-                        }}
-                        value={field.value ?? 1}
-                      />
-                      <div className="text-sub-font-black shrink-0 text-lg whitespace-nowrap">
-                        일전
-                      </div>
-                    </div>
-                  </FieldWrapper>
-                  {fieldState.invalid && (
-                    <ErrorMessage
-                      message={fieldState.error?.message as string}
-                    />
-                  )}
-                </div>
-              );
-            }}
           />
 
           <Controller
@@ -262,7 +213,7 @@ function AddSubscribeForm({ id }: { id: string }) {
           <span className="text-2xl font-semibold">
             {dutchPay
               ? `${form.watch('dutchPayAmount')} 원`
-              : `${Number(selectPlan?.price || 0).toLocaleString()} 원`}
+              : `${Number(selectPlan?.price || 0).toLocaleString()} ${selectPlan?.amountUnit === 'KRW' ? '원' : '$'}`}
           </span>
         </div>
 

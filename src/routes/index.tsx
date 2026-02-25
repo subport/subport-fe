@@ -23,6 +23,10 @@ import EditMemberSubscribeFormPage from './pages/edit-member-subscribe-form-page
 import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
 import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layout';
 import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
+import MyPageSectionPage from './pages/my-page-section-page';
+import { queryClient } from '@/components/providers/query-provider';
+import { QUERY_KEY } from '@/constants/query-key';
+import { getMyAccount, getReminderSettings } from '@/api/profile';
 
 const router = createBrowserRouter([
   {
@@ -179,8 +183,37 @@ const router = createBrowserRouter([
 
           {
             path: '/my',
-            element: <MyPage />,
-            handle: { bottomNavigation: true },
+            children: [
+              {
+                index: true,
+                element: <MyPage />,
+                handle: { bottomNavigation: true },
+              },
+              {
+                path: '/my/:section',
+                element: <MyPageSectionPage />,
+                handle: {
+                  header: { header: true },
+                },
+                loader: async ({ params }) => {
+                  if (params.section === 'edit-account') {
+                    await queryClient.ensureQueryData({
+                      queryKey: QUERY_KEY.my.account,
+                      queryFn: getMyAccount,
+                    });
+                  }
+
+                  if (params.section === 'reminder') {
+                    await queryClient.ensureQueryData({
+                      queryKey: QUERY_KEY.my.reminderSettings,
+                      queryFn: getReminderSettings,
+                    });
+                  }
+
+                  return null;
+                },
+              },
+            ],
           },
         ],
       },

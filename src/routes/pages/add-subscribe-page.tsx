@@ -1,6 +1,6 @@
 import { cn, formatKRWInput } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useGetSubscriptions from '@/hooks/queries/use-get-subscriptions';
 import { Button } from '@/components/ui/button';
 import { useSubScribe } from '@/store/use-subscribe-store';
@@ -10,6 +10,7 @@ import SearchIcon from '@/assets/icons/search-icon.svg?react';
 import { useState } from 'react';
 import useDebounce from '@/hooks/use-debunce';
 import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';
+import { Plus } from 'lucide-react';
 
 function AddSubscribePage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -67,7 +68,7 @@ function AddSubscribePage() {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="relative flex h-full flex-col gap-4">
       <div className="relative">
         <input
           value={searchTerm}
@@ -154,6 +155,17 @@ function AddSubscribePage() {
         >
           다음으로
         </Button>
+      )}
+
+      {addSubscriptions.length === 0 && (
+        <Link
+          to="/subscribe/add/custom"
+          className={cn(
+            'bg-primary absolute right-1 bottom-1 z-999 flex cursor-pointer items-center justify-center rounded-xl p-4 transition-opacity hover:opacity-80',
+          )}
+        >
+          <Plus strokeWidth={4} stroke="#242429" />
+        </Link>
       )}
     </div>
   );

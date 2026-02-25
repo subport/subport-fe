@@ -11,11 +11,9 @@ function SubscribeList({
   return (
     <ul className="flex flex-col gap-4">
       {subscribeList.map((subscribe) => (
-        <SubscribeCard
-          unActive={unActive}
-          key={subscribe.id}
-          subscribeInfo={subscribe}
-        />
+        <li key={subscribe.id}>
+          <SubscribeCard unActive={unActive} subscribeInfo={subscribe} />
+        </li>
       ))}
     </ul>
   );

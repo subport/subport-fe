@@ -2,10 +2,20 @@ import AddCustomSubscribeForm from '@/components/subscribe/add-custom-subscribe-
 
 import useAddCustomSubscribeMutate from '@/hooks/mutations/use-add-custom-subscribe-mutate';
 import type { AddCustomSubscribeReq } from '@/types/subscribe';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 function AddCustomSubscribePage() {
+  const navigate = useNavigate();
   const { mutate: addCustomSubscribe, isPending: isAddCustomSubscribePending } =
-    useAddCustomSubscribeMutate();
+    useAddCustomSubscribeMutate({
+      onSuccess: () => {
+        navigate(-1);
+        toast.success('구독이 서비스가 생성되었습니다', {
+          position: 'bottom-center',
+        });
+      },
+    });
 
   const onSubmit = (formData: AddCustomSubscribeReq) => {
     addCustomSubscribe(formData);

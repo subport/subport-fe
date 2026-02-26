@@ -133,7 +133,7 @@ function MainPage() {
           <SubscribeListSkeleton />
         ) : (
           <>
-            {active && subscriptions?.subscriptions.length === 0 && (
+            {active && subscriptions?.currentMonthTotalAmount === 0 && (
               <Link
                 to="/subscribe/add"
                 className="hover:bg-primary/90 bg-primary text-primary-foreground block w-full rounded-2xl py-4.5 text-center text-lg font-bold transition-colors"

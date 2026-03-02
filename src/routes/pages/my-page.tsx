@@ -150,7 +150,7 @@ function MyPage() {
             </Link>
           </li>
           <li>
-            <Link to="/" className="flex items-center justify-between">
+            <Link to="/faq" className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <img className="size-8" src={FaqIcon} alt="FAQ" />
                 <div className="flex flex-col justify-between text-sm">

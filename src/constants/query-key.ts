@@ -26,4 +26,8 @@ export const QUERY_KEY = {
     account: ['my', 'account'],
     reminderSettings: ['my', 'reminder-settings'],
   },
+
+  faq: {
+    all: ['faq', 'all'],
+  },
 };

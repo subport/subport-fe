@@ -27,6 +27,11 @@ export const QUERY_KEY = {
     reminderSettings: ['my', 'reminder-settings'],
   },
 
+  spendingRecords: {
+    yearMonth: (yearMonth: string) => ['spending-records', yearMonth],
+    byDate: (date: string) => ['spending-records', 'by-date', date],
+  },
+
   faq: {
     all: ['faq', 'all'],
   },

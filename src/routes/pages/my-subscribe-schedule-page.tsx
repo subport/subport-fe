@@ -12,7 +12,7 @@ function MySubscribeSchedulePage() {
   const { data: spendingRecords, isPending: isGetSpendingRecords } =
     useGetSpendingRecords(viewMonth);
 
-  const { data: spendingRecordsByDate, isPending: isGetSpendingRecordsByDate } =
+  const { data: spendingRecordsByDate } =
     useGetSpendingRecordsByDate(selectedDay);
   console.log(selectedDay);
 

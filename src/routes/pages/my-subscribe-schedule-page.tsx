@@ -14,7 +14,7 @@ function MySubscribeSchedulePage() {
 
   const { data: spendingRecordsByDate } =
     useGetSpendingRecordsByDate(selectedDay);
-  console.log(selectedDay);
+  console.log(viewMonth);
 
   if (isGetSpendingRecords) return null;
   if (!spendingRecords) return null;
@@ -46,6 +46,7 @@ function MySubscribeSchedulePage() {
           <>
             {spendingRecordsByDate.completedRecords.length > 0 && (
               <SpendingSubscriptionRecords
+                selectedDate={selectedDay!}
                 variant="complete"
                 records={spendingRecordsByDate.completedRecords}
               />
@@ -53,6 +54,7 @@ function MySubscribeSchedulePage() {
 
             {spendingRecordsByDate.ongoingRecords.length > 0 && (
               <SpendingSubscriptionRecords
+                selectedDate={selectedDay!}
                 variant="ongoing"
                 records={spendingRecordsByDate.ongoingRecords}
               />

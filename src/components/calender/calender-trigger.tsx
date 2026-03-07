@@ -25,7 +25,6 @@ function CalenDerTrigger({
   onMonthChange,
   onSelectedDay,
 }: CalenDerTriggerProps) {
-  // TODO : 미래의 월 선택하지 못하게
   const [mode, setMode] = useState<'year' | 'month'>('year');
   const [open, setOpen] = useState(false);
 
@@ -39,7 +38,8 @@ function CalenDerTrigger({
       open={open}
       onOpenChange={() => {
         setOpen((prev) => !prev);
-        if (open) {
+
+        if (!open) {
           setSelectedYear(null);
           setSelectedMonth(null);
           setMode('year');
@@ -80,6 +80,13 @@ function CalenDerTrigger({
               <div
                 onClick={() => {
                   setSelectedYear(year);
+
+                  if (
+                    selectedMonth &&
+                    selectedMonth > new Date().getMonth() + 1
+                  ) {
+                    setSelectedMonth(new Date().getMonth() + 1);
+                  }
                   setMode('month');
                 }}
                 key={year}

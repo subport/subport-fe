@@ -41,7 +41,7 @@ function SubscribeCard({
                 'flex w-13 items-center justify-center rounded-sm py-1 text-sm',
               )}
             >
-              {`d-${subscribeInfo.daysUntilPayment}`}
+              {`d-${subscribeInfo.daysUntilPayment === 0 ? 'day' : subscribeInfo.daysUntilPayment}`}
             </div>
           )}
         </div>

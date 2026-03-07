@@ -31,9 +31,15 @@ type SubscribeFormProps = {
   ) => void;
 
   defaultValues?: AddSubscribeType;
+  minDate?: Date;
 };
 
-function AddSubscribeForm({ id, onSubmit, defaultValues }: SubscribeFormProps) {
+function AddSubscribeForm({
+  id,
+  onSubmit,
+  defaultValues,
+  minDate,
+}: SubscribeFormProps) {
   const { data: subscribe, isPending: isGetSubscribePending } =
     useGetSubscriptionsById(id);
   const [plan, setPlan] = useState(false);
@@ -175,7 +181,7 @@ function AddSubscribeForm({ id, onSubmit, defaultValues }: SubscribeFormProps) {
             render={() => (
               <FieldWrapper label="결제 시작일" id="startDate">
                 <DatePicker
-                  minDate={addMonths(new Date(), -12)}
+                  minDate={minDate || addMonths(new Date(), -12)}
                   maxDate={new Date()}
                   onChange={({ year, month, day }) => {
                     const startDate = new Date(

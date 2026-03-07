@@ -1,6 +1,8 @@
 import type { CompletedRecord, OngoingRecord } from '@/api/calender';
 import { formatKRWInput } from '@/lib/utils';
 import SpendingStateDot from './spending-state-dot';
+import DeleteSpendingRecordsButton from './delete-spending-records-button';
+import OngoingSpendingRecordButton from './ongoing-spending-record-button';
 
 type SpendingSubscriptionRecordsProps = CompleteListProps | OngoingListProps;
 
@@ -16,7 +18,8 @@ type OngoingListProps = {
 function SpendingSubscriptionRecords({
   variant,
   records,
-}: SpendingSubscriptionRecordsProps) {
+  selectedDate,
+}: SpendingSubscriptionRecordsProps & { selectedDate: Date }) {
   return (
     <div>
       <div className="mb-2">
@@ -28,7 +31,7 @@ function SpendingSubscriptionRecords({
         </p>
         {variant === 'ongoing' && (
           <span className="text-sub-font-black mt-2 text-sm">
-            아직 결제되지 않은 구독 이에요
+            아직 확정되지 않은 구독 이에요
           </span>
         )}
       </div>
@@ -55,6 +58,24 @@ function SpendingSubscriptionRecords({
                   <span className="text-sub-font-black">{`${formatKRWInput(record.amount.toString())}/${record.period}개월`}</span>
                 </div>
               </div>
+
+              {variant === 'complete' && (
+                <DeleteSpendingRecordsButton
+                  recordId={(
+                    record as CompletedRecord
+                  ).spendingRecordId.toString()}
+                  selectedDate={selectedDate}
+                />
+              )}
+
+              {variant === 'ongoing' && (
+                <OngoingSpendingRecordButton
+                  memberSubscribeId={(
+                    record as OngoingRecord
+                  ).memberSubscriptionId.toString()}
+                  selectedDate={selectedDate}
+                />
+              )}
             </div>
           </li>
         ))}

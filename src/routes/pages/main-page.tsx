@@ -1,6 +1,7 @@
 ﻿import GroupedSubscribeList from '@/components/subscribe/member-subscribe/grouped-subscribe-list';
 import SubscribeList from '@/components/subscribe/member-subscribe/subscribe-list';
 import SubscribeListSkeleton from '@/components/subscribe/member-subscribe/subscribe-list-skeleton';
+
 import {
   Select,
   SelectContent,
@@ -16,7 +17,10 @@ import type {
   MemberSubscriptionSort,
   SubscriptionGroupMap,
 } from '@/types/subscribe';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+
+import OnBoardingBottomModal from '@/components/modal/onboarding-bottom-modal';
 
 const SUBSCIRBE_SORTS = [
   { value: 'type', label: '타입순' },
@@ -44,7 +48,13 @@ const parseParams = (sq: URLSearchParams) => {
 };
 
 function MainPage() {
+  const isOnBoardingConsumed =
+    sessionStorage.getItem('first-login-onboarding-consumed') === 'consumed';
+
+  const location = useLocation();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  const [open] = useState(() => Boolean(location.state?.showOnboarding));
 
   const { active, sortBy } = parseParams(searchParams);
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
@@ -81,101 +91,107 @@ function MainPage() {
   };
 
   return (
-    <div className="scrollbar-hide flex h-full flex-col gap-6 overflow-scroll">
-      <div>
-        <Switch
-          checked={active}
-          onClick={toggleActive}
-          className="cursor-pointer"
-          variant="label-pill"
-          onLabel="활성화"
-          offLabel="비활성화"
-        />
+    <>
+      <div className="scrollbar-hide flex h-full flex-col gap-6 overflow-scroll">
+        <div>
+          <Switch
+            checked={active}
+            onClick={toggleActive}
+            className="cursor-pointer"
+            variant="label-pill"
+            onLabel="활성화"
+            offLabel="비활성화"
+          />
+        </div>
+
+        <div className="flex-1">
+          {active && (
+            <>
+              <p className="mb-2 text-sm">이번 달 결제 예정 금액</p>
+              <div className="mb-4 flex items-center justify-between">
+                <p className="flex items-end text-lg">
+                  월
+                  <span className="mr-0.5 ml-1 text-2xl/tight font-semibold">
+                    {formatKRWInput(
+                      subscriptions?.currentMonthTotalAmount.toString() || '0',
+                    )}
+                  </span>
+                  원
+                </p>
+
+                <Select
+                  onValueChange={(sortBy: MemberSubscriptionSort) =>
+                    handleChangeSort(sortBy)
+                  }
+                  defaultValue={sortBy}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent defaultValue={sortBy} position="popper">
+                    {SUBSCIRBE_SORTS.map((sort) => (
+                      <SelectItem key={sort.value} value={sort.value}>
+                        {sort.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          )}
+
+          {isGetSubscriptionsPending ? (
+            <SubscribeListSkeleton />
+          ) : (
+            <>
+              {active && subscriptions?.currentMonthTotalAmount === 0 && (
+                <Link
+                  to="/subscribe/add"
+                  className="hover:bg-primary/90 bg-primary text-primary-foreground block w-full rounded-2xl py-4.5 text-center text-lg font-bold transition-colors"
+                >
+                  첫 구독 등록하기
+                </Link>
+              )}
+
+              {!active && subscriptions!.subscriptions.length === 0 && (
+                <p className="text-sub-font-black flex h-full items-center justify-center">
+                  비활성화된 구독 서비스가 존재하지 않습니다.
+                </p>
+              )}
+
+              {!active && (
+                <SubscribeList
+                  unActive
+                  subscribeList={
+                    subscriptions!.subscriptions as MemberSubscriptions
+                  }
+                />
+              )}
+
+              {sortBy === 'type' && (
+                <GroupedSubscribeList
+                  subscribeList={
+                    subscriptions!.subscriptions as SubscriptionGroupMap
+                  }
+                />
+              )}
+
+              {sortBy !== 'type' && active && (
+                <SubscribeList
+                  subscribeList={
+                    subscriptions!.subscriptions as MemberSubscriptions
+                  }
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex-1">
-        {active && (
-          <>
-            <p className="mb-2 text-sm">이번 달 결제 예정 금액</p>
-            <div className="mb-4 flex items-center justify-between">
-              <p className="flex items-end text-lg">
-                월
-                <span className="mr-0.5 ml-1 text-2xl/tight font-semibold">
-                  {formatKRWInput(
-                    subscriptions?.currentMonthTotalAmount.toString() || '0',
-                  )}
-                </span>
-                원
-              </p>
-
-              <Select
-                onValueChange={(sortBy: MemberSubscriptionSort) =>
-                  handleChangeSort(sortBy)
-                }
-                defaultValue={sortBy}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent defaultValue={sortBy} position="popper">
-                  {SUBSCIRBE_SORTS.map((sort) => (
-                    <SelectItem key={sort.value} value={sort.value}>
-                      {sort.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </>
-        )}
-
-        {isGetSubscriptionsPending ? (
-          <SubscribeListSkeleton />
-        ) : (
-          <>
-            {active && subscriptions?.currentMonthTotalAmount === 0 && (
-              <Link
-                to="/subscribe/add"
-                className="hover:bg-primary/90 bg-primary text-primary-foreground block w-full rounded-2xl py-4.5 text-center text-lg font-bold transition-colors"
-              >
-                첫 구독 등록하기
-              </Link>
-            )}
-
-            {!active && subscriptions!.subscriptions.length === 0 && (
-              <p className="text-sub-font-black flex h-full items-center justify-center">
-                비활성화된 구독 서비스가 존재하지 않습니다.
-              </p>
-            )}
-
-            {!active && (
-              <SubscribeList
-                unActive
-                subscribeList={
-                  subscriptions!.subscriptions as MemberSubscriptions
-                }
-              />
-            )}
-
-            {sortBy === 'type' && (
-              <GroupedSubscribeList
-                subscribeList={
-                  subscriptions!.subscriptions as SubscriptionGroupMap
-                }
-              />
-            )}
-
-            {sortBy !== 'type' && active && (
-              <SubscribeList
-                subscribeList={
-                  subscriptions!.subscriptions as MemberSubscriptions
-                }
-              />
-            )}
-          </>
-        )}
-      </div>
-    </div>
+      {location.state?.showOnboarding === true && !isOnBoardingConsumed && (
+        <OnBoardingBottomModal open={open} />
+      )}
+    </>
   );
 }
 

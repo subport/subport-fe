@@ -6,7 +6,7 @@ function LoginSuccessPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const accessToken = searchParams.get('access');
-
+  const firstLogin = searchParams.get('firstLogin');
   useEffect(() => {
     if (!accessToken) {
       navigate('/login', { replace: true });
@@ -14,7 +14,14 @@ function LoginSuccessPage() {
 
     if (accessToken) {
       tokenStorage.setToken(accessToken);
-      navigate('/', { replace: true });
+      navigate('/', { replace: true, state: { showOnboarding: true } });
+
+      if (firstLogin) {
+        sessionStorage.setItem(
+          'first-login-onboarding-consumed',
+          'un-consumed',
+        );
+      }
     }
   }, []);
 

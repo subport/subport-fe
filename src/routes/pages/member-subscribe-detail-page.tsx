@@ -13,7 +13,7 @@ import MemberSubscribeDetailSkeleton from '@/components/subscribe/member-subscri
 const formatDateKorean = (dateStr: string) => {
   const [y, m, d] = dateStr.split('-');
 
-  return `${y}년 ${m}월 ${d}일`;
+  return `${y}년 ${Number(m)}월 ${Number(d)}일`;
 };
 
 function MemberSubscribeDetailpage() {
@@ -66,8 +66,8 @@ function MemberSubscribeDetailpage() {
                 <div className="bg-background-black relative mb-2 h-2.5 w-full rounded-full">
                   <div
                     style={{
-                      width: subscribe!.paymentProgressPercent,
-                      minWidth: '6%',
+                      width: `${subscribe!.paymentProgressPercent}%`,
+                      minWidth: `24px`,
                       maxWidth: '100%',
                     }}
                     className={`bg-primary absolute top-0 left-0 h-2.5 rounded-full`}

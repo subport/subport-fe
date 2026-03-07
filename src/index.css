@@ -75,7 +75,9 @@
 
 html,
 body {
-  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @custom-variant dark (&:is(.dark *));

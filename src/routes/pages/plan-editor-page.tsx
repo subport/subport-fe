@@ -71,7 +71,7 @@ function PlanEditorPage() {
       {!customPlans ||
         (customPlans.length <= 0 && (
           <p className="text-sub-font-black flex flex-1 items-center justify-center">
-            등록한 멤버십이 존재하지 않습니다.
+            직접 등록한 멤버십이 존재하지 않습니다.
           </p>
         ))}
       {modal && (

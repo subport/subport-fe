@@ -14,7 +14,7 @@ function LoginSuccessPage() {
 
     if (accessToken) {
       tokenStorage.setToken(accessToken);
-      navigate('/', { replace: true, state: { showOnboarding: true } });
+      navigate('/', { replace: true, state: { showOnboarding: firstLogin } });
 
       if (firstLogin) {
         sessionStorage.setItem(

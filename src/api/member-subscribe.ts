@@ -43,6 +43,21 @@ export const updateMemberSubscribeDutchPay = async ({
   return response.data;
 };
 
+export const updateMemberSubscribeMemo = async ({
+  memberSubscribeId,
+  updatedMemo,
+}: {
+  memberSubscribeId: string;
+  updatedMemo: string;
+}) => {
+  const response = await client.put<MemberSubscribeItem>(
+    `/api/member-subscriptions/${memberSubscribeId}/memo`,
+    { memo: updatedMemo },
+  );
+
+  return response.data;
+};
+
 export const deactivateMemberSubscrbe = async ({
   memberSubscribeId,
 }: {

@@ -10,6 +10,7 @@ import ReloadIcon from '@/assets/icons/reload-icon.svg?react';
 import WalletIcon from '@/assets/icons/wallet-icon.svg?react';
 import ConfirmModal from '@/components/modal/confirm-modal';
 import MemberSubscribeDetailSkeleton from '@/components/subscribe/member-subscribe/member-subscribe-detail-skeleton';
+import MemberSubscribeMemoInput from '@/components/subscribe/member-subscribe/member-subscribe-memo-input';
 const formatDateKorean = (dateStr: string) => {
   const [y, m, d] = dateStr.split('-');
 
@@ -174,15 +175,10 @@ function MemberSubscribeDetailpage() {
               </ul>
             )}
           </div>
-
-          <div className="bg-box-black rounded-lg p-5">
-            <p className="font-semibold">메모</p>
-
-            {subscribe!.memo.trim().length <= 0 && (
-              <p className="text-sm">작성된 메모가 존재하지 않습니다.</p>
-            )}
-            {subscribe!.memo.trim().length > 0 && <p>{subscribe!.memo}</p>}
-          </div>
+          <MemberSubscribeMemoInput
+            memo={subscribe!.memo}
+            memberSubscribeId={subscribe!.id}
+          />
         </div>
 
         <div className="pt-5">

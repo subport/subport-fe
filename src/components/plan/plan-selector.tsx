@@ -1,25 +1,25 @@
 import { Link } from 'react-router-dom';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Loader2, Plus } from 'lucide-react';
-import useGetPlanList from '@/hooks/queries/use-get-plan-list';
+import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PlanType } from '../subscribe/add-subscribe-form';
 import { useState } from 'react';
+import type { PlanItem } from '@/types/plan';
 
 type PlanSelectorProps = {
   subscribeId: string;
   defaultValue?: string;
   onSelect: (selectPlan: PlanType) => void;
+  plans: PlanItem[];
 };
 
 function PlanSelector({
   subscribeId,
   defaultValue,
   onSelect,
+  plans,
 }: PlanSelectorProps) {
   const [currentPlan, setCurrentPlan] = useState(defaultValue || null);
-  const { data: plans, isPending: isGetPlansPending } =
-    useGetPlanList(subscribeId);
 
   const handleValueChange = (value: string) => {
     const selectedPlan = plans!.find((plan) => plan.id.toString() === value)!;
@@ -33,13 +33,6 @@ function PlanSelector({
       price: selectedPlan.amount,
     });
   };
-
-  if (isGetPlansPending)
-    return (
-      <div className="bg-box-black mb-4 flex h-32 w-full animate-pulse items-center justify-center rounded-2xl">
-        <Loader2 className="animate-spin" />
-      </div>
-    );
 
   return (
     <div className="scrollbar-hide space-y-4 overflow-y-scroll">

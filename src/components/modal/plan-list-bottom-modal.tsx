@@ -9,6 +9,8 @@ import type { PlanType } from '../subscribe/add-subscribe-form';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import PlanSelector from '../plan/plan-selector';
+import useGetPlanList from '@/hooks/queries/use-get-plan-list';
+import { Loader2 } from 'lucide-react';
 
 interface PlanListBottomModalProps {
   open: boolean;
@@ -25,6 +27,7 @@ function PlanListBottomModal({
   defaultValue,
   id,
 }: PlanListBottomModalProps) {
+  const { data: plans, isPending: isGetPlansPending } = useGetPlanList(id);
   const navigate = useNavigate();
   const [openDrawer, setOpenDarwer] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanType>();
@@ -46,6 +49,8 @@ function PlanListBottomModal({
   const handleOpenChange = () => {
     onClose();
   };
+
+  if (isGetPlansPending) return null;
 
   return (
     <>
@@ -84,13 +89,15 @@ function PlanListBottomModal({
               </Tooltip>
               <div className="items-cetner flex gap-2">
                 <span className="text-xl">멤버십 종류</span>
-                <Link
-                  to="/subscribe/add"
-                  target="_blank"
-                  className="text-background-black flex items-center rounded-full bg-[#E9ECEF] px-2 py-1.5 text-xs font-bold"
-                >
-                  살펴보기
-                </Link>
+                {plans!.planUrl && (
+                  <Link
+                    to={plans!.planUrl}
+                    target="_blank"
+                    className="text-background-black flex items-center rounded-full bg-[#E9ECEF] px-2 py-1.5 text-xs font-bold"
+                  >
+                    살펴보기
+                  </Link>
+                )}
               </div>
               <button
                 type="button"
@@ -103,11 +110,18 @@ function PlanListBottomModal({
           </DrawerTitle>
 
           <div className="scrollbar-hide overflow-scroll pb-4">
-            <PlanSelector
-              defaultValue={defaultValue}
-              subscribeId={id!}
-              onSelect={(selectedPlan) => setSelectedPlan(selectedPlan)}
-            />
+            {isGetPlansPending ? (
+              <div className="bg-box-black mb-4 flex h-32 w-full animate-pulse items-center justify-center rounded-2xl">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : (
+              <PlanSelector
+                plans={plans!.plans}
+                defaultValue={defaultValue}
+                subscribeId={id!}
+                onSelect={(selectedPlan) => setSelectedPlan(selectedPlan)}
+              />
+            )}
           </div>
 
           <div className="flex items-center gap-4">

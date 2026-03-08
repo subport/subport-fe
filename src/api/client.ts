@@ -18,37 +18,42 @@ client.interceptors.request.use(async (config) => {
 });
 
 client.interceptors.response.use(
-  async (response) => {
-    console.log(response);
-
-    return response;
-  },
+  async (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as typeof error.config & {
-      _retry: boolean;
+      _retry?: boolean;
     };
 
     if (!isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    if (isAxiosError(error)) {
-      if (error.status === 401 && !originalRequest?._retry) {
-        originalRequest._retry = true;
-        try {
-          const { accessToken } = await refresh();
-          if (accessToken) {
-            tokenStorage.setToken(accessToken);
-            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-            return client(originalRequest!);
-          }
-        } catch {
-          tokenStorage.clearToken();
-          window.location.reload();
+    const status = error.response?.status;
+    const isRefreshRequest = originalRequest?.url?.includes('/api/auth/refresh');
+
+    if (status === 401 && originalRequest && !originalRequest._retry && !isRefreshRequest) {
+      originalRequest._retry = true;
+
+      try {
+        const { accessToken } = await refresh();
+
+        if (!accessToken) {
+          throw new Error('Missing refreshed access token');
+        }
+
+        tokenStorage.setToken(accessToken);
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+        return client(originalRequest);
+      } catch {
+        tokenStorage.clearToken();
+
+        if (window.location.pathname !== '/login') {
+          window.location.replace('/login');
         }
       }
-      return Promise.reject(error);
     }
+
     return Promise.reject(error);
   },
 );

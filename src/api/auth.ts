@@ -1,13 +1,17 @@
+import axios from 'axios';
 import { client } from './client';
 
 type RefreshRes = {
   accessToken: string;
 };
 
-export const refresh = async () => {
-  const response = await client.post<RefreshRes>('/api/auth/refresh');
+const authClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
-  console.log(response.data);
+export const refresh = async () => {
+  const response = await authClient.post<RefreshRes>('/api/auth/refresh');
 
   return response.data;
 };

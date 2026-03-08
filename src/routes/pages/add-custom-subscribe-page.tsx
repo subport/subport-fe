@@ -11,7 +11,7 @@ function AddCustomSubscribePage() {
     useAddCustomSubscribeMutate({
       onSuccess: () => {
         navigate(-1);
-        toast.success('구독이 서비스가 생성되었습니다', {
+        toast.success('구독 서비스가 생성되었습니다', {
           position: 'bottom-center',
         });
       },

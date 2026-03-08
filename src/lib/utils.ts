@@ -59,7 +59,13 @@ export function buildCustomSubscribeFormData(
   formData.append(
     'request',
     new Blob(
-      [JSON.stringify({ name: subscribeInfo.name, type: subscribeInfo.type })],
+      [
+        JSON.stringify({
+          name: subscribeInfo.name,
+          type: subscribeInfo.type,
+          defaultImageName: subscribeInfo.defaultImageName,
+        }),
+      ],
       {
         type: 'application/json',
       },

@@ -5,13 +5,13 @@ import SubscribeCalendarIcon from '@/assets/subscribe-calendar.png';
 import SubscribeManageIcon from '@/assets/subscribe-manage.png';
 import EditProfileIcon from '@/assets/icons/edit-proifle-icon.svg';
 import LogoutIcon from '@/assets/icons/logout-icon.svg';
-import QuitIcon from '@/assets/icons/quit-icon.svg';
 import NotificationIcon from '@/assets/icons/notification-icon.svg';
 import FaqIcon from '@/assets/icons/faq-icon.svg';
 import { ChevronRight } from 'lucide-react';
 import MyPageSkeleton from '@/components/my/my-page-skeleton';
 import { Button } from '@/components/ui/button';
 import LogoutButton from '@/components/my/logout-button';
+import DeleteProfileButton from '@/components/my/delete-profile-button';
 function MyPage() {
   const {
     data: profile,
@@ -107,18 +107,7 @@ function MyPage() {
             </LogoutButton>
           </li>
           <li>
-            <button className="flex w-full items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <img className="size-8" src={QuitIcon} alt="계정 탈퇴" />
-                <div className="flex flex-col justify-between text-sm">
-                  <span className="text-start font-semibold">계정 탈퇴</span>
-                  <span className="text-sub-font-black text-xs">
-                    계정을 탈퇴하고 모든 데이터를 삭제해요
-                  </span>
-                </div>
-              </div>
-              <ChevronRight />
-            </button>
+            <DeleteProfileButton />
           </li>
         </ul>
       </div>

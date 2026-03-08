@@ -54,3 +54,9 @@ export const updatedReminderSettings = async (
 
   return response.data;
 };
+
+export const deleteProfile = async () => {
+  const response = await client.delete('/api/members/me');
+
+  return response.data;
+};

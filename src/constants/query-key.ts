@@ -5,7 +5,7 @@ export const QUERY_KEY = {
     all: ['subscribe'],
     search: (searchTerm: string) => ['subscribe', searchTerm],
     byId: (id: string) => ['subscribe', id],
-    types: ['subscribe', 'type'],
+    types: ['subscribe-type'],
   },
 
   plans: {

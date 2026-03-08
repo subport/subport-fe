@@ -8,6 +8,7 @@ export type PlanItem = {
 };
 
 export type PlanList = {
+  planUrl: string | null;
   plans: PlanItem[];
 };
 

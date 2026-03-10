@@ -129,7 +129,7 @@ function MemberSubscribeDetailpage() {
               </div>
             </div>
             <div className="bg-background-black flex items-center justify-center gap-2 rounded-lg px-4 py-2">
-              <WalletIcon className="hidden [@media(width>400px)]:block" />
+              <WalletIcon className="size-8" />
               <span className="text-sm">
                 {`${formatKRWInput(subscribe!.actualPayment.toString())}원`}
               </span>

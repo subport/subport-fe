@@ -1,6 +1,7 @@
 import PlanSelector from '@/components/plan/plan-selector';
 import { Button } from '@/components/ui/button';
 import useUpdateMemberSubscribePlanMutate from '@/hooks/mutations/use-update-member-subscribe-plan-mutate';
+import useGetPlanList from '@/hooks/queries/use-get-plan-list';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -12,6 +13,8 @@ function EditMemberSubscribePlanForm({
   subscribeId: string;
   prevPlanId?: string;
 }) {
+  const { data: plans, isPending: isGetPlansPending } =
+    useGetPlanList(subscribeId);
   const navigate = useNavigate();
   const [currentPlan, setCurrentPlan] = useState(prevPlanId);
   const { memberSubscribeId: currentMemberSubscirbeId } = useParams();
@@ -60,11 +63,14 @@ function EditMemberSubscribePlanForm({
         </Link>
       </div>
       <div className="scrollbar-hide flex-1 overflow-scroll">
-        <PlanSelector
-          defaultValue={prevPlanId}
-          subscribeId={subscribeId!}
-          onSelect={(selectPlan) => handleSelect(selectPlan.id.toString())}
-        />
+        {!isGetPlansPending && plans && (
+          <PlanSelector
+            plans={plans.plans}
+            defaultValue={prevPlanId}
+            subscribeId={subscribeId!}
+            onSelect={(selectPlan) => handleSelect(selectPlan.id.toString())}
+          />
+        )}
       </div>
       <div className="rounded-t-2xl pt-4">
         <Button onClick={handleClick} disabled={disabled} className="w-full">

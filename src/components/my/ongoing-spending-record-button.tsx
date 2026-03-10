@@ -54,7 +54,7 @@ function OngoingSpendingRecordButton({
 
           <PopoverContent
             align="end"
-            className="bg-box-black w-40 overflow-hidden rounded-lg border-none p-0 text-white drop-shadow-2xl"
+            className="bg-box-black w-40 overflow-hidden rounded-lg border-none p-0 text-white drop-shadow-xl"
           >
             <Link
               to={`/member-subscribe/${memberSubscribeId}`}

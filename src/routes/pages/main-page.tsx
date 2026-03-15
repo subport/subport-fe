@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import useGetMemberSubscriptions from '@/hooks/queries/use-get-member-subscriptions';
-import { formatKRWInput } from '@/lib/utils';
 import type {
   MemberSubscriptions,
   MemberSubscriptionSort,
@@ -21,6 +20,7 @@ import { useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import OnBoardingBottomModal from '@/components/modal/onboarding-bottom-modal';
+import MonthlySpendingCard from '@/components/subscribe/member-subscribe/monthly-spending-card';
 
 const SUBSCIRBE_SORTS = [
   { value: 'type', label: '타입순' },
@@ -92,7 +92,7 @@ function MainPage() {
 
   return (
     <>
-      <div className="scrollbar-hide flex h-full flex-col gap-6 overflow-scroll">
+      <div className="scrollbar-hide flex h-full flex-col gap-6 overflow-scroll pb-6">
         <div>
           <Switch
             checked={active}
@@ -107,18 +107,12 @@ function MainPage() {
         <div className="flex-1">
           {active && (
             <>
-              <p className="mb-2 text-sm">이번 달 결제 예정 금액</p>
-              <div className="mb-4 flex items-center justify-between">
-                <p className="flex items-end text-lg">
-                  월
-                  <span className="mr-0.5 ml-1 text-2xl/tight font-semibold">
-                    {formatKRWInput(
-                      subscriptions?.currentMonthTotalAmount.toString() || '0',
-                    )}
-                  </span>
-                  원
-                </p>
-
+              <div className="mb-4 flex flex-col items-end gap-4">
+                <MonthlySpendingCard
+                  paidAmount={subscriptions?.currentMonthPaidAmount ?? 0}
+                  progressPercent={subscriptions?.paymentProgressPercent ?? 0}
+                  totalAmount={subscriptions?.currentMonthTotalAmount ?? 0}
+                />
                 <Select
                   onValueChange={(sortBy: MemberSubscriptionSort) =>
                     handleChangeSort(sortBy)

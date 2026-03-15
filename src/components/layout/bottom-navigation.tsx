@@ -1,27 +1,44 @@
 import HomeIcon from '@/assets/icons/home-icon.svg?react';
-import AddIcon from '@/assets/icons/add-icon.svg?react';
+import AddIcon from '@/assets/icons/add-subscribe-icon.svg?react';
 import MyPageIcon from '@/assets/icons/my-page-icon.svg?react';
 import { Link, useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 function BottomNavigation() {
   const { pathname } = useLocation();
   return (
-    <div className="bottom-nav absolute bottom-0 left-0 z-10 w-full rounded-[40px] bg-white/10 py-3 backdrop-blur-md">
-      <div className="flex items-center justify-center gap-12">
-        <Link to="/">
+    <div className="bg-box-black absolute bottom-0 left-0 z-10 w-full py-4">
+      <div className="flex items-center justify-center gap-15">
+        <Link
+          to="/"
+          className="flex w-13 flex-col items-center justify-center gap-1 text-xs"
+        >
           <HomeIcon
-            className="transition-colors"
-            fill={pathname === '/' ? '#6FCFC3' : '#ffffff'}
+            className={cn(
+              'size-6 transition-colors',
+              pathname === '/' ? 'fill-primary' : 'fill-icon-default',
+            )}
           />
+          <span>홈</span>
         </Link>
-        <Link to="/subscribe/add" className="rounded-2xl bg-[#B2B4B6] p-2">
-          <AddIcon fill="#ffffff" />
+        <Link
+          to="/subscribe/add"
+          className="flex w-13 flex-col items-center justify-center gap-1 text-xs"
+        >
+          <AddIcon className="fill-icon-default size-6" />
+          <span>구독추가</span>
         </Link>
-        <Link to="/my">
+        <Link
+          to="/my"
+          className="flex w-13 flex-col items-center justify-center gap-1 text-xs"
+        >
           <MyPageIcon
-            className="transition-colors"
-            fill={pathname === '/my' ? '#6FCFC3' : '#ffffff'}
+            className={cn(
+              'size-6 transition-colors',
+              pathname === '/my' ? 'fill-primary' : 'fill-icon-default',
+            )}
           />
+          <span>마이페이지</span>
         </Link>
       </div>
     </div>

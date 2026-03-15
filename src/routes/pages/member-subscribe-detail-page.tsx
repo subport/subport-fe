@@ -5,12 +5,14 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProccessBarCoin from '@/assets/icons/proccess-bar-icon.svg?react';
 
-import AlarmIcon from '@/assets/icons/alarm-icon.svg?react';
-import ReloadIcon from '@/assets/icons/reload-icon.svg?react';
+import SettingsIcon from '@/assets/icons/settings-icon.svg?react';
 import WalletIcon from '@/assets/icons/wallet-icon.svg?react';
 import ConfirmModal from '@/components/modal/confirm-modal';
 import MemberSubscribeDetailSkeleton from '@/components/subscribe/member-subscribe/member-subscribe-detail-skeleton';
 import MemberSubscribeMemoInput from '@/components/subscribe/member-subscribe/member-subscribe-memo-input';
+import { ChevronRight } from 'lucide-react';
+import useDeleteMemberSubscribeMutate from '@/hooks/mutations/use-delete-member-subscribe-mutate';
+import { toast } from 'sonner';
 const formatDateKorean = (dateStr: string) => {
   const [y, m, d] = dateStr.split('-');
 
@@ -19,17 +21,19 @@ const formatDateKorean = (dateStr: string) => {
 
 function MemberSubscribeDetailpage() {
   const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState<'reactivate' | 'delete' | null>(null);
   const { memberSubscribeId } = useParams();
 
   const { data: subscribe, isPending: isGetMemberSubscribePending } =
     useGetMemberSubscribeById(memberSubscribeId!);
 
-  const handleClickActivateButtom = () => {
-    if (subscribe && !subscribe.active) {
-      setModal(true);
-    }
-  };
+  const { mutate: deleteMemberSubscribe } = useDeleteMemberSubscribeMutate({
+    onSuccess: () => {
+      navigate('/');
+      toast.success('정상적으로 삭제되었습니다', { position: 'bottom-center' });
+    },
+  });
+
   if (isGetMemberSubscribePending) return <MemberSubscribeDetailSkeleton />;
 
   return (
@@ -100,22 +104,18 @@ function MemberSubscribeDetailpage() {
 
           {/* action buttom */}
           {subscribe!.active && (
-            <div className="flex items-center gap-4">
-              <Link
-                to="/"
-                className="bg-box-black flex w-full items-center justify-center gap-1 rounded-lg py-4 font-semibold transition-opacity hover:opacity-80"
-              >
-                <AlarmIcon />
-                <span>알림설정</span>
-              </Link>
-              <Link
-                to="edit/state"
-                className="bg-box-black flex w-full items-center justify-center gap-1 rounded-lg py-4 font-semibold transition-opacity hover:opacity-80"
-              >
-                <ReloadIcon />
-                <span>구독 상태 변경</span>
-              </Link>
-            </div>
+            <Link
+              to="edit/state"
+              className="bg-box-black flex cursor-pointer items-center justify-between rounded-lg p-4 transition-opacity hover:opacity-80"
+            >
+              <div>
+                <div className="flex w-full items-center justify-start gap-2 font-semibold">
+                  <SettingsIcon className="size-6" />
+                  <span>구독 상태 변경</span>
+                </div>
+              </div>
+              <ChevronRight strokeWidth={3} />
+            </Link>
           )}
 
           {/* amount list */}
@@ -155,7 +155,7 @@ function MemberSubscribeDetailpage() {
                   <li className="flex items-center gap-2">
                     <img
                       src={subscribe!.logoImageUrl}
-                      className="aspect-square size-12.5 rounded-lg"
+                      className="aspect-square size-12 rounded-lg"
                     />
 
                     <div className="flex w-full items-center justify-between">
@@ -180,34 +180,60 @@ function MemberSubscribeDetailpage() {
             memberSubscribeId={subscribe!.id}
           />
         </div>
-
-        <div className="pt-5">
-          {!subscribe!.active && (
-            <Button onClick={handleClickActivateButtom} className="w-full">
+        {!subscribe!.active && (
+          <div className="flex items-center gap-4 pt-5">
+            <Button
+              onClick={() => setModal('delete')}
+              variant={'secondary'}
+              className="w-1/3"
+            >
+              삭제하기
+            </Button>
+            <Button onClick={() => setModal('reactivate')} className="flex-1">
               활성화하기
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {modal && (
         <ConfirmModal
-          title="이전에 저장된 구독 정보를 사용할까요?"
-          description="비활성화 이전에 저장된 구독 정보가 있어요. 그대로 사용하면 이전 기록을 이어서 관리할 수 있어요."
-          cancelText="새로 등록"
-          confirmText="그대로 사용"
-          open={modal}
-          onOpenChange={() => setModal(false)}
-          onConfirm={() =>
-            navigate(
-              `/member-subscribe/${memberSubscribeId}/reactivate?reuse=previous`,
-            )
+          title={
+            modal === 'reactivate'
+              ? '이전에 저장된 구독 정보를 사용할까요?'
+              : '구독을 삭제하시겠어요?'
           }
-          onCancel={() =>
-            navigate(
-              `/member-subscribe/${memberSubscribeId}/reactivate?reuse=custom`,
-            )
+          description={
+            modal === 'reactivate'
+              ? '비활성화 이전에 저장된 구독 정보가 있어요. 그대로 사용하면 이전 기록을 이어서 관리할 수 있어요.'
+              : '삭제하시면 지금까지 남아 있던 기록이 모두 사라집니다.이후 다시 이용하시려면 새로 등록해 주세요.'
           }
+          cancelText={modal === 'reactivate' ? '새로 등록' : '아니요'}
+          confirmText={modal === 'reactivate' ? '그대로 사용' : '네'}
+          open={modal !== null}
+          onOpenChange={() => setModal(null)}
+          onConfirm={() => {
+            if (modal === 'reactivate') {
+              navigate(
+                `/member-subscribe/${memberSubscribeId}/reactivate?reuse=previous`,
+              );
+              return;
+            }
+
+            if (modal === 'delete') {
+              deleteMemberSubscribe({ memberSubscribeId: memberSubscribeId! });
+            }
+          }}
+          onCancel={() => {
+            if (modal === 'reactivate') {
+              navigate(
+                `/member-subscribe/${memberSubscribeId}/reactivate?reuse=custom`,
+              );
+              return;
+            } else {
+              setModal(null);
+            }
+          }}
         />
       )}
     </>

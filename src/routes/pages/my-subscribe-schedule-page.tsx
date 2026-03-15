@@ -2,19 +2,36 @@ import SpendingSubscriptionRecords from '@/components/my/spending-subscription-r
 import SubscribeCalender from '@/components/my/subscribe-calender';
 import useGetSpendingRecords from '@/hooks/queries/use-get-spending-records';
 import useGetSpendingRecordsByDate from '@/hooks/queries/use-get-spending-records-by-date';
-import { format, startOfMonth } from 'date-fns';
-import { useState } from 'react';
+import { format, parse } from 'date-fns';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 function MySubscribeSchedulePage() {
-  const [viewMonth, setViewMonth] = useState<Date>(startOfMonth(new Date()));
-  const [selectedDay, setSelectedDay] = useState<undefined | Date>(undefined);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const month = searchParams.get('month')
+    ? parse(searchParams.get('month')!, 'yyyy-MM', new Date())
+    : new Date();
 
+  const day = searchParams.get('day')
+    ? parse(searchParams.get('day')!, 'yyyy-MM-dd', new Date())
+    : undefined;
   const { data: spendingRecords, isPending: isGetSpendingRecords } =
-    useGetSpendingRecords(viewMonth);
+    useGetSpendingRecords(month);
 
-  const { data: spendingRecordsByDate } =
-    useGetSpendingRecordsByDate(selectedDay);
-  console.log(viewMonth);
+  const { data: spendingRecordsByDate } = useGetSpendingRecordsByDate(day);
+
+  useEffect(() => {
+    if (searchParams.get('month')) return;
+
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set('month', format(new Date(), 'yyyy-MM'));
+        return next;
+      },
+      { replace: true },
+    );
+  }, [searchParams, setSearchParams]);
 
   if (isGetSpendingRecords) return null;
   if (!spendingRecords) return null;
@@ -28,25 +45,47 @@ function MySubscribeSchedulePage() {
           amountDiffFromPreviousMonth={
             spendingRecords.amountDiffFromPreviousMonth
           }
-          onMonthChange={(d: Date) => setViewMonth(d)}
-          onSelectDay={(d: Date | undefined) => setSelectedDay(d)}
-          viewMonth={viewMonth}
-          selectedDay={selectedDay}
+          onMonthChange={(d: Date) => {
+            setSearchParams(
+              (prev) => {
+                const next = new URLSearchParams(prev);
+                next.set('month', format(d, 'yyyy-MM'));
+                next.delete('day');
+                return next;
+              },
+              { replace: true },
+            );
+          }}
+          onSelectDay={(d: Date | undefined) => {
+            if (d) {
+              setSearchParams(
+                (prev) => {
+                  const next = new URLSearchParams(prev);
+                  next.set('day', format(d, 'yyyy-MM-dd'));
+
+                  return next;
+                },
+                { replace: true },
+              );
+            }
+          }}
+          viewMonth={month}
+          selectedDay={day}
         />
       </div>
 
       <div aria-hidden className="bg-box-black w-vw z-30 -mx-6 my-5 h-2.5" />
 
       <div className="scrollbar-hide h-full space-y-4 overflow-y-scroll pb-5">
-        {selectedDay && (
-          <p className="text-xl font-semibold">{`${format(selectedDay, 'M')}월 ${format(selectedDay, 'd')}일`}</p>
+        {day && (
+          <p className="text-xl font-semibold">{`${format(day, 'M')}월 ${format(day, 'd')}일`}</p>
         )}
 
         {spendingRecordsByDate && (
           <>
             {spendingRecordsByDate.completedRecords.length > 0 && (
               <SpendingSubscriptionRecords
-                selectedDate={selectedDay!}
+                selectedDate={day!}
                 variant="complete"
                 records={spendingRecordsByDate.completedRecords}
               />
@@ -54,7 +93,7 @@ function MySubscribeSchedulePage() {
 
             {spendingRecordsByDate.ongoingRecords.length > 0 && (
               <SpendingSubscriptionRecords
-                selectedDate={selectedDay!}
+                selectedDate={day!}
                 variant="ongoing"
                 records={spendingRecordsByDate.ongoingRecords}
               />

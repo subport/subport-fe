@@ -16,7 +16,7 @@ function MemberSubscribeEditPage() {
       <div className="mb-10 flex flex-col items-center justify-center gap-4">
         <img src={subscribe.logoImageUrl} className="size-15 rounded-xl" />
         <span className="bg-box-black inline-flex self-center rounded-full px-3.5 py-1.5 text-sm">
-          활성화
+          {subscribe.active ? '활성화' : '비활성화'}
         </span>
       </div>
 

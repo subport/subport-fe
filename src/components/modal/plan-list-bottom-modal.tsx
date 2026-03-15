@@ -124,7 +124,7 @@ function PlanListBottomModal({
             )}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pt-5">
             <Button
               type="button"
               variant="secondary"

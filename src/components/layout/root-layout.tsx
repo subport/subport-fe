@@ -43,7 +43,7 @@ function RootLayout() {
           <main
             className={cn(
               'scrollbar-hide flex-1 overflow-scroll p-6',
-              layout?.bottomNavigation && 'pb-26',
+              layout?.bottomNavigation && 'pb-19',
               layout?.header && 'pt-0',
             )}
           >

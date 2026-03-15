@@ -39,13 +39,17 @@ export type SubscriptionGroupMap = Record<string, MemberSubscriptionsItem[]>;
 
 export type MemberSubscriptions = MemberSubscriptionsItem[];
 
-export type GroupedSubscriptionRes = {
+export type MemberSubscribeAmounts = {
+  currentMonthPaidAmount: number;
   currentMonthTotalAmount: number;
+  paymentProgressPercent: number;
+};
+
+export type GroupedSubscriptionRes = MemberSubscribeAmounts & {
   subscriptions: SubscriptionGroupMap;
 };
 
-export type FlatSubscriptionRes = {
-  currentMonthTotalAmount: number;
+export type FlatSubscriptionRes = MemberSubscribeAmounts & {
   subscriptions: MemberSubscriptions;
 };
 

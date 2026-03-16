@@ -28,6 +28,7 @@ export const QUERY_KEY = {
   },
 
   spendingRecords: {
+    all: ['spending-records'],
     yearMonth: (yearMonth: string) => ['spending-records', yearMonth],
     byDate: (date: string) => ['spending-records', 'by-date', date],
   },

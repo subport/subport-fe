@@ -4,6 +4,7 @@ import useUpdatePlanMutate from '@/hooks/mutations/use-update-plan-mutate';
 import useGetPlan from '@/hooks/queries/use-get-plan';
 import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 function EditPlanPage() {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ function EditPlanPage() {
   const { data: plan, isPending: isGetPlanDataPending } = useGetPlan(planId!);
   const { mutate: updatePlan } = useUpdatePlanMutate({
     onSuccess: () => {
+      toast.success('멤버십이 수정되었습니다', { position: 'bottom-center' });
+
       if (window.history.state?.idx > 0) {
         navigate(-1);
       } else {

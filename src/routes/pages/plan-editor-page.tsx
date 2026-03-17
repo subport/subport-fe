@@ -6,6 +6,7 @@ import useDeletePlanMutate from '@/hooks/mutations/use-delete-plan-mutate';
 import { useState } from 'react';
 
 import ConfirmModal from '@/components/modal/confirm-modal';
+import { toast } from 'sonner';
 
 function PlanEditorPage() {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
@@ -17,6 +18,7 @@ function PlanEditorPage() {
 
   const { mutate: deletePlan } = useDeletePlanMutate({
     onSuccess: () => {
+      toast.success('멤버십이 삭제되었습니다', { position: 'bottom-center' });
       setModal(false);
     },
   });

@@ -67,12 +67,10 @@ function EditMemberSubscribeStateForm() {
               <div
                 onClick={() => setSubscribeState(state.value)}
                 key={state.value}
-                className="bg-box-black hover:bg-box-black/80 flex cursor-pointer items-center justify-between rounded-2xl px-5 py-4 transition-colors"
+                className="bg-box-black hover:bg-box-black/80 flex cursor-pointer items-center justify-between gap-4 rounded-2xl px-5 py-4 transition-colors"
               >
                 <div>
-                  <p className={cn('mb-2 text-lg font-semibold')}>
-                    {state.label}
-                  </p>
+                  <p className={cn('text-lg font-semibold')}>{state.label}</p>
                   <span className="text-sub-font-black text-sm">
                     {state.value === 'deActivate' &&
                       '저장된 구독 정보는 그대로 남아있어요'}

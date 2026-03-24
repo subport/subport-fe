@@ -69,8 +69,8 @@ function EditPayMentDateNotificationForm() {
   return (
     <div className="flex h-full flex-col justify-between">
       <div className="flex-1">
-        <p className="mb-4 w-1/3 text-xl font-semibold">
-          이메일 알림을 설정해 주세요
+        <p className="mb-4 text-xl font-semibold">
+          이메일 알림을 <br /> 설정해 주세요
         </p>
 
         <div className="bg-box-black mb-4 flex justify-between rounded-lg p-3">

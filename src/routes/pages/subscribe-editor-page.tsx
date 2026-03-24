@@ -7,6 +7,7 @@ import useDeleteCustomSubscribeMutate from '@/hooks/mutations/use-delete-custom-
 import { toast } from 'sonner';
 import { useState } from 'react';
 import ConfirmModal from '@/components/modal/confirm-modal';
+import { getApiErrorMessage } from '@/lib/error';
 function SubscribeEditorPage() {
   const [modal, setModal] = useState(false);
   const [deleteSubscribeId, setDeleteSubscribeId] = useState<number | null>(
@@ -22,9 +23,9 @@ function SubscribeEditorPage() {
       });
     },
 
-    onError: () => {
-      console.log('error');
-      toast.error('활성화 중인 구독은 삭제 할 수 없습니다', {
+    onError: (error) => {
+      const errorMessage = getApiErrorMessage(error);
+      toast.error(errorMessage, {
         position: 'bottom-center',
       });
     },

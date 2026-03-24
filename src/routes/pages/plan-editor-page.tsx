@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import ConfirmModal from '@/components/modal/confirm-modal';
 import { toast } from 'sonner';
+import { getApiErrorMessage } from '@/lib/error';
 
 function PlanEditorPage() {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
@@ -20,6 +21,11 @@ function PlanEditorPage() {
     onSuccess: () => {
       toast.success('멤버십이 삭제되었습니다', { position: 'bottom-center' });
       setModal(false);
+    },
+    onError: (error) => {
+      const errorMessage = getApiErrorMessage(error);
+
+      toast.error(errorMessage, { position: 'bottom-center' });
     },
   });
 

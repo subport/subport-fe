@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ConfirmModal from '../modal/confirm-modal';
 import useDeletePlanMutate from '@/hooks/mutations/use-delete-plan-mutate';
 import { toast } from 'sonner';
+import { getApiErrorMessage } from '@/lib/error';
 
 type PlanEditCardProps = {
   plan: PlanItem;
@@ -24,6 +25,10 @@ function PlanEditCard({ plan, subscribeId }: PlanEditCardProps) {
     onSuccess: () => {
       toast.success('멤버십이 삭제되었습니다', { position: 'bottom-center' });
       setModal(false);
+    },
+    onError: (error) => {
+      const errorMessage = getApiErrorMessage(error);
+      toast.error(errorMessage, { position: 'bottom-center' });
     },
   });
 

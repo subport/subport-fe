@@ -28,10 +28,14 @@ import { queryClient } from '@/components/providers/query-provider';
 import { QUERY_KEY } from '@/constants/query-key';
 import { getMyAccount, getReminderSettings } from '@/api/profile';
 import FaqPage from './pages/faq-page';
+import UserCommentPage from './pages/user-comment-page';
+import FeedbackModalPage from './pages/feed-back-modal-page';
+import RootErrorPage from './pages/root-error-page';
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
+    errorElement: <RootErrorPage />,
     children: [
       {
         element: <RequireGuest />,
@@ -48,11 +52,18 @@ const router = createBrowserRouter([
       },
       {
         element: <RequireAuth />,
+
         children: [
           {
             path: '/',
             element: <MainPage />,
             handle: { bottomNavigation: true },
+            children: [
+              {
+                path: '/feedback',
+                element: <FeedbackModalPage />,
+              },
+            ],
           },
 
           {
@@ -222,6 +233,14 @@ const router = createBrowserRouter([
             element: <FaqPage />,
             handle: {
               header: { header: true, title: 'FAQ' },
+            },
+          },
+
+          {
+            path: 'user-comment',
+            element: <UserCommentPage />,
+            handle: {
+              header: { header: true },
             },
           },
         ],

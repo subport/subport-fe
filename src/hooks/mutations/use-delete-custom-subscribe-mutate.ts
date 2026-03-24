@@ -3,7 +3,6 @@ import { QUERY_KEY } from '@/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { type subscribeItem } from '@/types/subscribe';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
 
 function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
   const queryClient = useQueryClient();
@@ -31,9 +30,7 @@ function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
     },
 
     onError: (error) => {
-      if (isAxiosError(error)) {
-        callbacks?.onError?.(error);
-      }
+      callbacks?.onError?.(error);
     },
   });
 }

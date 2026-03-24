@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import kakaoSymol from '@/assets/icons/kakao-symbol.svg';
 import OnbordingImage from '@/assets/onbording-image.svg';
+import GuestLoginButton from '@/components/auth/guest-login-button';
 const KAKAO_OAUTH_URL = `${import.meta.env.VITE_API_URL}/oauth2/authorization/kakao`;
 
 function LoginPage() {
@@ -19,10 +20,12 @@ function LoginPage() {
         className="z-20 flex w-full items-center justify-center gap-4 rounded-xl bg-[#FDE500] py-4"
       >
         <img src={kakaoSymol} alt="카카오 심볼 로고" />
-        <span className="text-background-black text-lg font-bold">
+        <span className="text-background-black text-lg font-semibold">
           카카오로 로그인
         </span>
       </Link>
+
+      <GuestLoginButton />
     </div>
   );
 }

@@ -56,9 +56,9 @@ function DeleteProfileButton() {
                 계정을 탈퇴하시겠어요?
               </DialogTitle>
             </DialogHeader>
-            <DialogDescription className="text-sub-font-black text-center">
-              탈퇴 시 계정 정보와 저장된 내용은 모두 삭제되며,
-              <br /> 복구할 수 없습니다.
+            <DialogDescription className="text-sub-font-black text-center wrap-break-word">
+              탈퇴 시 계정 정보와 저장된 내용은
+              <br /> 모두 삭제되며, 복구할 수 없습니다.
             </DialogDescription>
 
             <div className="flex items-center justify-center gap-2">
@@ -77,7 +77,9 @@ function DeleteProfileButton() {
 
             <DialogFooter>
               <Button
-                onClick={() => deleteProfile}
+                onClick={() => {
+                  deleteProfile();
+                }}
                 disabled={!confirm}
                 className="bg-primary-light-active h-12 w-full rounded-xl"
               >

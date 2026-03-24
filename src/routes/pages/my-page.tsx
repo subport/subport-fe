@@ -6,19 +6,25 @@ import SubscribeManageIcon from '@/assets/subscribe-manage.png';
 import EditProfileIcon from '@/assets/icons/edit-profile-icon.svg';
 import LogoutIcon from '@/assets/icons/logout-icon.svg';
 import NotificationIcon from '@/assets/icons/notification-icon.svg';
-
 import FaqIcon from '@/assets/icons/faq-icon.svg';
+import SendCommentIcon from '@/assets/icons/send-comment-icon.svg';
+
 import { ChevronRight } from 'lucide-react';
 import MyPageSkeleton from '@/components/my/my-page-skeleton';
 import { Button } from '@/components/ui/button';
 import LogoutButton from '@/components/my/logout-button';
 import DeleteProfileButton from '@/components/my/delete-profile-button';
+import { useGetAuthRole } from '@/store/use-auth-store';
 function MyPage() {
+  const role = useGetAuthRole();
+
   const {
     data: profile,
     isPending: isGetProfilePending,
     refetch,
   } = useGetMyProfile();
+
+  const isMember = role === 'member';
 
   if (isGetProfilePending) return <MyPageSkeleton />;
   if (!profile)
@@ -38,12 +44,16 @@ function MyPage() {
 
   return (
     <section className="scrollbar-hide h-full overflow-scroll pb-6">
-      <p className="mb-4 w-1/2 text-2xl/relaxed font-semibold">
+      <p className="mb-4 text-2xl/relaxed font-semibold">
         {`${profile.nickname}님!`}
-        <br />
-        구독을 관리한지
-        <br />
-        <span className="text-primary">{`D+${profile.joinedDays}`}</span>
+        {isMember && (
+          <>
+            <br />
+            '구독을 관리한지'
+            <br />
+            <span className="text-primary">{`D+${profile.joinedDays}`}</span>
+          </>
+        )}
       </p>
 
       <div className="mb-4 flex items-center gap-4">
@@ -147,6 +157,27 @@ function MyPage() {
                   <span className="font-semibold">FAQ</span>
                   <span className="text-sub-font-black text-xs">
                     자주 묻는 질문을 확인할 수 있어요
+                  </span>
+                </div>
+              </div>
+              <ChevronRight />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/user-comment"
+              className="flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2.5">
+                <img
+                  className="size-8"
+                  src={SendCommentIcon}
+                  alt="send-user-comment"
+                />
+                <div className="flex flex-col justify-between text-sm">
+                  <span className="font-semibold">의견보내기</span>
+                  <span className="text-sub-font-black text-xs">
+                    사용 중 불편했던 점이나 개선 의견을 남겨주세요
                   </span>
                 </div>
               </div>

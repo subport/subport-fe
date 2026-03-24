@@ -1,20 +1,18 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { tokenStorage } from '@/lib/token-storage';
+import { useGetAccessToken, useGetAuthRole } from '@/store/use-auth-store';
 
 export function RequireAuth() {
-  const token = tokenStorage.getToken();
-  const isLoggedIn = token !== null;
+  const accessToken = useGetAccessToken();
 
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
+  if (!accessToken) return <Navigate to="/login" replace />;
 
   return <Outlet />;
 }
 
 export function RequireGuest() {
-  const token = tokenStorage.getToken();
-  const isLoggedIn = token !== null;
+  const role = useGetAuthRole();
 
-  if (isLoggedIn) return <Navigate to="/" replace />;
+  if (role === 'member' || role === 'guest') return <Navigate to="/" replace />;
 
   return <Outlet />;
 }

@@ -18,10 +18,21 @@ import type {
   SubscriptionGroupMap,
 } from '@/types/subscribe';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 import OnBoardingBottomModal from '@/components/modal/onboarding-bottom-modal';
 import MonthlySpendingCard from '@/components/subscribe/member-subscribe/monthly-spending-card';
+
+import MessageIcon from '@/assets/icons/message-icon.svg?react';
+import FeedbackEntryBottomModal from '@/components/modal/feedback-entry-bottom-modal';
+import { STORAGE_KEY } from '@/constants/storage-key';
+import { useGetAuthRole } from '@/store/use-auth-store';
 
 const SUBSCIRBE_SORTS = [
   { value: 'type', label: '타입순' },
@@ -39,6 +50,7 @@ const DEFAULT_MONTHLY_CARD: MemberSubscribeAmounts = {
 };
 
 const SORT_VALUES = new Set(SUBSCIRBE_SORTS.map((s) => s.value));
+const TODAY_DATE = new Date().toLocaleDateString('sv-SE');
 
 const parseParams = (sq: URLSearchParams) => {
   const active = sq.get('active') === '0' ? false : DEFAULT_ACTIVE;
@@ -55,12 +67,22 @@ const parseParams = (sq: URLSearchParams) => {
 
 function MainPage() {
   const isOnBoardingConsumed =
-    sessionStorage.getItem('first-login-onboarding-consumed') === 'consumed';
-
+    sessionStorage.getItem(STORAGE_KEY.firstLoginOnboardingConsumed) ===
+    'consumed';
+  const role = useGetAuthRole();
+  const isGuest = role === 'guest';
+  const navigate = useNavigate();
   const location = useLocation();
-
   const [searchParams, setSearchParams] = useSearchParams();
-  const [open] = useState(() => Boolean(location.state?.showOnboarding));
+  const [isFeedbackEntryOpen, setIsFeedbackEntryOpen] = useState(() => {
+    const hiddenDate = localStorage.getItem(
+      STORAGE_KEY.feedbackEntryHiddenUntil,
+    );
+    const hasSubmittedFeedback =
+      localStorage.getItem(STORAGE_KEY.feedbackSubmitted) === 'true';
+
+    return hiddenDate !== TODAY_DATE && !hasSubmittedFeedback;
+  });
   const [monthlyCard, setMonthlyCard] =
     useState<MemberSubscribeAmounts>(DEFAULT_MONTHLY_CARD);
 
@@ -109,10 +131,18 @@ function MainPage() {
     });
   };
 
+  const shouldShowOnboarding =
+    (location.state?.showOnboarding === true || isGuest) &&
+    !isOnBoardingConsumed;
+
+  const shouldSkipFeedbackEntry = location.state?.skipFeedbackEntry === true;
+
+  const shouldRenderFeedbackEntry =
+    !shouldShowOnboarding && !shouldSkipFeedbackEntry && isFeedbackEntryOpen;
   return (
     <>
       <div className="scrollbar-hide flex h-full flex-col gap-6 overflow-scroll pb-6">
-        <div>
+        <div className="flex items-center justify-between">
           <Switch
             checked={active}
             onClick={toggleActive}
@@ -121,6 +151,17 @@ function MainPage() {
             onLabel="활성화"
             offLabel="비활성화"
           />
+
+          <button
+            className="relative cursor-pointer p-3"
+            type="button"
+            onClick={() => navigate('/feedback')}
+          >
+            <span className="bg-primary-light-active text-background-black absolute top-1.5 -left-5 rounded-full px-2.5 py-0.5 text-xs font-semibold">
+              피드백
+            </span>
+            <MessageIcon className="size-8" />
+          </button>
         </div>
 
         <div className="flex-1">
@@ -201,8 +242,17 @@ function MainPage() {
         </div>
       </div>
 
-      {location.state?.showOnboarding === true && !isOnBoardingConsumed && (
-        <OnBoardingBottomModal open={open} />
+      <Outlet />
+
+      {shouldShowOnboarding && (
+        <OnBoardingBottomModal open={shouldShowOnboarding} />
+      )}
+
+      {shouldRenderFeedbackEntry && (
+        <FeedbackEntryBottomModal
+          open={isFeedbackEntryOpen}
+          onOpenChange={() => setIsFeedbackEntryOpen(false)}
+        />
       )}
     </>
   );

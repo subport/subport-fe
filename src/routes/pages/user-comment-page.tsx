@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/text-area';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { PEEDBACK_CATEGORIES } from '@/constants/peedback-categories';
+import { FEEDBACK_CATEGORIES } from '@/constants/feedback-categories';
 import useSendUserComment from '@/hooks/mutations/use-send-user-comment';
 import {
   type UserCommentFormPayload,
@@ -47,7 +47,7 @@ function UserCommentPage() {
 
   const selectedCategory = useMemo(
     () =>
-      PEEDBACK_CATEGORIES.find((category) => category.id === selectCategory),
+      FEEDBACK_CATEGORIES.find((category) => category.id === selectCategory),
     [selectCategory],
   );
 
@@ -89,7 +89,7 @@ function UserCommentPage() {
                     }
                   }}
                 >
-                  {PEEDBACK_CATEGORIES.map((cateogry) => (
+                  {FEEDBACK_CATEGORIES.map((cateogry) => (
                     <ToggleGroupItem
                       key={cateogry.id}
                       className="min-w-15"

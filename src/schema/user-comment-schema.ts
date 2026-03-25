@@ -1,4 +1,4 @@
-import { PEEDBACK_CATEGORIES } from '@/constants/peedback-categories';
+import { FEEDBACK_CATEGORIES } from '@/constants/feedback-categories';
 import z from 'zod';
 
 export const userCommentSchema = z
@@ -20,7 +20,7 @@ export const userCommentSchema = z
     }
   })
   .transform((data) => {
-    const selectedCategory = PEEDBACK_CATEGORIES.find(
+    const selectedCategory = FEEDBACK_CATEGORIES.find(
       (category) => data.category === category.id,
     );
 

@@ -50,12 +50,19 @@ function MyPage() {
     <section className="scrollbar-hide h-full overflow-scroll pb-6">
       <p className="mb-4 text-2xl/relaxed font-semibold">
         {`${profile.nickname}님!`}
-        {isMember && (
+        {isMember ? (
           <>
             <br />
             구독을 관리한지
             <br />
             <span className="text-primary">{`D+${profile.joinedDays}`}</span>
+          </>
+        ) : (
+          <>
+            <br />
+            지금은 게스트로
+            <br />
+            이용 중이에요
           </>
         )}
       </p>

@@ -37,7 +37,10 @@ function FeedbackModalPage() {
     <div className="bg-background-black fixed top-0 left-1/2 z-50 flex h-svh w-full max-w-107.5 -translate-x-1/2 flex-col justify-between overflow-hidden p-6">
       <div className="flex-1">
         <div className="mb-6 text-right">
-          <CloseButton className="inline-block" onClick={() => navigate(-1)} />
+          <CloseButton
+            className="inline-block cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
         </div>
         <div className="h-full">
           <p className="mb-6 text-xl font-semibold">

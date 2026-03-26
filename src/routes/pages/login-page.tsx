@@ -7,14 +7,16 @@ const KAKAO_OAUTH_URL = `${import.meta.env.VITE_API_URL}/oauth2/authorization/ka
 function LoginPage() {
   return (
     <div className="relative flex h-full flex-col items-center justify-end gap-4 pb-4">
-      <div className="z-1 mb-10 space-y-4 px-4 text-center">
-        <h3 className="text-xl font-semibold">구독, 한 눈에 정리하세요!</h3>
+      <img src={OnbordingImage} className="absolute bottom-[25%]" />
+
+      <div className="z-20 mb-5 w-full text-center">
+        <h3 className="mb-4 text-xl font-semibold">
+          구독, 한 눈에 정리하세요!
+        </h3>
         <p className="text-sub-font-black font-light break-keep">
-          흩어진 구독 서비스와 월 지출을 한 번에 보여드려요
+          흩어진 구독 서비스와 <br />월 지출을 한 번에 보여드려요
         </p>
       </div>
-      <img src={OnbordingImage} className="absolute top-[10%] md:top-[35%]" />
-
       <Link
         to={KAKAO_OAUTH_URL}
         className="z-20 flex w-full items-center justify-center gap-4 rounded-xl bg-[#FDE500] py-4"

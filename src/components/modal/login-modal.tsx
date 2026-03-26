@@ -41,7 +41,7 @@ function LoginModal({ open, onOpenChange }: LoginModalProps) {
               sessionStorage.setItem('login-redirect', location.pathname);
               window.location.href = KAKAO_OAUTH_URL;
             }}
-            className="mb-2 flex w-full items-center justify-center gap-4 rounded-xl bg-[#FDE500] py-4"
+            className="mb-2 flex w-full cursor-pointer items-center justify-center gap-4 rounded-xl bg-[#FDE500] py-4"
           >
             <img src={kakaoSymol} alt="카카오 심볼 로고" />
             <span className="text-background-black text-lg font-semibold">
@@ -51,7 +51,7 @@ function LoginModal({ open, onOpenChange }: LoginModalProps) {
           <button
             onClick={onOpenChange}
             type="button"
-            className="text-sub-font-black w-full text-center text-xs"
+            className="text-sub-font-black w-full cursor-pointer text-center text-xs"
           >
             나중에 할게요
           </button>

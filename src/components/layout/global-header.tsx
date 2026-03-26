@@ -9,7 +9,6 @@ interface HeaderProps {
 
 function GlobalHeader({ title, right, backTo }: HeaderProps) {
   const navigate = useNavigate();
-  console.log(backTo, title);
   return (
     <header className="relative flex w-full items-center justify-between py-4 pr-6 pl-2">
       <div className="w-10 justify-start">
@@ -21,7 +20,12 @@ function GlobalHeader({ title, right, backTo }: HeaderProps) {
               return;
             }
 
-            navigate(-1);
+            if (window.history.state?.idx > 0) {
+              navigate(-1);
+              return;
+            }
+
+            navigate('/', { replace: true });
           }}
           aria-label="뒤로가기"
         >

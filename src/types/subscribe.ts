@@ -1,3 +1,5 @@
+import type { UserSubscriptionSort } from '@/domains/subscription/user-subscription/model/types';
+
 export type subscribeItem = {
   id: number;
   name: string;
@@ -19,12 +21,6 @@ export type AddCustomSubscribeReq = {
   type: string;
   defaultImageName: string | null;
 };
-
-export type MemberSubscriptionSort =
-  | 'type'
-  | 'nextPaymentDate'
-  | 'createdAt'
-  | 'name';
 
 export type MemberSubscriptionsItem = {
   id: number;
@@ -60,9 +56,9 @@ export type SubscriptionsResBySort = {
   name: FlatSubscriptionRes;
 };
 
-export type MemberSubscriptionsRes<S extends MemberSubscriptionSort> =
+export type MemberSubscriptionsRes<S extends UserSubscriptionSort> =
   SubscriptionsResBySort[S];
 
 export type MemberSubscriptionsParams =
   | { active: false }
-  | { active: true; sortBy: MemberSubscriptionSort };
+  | { active: true; sortBy: UserSubscriptionSort };

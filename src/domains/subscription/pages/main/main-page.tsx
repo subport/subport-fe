@@ -14,17 +14,10 @@ import useGetMemberSubscriptions from '@/hooks/queries/use-get-member-subscripti
 import type {
   MemberSubscribeAmounts,
   MemberSubscriptions,
-  MemberSubscriptionSort,
   SubscriptionGroupMap,
 } from '@/types/subscribe';
 import { useEffect, useState } from 'react';
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import OnBoardingBottomModal from '@/components/modal/onboarding-bottom-modal';
 import MonthlySpendingCard from '@/components/subscribe/member-subscribe/monthly-spending-card';
@@ -33,39 +26,22 @@ import MessageIcon from '@/assets/icons/message-icon.svg?react';
 import FeedbackEntryBottomModal from '@/components/modal/feedback-entry-bottom-modal';
 import { STORAGE_KEY } from '@/constants/storage-key';
 import { useGetAuthRole } from '@/store/use-auth-store';
+import useSubscriptionListFilter from './hooks/use-subscription-list-filter';
+import { SUBSCRIPTION_SORT_OPTIONS } from './constants';
+import type { UserSubscriptionSort } from '../../user-subscription/model/types';
 
-const SUBSCIRBE_SORTS = [
-  { value: 'type', label: '타입순' },
-  { value: 'nextPaymentDate', label: '결제 가까운 순' },
-  { value: 'createdAt', label: '최신순' },
-  { value: 'name', label: '이름순' },
-] as const;
-
-const DEFAULT_ACTIVE = true;
-const DEFAULT_SORT: MemberSubscriptionSort = 'type';
 const DEFAULT_MONTHLY_CARD: MemberSubscribeAmounts = {
   currentMonthPaidAmount: 0,
   currentMonthTotalAmount: 0,
   paymentProgressPercent: 0,
 };
 
-const SORT_VALUES = new Set(SUBSCIRBE_SORTS.map((s) => s.value));
 const TODAY_DATE = new Date().toLocaleDateString('sv-SE');
 
-const parseParams = (sq: URLSearchParams) => {
-  const active = sq.get('active') === '0' ? false : DEFAULT_ACTIVE;
-  if (!active) return { active: false, sortBy: 'name' as const };
-
-  const rawSort = sq.get('sort');
-  const sortBy =
-    rawSort && SORT_VALUES.has(rawSort as MemberSubscriptionSort)
-      ? (rawSort as MemberSubscriptionSort)
-      : DEFAULT_SORT;
-
-  return { active: true, sortBy };
-};
-
 function MainPage() {
+  const { active, sortBy, changeSortBy, toggleActiveFilter } =
+    useSubscriptionListFilter();
+
   const isOnBoardingConsumed =
     sessionStorage.getItem(STORAGE_KEY.firstLoginOnboardingConsumed) ===
     'consumed';
@@ -75,7 +51,6 @@ function MainPage() {
   const isGuest = role === 'guest';
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
   const shouldShowOnboarding =
     (location.state?.showOnboarding === true || isGuest) &&
     !isOnBoardingConsumed;
@@ -101,10 +76,10 @@ function MainPage() {
   const [monthlyCard, setMonthlyCard] =
     useState<MemberSubscribeAmounts>(DEFAULT_MONTHLY_CARD);
 
-  const { active, sortBy } = parseParams(searchParams);
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
     useGetMemberSubscriptions({ active, sortBy });
 
+  console.log(subscriptions);
   useEffect(() => {
     if (!active || !subscriptions) return;
 
@@ -122,36 +97,6 @@ function MainPage() {
     };
   }, []);
 
-  const toggleActive = () => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      const nextActive = !(prev.get('active') === '0' ? false : true);
-
-      next.set('active', nextActive ? '1' : '0');
-
-      if (!nextActive) {
-        next.delete('sort');
-      } else {
-        if (!next.get('sort')) {
-          next.set('sort', DEFAULT_SORT);
-        }
-      }
-
-      return next;
-    });
-  };
-
-  const handleChangeSort = (sortBy: MemberSubscriptionSort) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-
-      next.set('active', '1');
-      next.set('sort', sortBy);
-
-      return next;
-    });
-  };
-
   const shouldRenderFeedbackEntry =
     isMainPage &&
     !shouldShowOnboarding &&
@@ -164,7 +109,7 @@ function MainPage() {
         <div className="flex items-center justify-between">
           <Switch
             checked={active}
-            onClick={toggleActive}
+            onClick={toggleActiveFilter}
             className="cursor-pointer"
             variant="label-pill"
             onLabel="활성화"
@@ -193,8 +138,8 @@ function MainPage() {
                   totalAmount={monthlyCard.currentMonthTotalAmount}
                 />
                 <Select
-                  onValueChange={(sortBy: MemberSubscriptionSort) =>
-                    handleChangeSort(sortBy)
+                  onValueChange={(sortBy: UserSubscriptionSort) =>
+                    changeSortBy(sortBy)
                   }
                   defaultValue={sortBy}
                 >
@@ -202,7 +147,7 @@ function MainPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent defaultValue={sortBy} position="popper">
-                    {SUBSCIRBE_SORTS.map((sort) => (
+                    {SUBSCRIPTION_SORT_OPTIONS.map((sort) => (
                       <SelectItem key={sort.value} value={sort.value}>
                         {sort.label}
                       </SelectItem>

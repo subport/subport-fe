@@ -3,7 +3,7 @@ import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import RootLayout from '@/components/layout/root-layout';
 import { RequireAuth, RequireGuest } from '@/components/layout/private-route';
 
-import MainPage from './pages/main-page';
+import MainPage from '../domains/subscription/pages/main/main-page';
 import LoginPage from './pages/login-page';
 import LoginSuccessPage from './pages/login-success-page';
 import AddSubscribePage from './pages/add-subscribe-page';

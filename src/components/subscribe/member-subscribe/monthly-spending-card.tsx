@@ -1,24 +1,20 @@
 import BackgroundRectangleImage from '@/assets/background-rectangle-image.png';
 import EmptyFileImage from '@/assets/empty-file-image.png';
 import FillFileImage from '@/assets/fill-file-image.png';
+import type { UserSubscribeSummary } from '@/domains/subscription/user-subscription/types/api';
 import { cn, formatKRWInput } from '@/lib/utils';
 import { format } from 'date-fns';
 
-type MonthlySpendingCardProps = {
-  paidAmount: number;
-  totalAmount: number;
-  progressPercent: number;
-};
-
 function MonthlySpendingCard({
-  paidAmount,
-  totalAmount,
-  progressPercent,
-}: MonthlySpendingCardProps) {
+  currentMonthPaidAmount,
+  currentMonthTotalAmount,
+  paymentProgressPercent,
+}: UserSubscribeSummary) {
   const today = new Date();
-  const paidAmountLabel = formatKRWInput(String(paidAmount || 0));
-  const totalAmountLabel = formatKRWInput(String(totalAmount || 0));
-  const folderImage = totalAmount === 0 ? EmptyFileImage : FillFileImage;
+  const paidAmountLabel = formatKRWInput(String(currentMonthPaidAmount || 0));
+  const totalAmountLabel = formatKRWInput(String(currentMonthTotalAmount || 0));
+  const folderImage =
+    currentMonthTotalAmount === 0 ? EmptyFileImage : FillFileImage;
 
   return (
     <section className="relative h-55 w-full overflow-hidden rounded-xl">
@@ -48,11 +44,11 @@ function MonthlySpendingCard({
         </div>
 
         <div className="w-full">
-          <p className="mb-1 text-right text-xs">{progressPercent}%</p>
+          <p className="mb-1 text-right text-xs">{paymentProgressPercent}%</p>
           <div className="bg-background-black h-3 overflow-hidden rounded-full">
             <div
               className="bg-primary h-full rounded-full transition-[width]"
-              style={{ width: `${progressPercent}%` }}
+              style={{ width: `${paymentProgressPercent}%` }}
             />
           </div>
         </div>

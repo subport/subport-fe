@@ -1,21 +1,7 @@
-﻿import GroupedSubscribeList from '@/components/subscribe/member-subscribe/grouped-subscribe-list';
-import SubscribeList from '@/components/subscribe/member-subscribe/subscribe-list';
-import SubscribeListSkeleton from '@/components/subscribe/member-subscribe/subscribe-list-skeleton';
+﻿import SubscribeListSkeleton from '@/components/subscribe/member-subscribe/subscribe-list-skeleton';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import useGetMemberSubscriptions from '@/hooks/queries/use-get-member-subscriptions';
-import type {
-  MemberSubscribeAmounts,
-  MemberSubscriptions,
-  SubscriptionGroupMap,
-} from '@/types/subscribe';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,20 +13,18 @@ import FeedbackEntryBottomModal from '@/components/modal/feedback-entry-bottom-m
 import { STORAGE_KEY } from '@/constants/storage-key';
 import { useGetAuthRole } from '@/store/use-auth-store';
 import useSubscriptionListFilter from './hooks/use-subscription-list-filter';
-import { SUBSCRIPTION_SORT_OPTIONS } from './constants';
-import type { UserSubscriptionSort } from '../../user-subscription/model/types';
-
-const DEFAULT_MONTHLY_CARD: MemberSubscribeAmounts = {
-  currentMonthPaidAmount: 0,
-  currentMonthTotalAmount: 0,
-  paymentProgressPercent: 0,
-};
+import mappingUserSubscriptionList from '../../user-subscription/model/mapper';
+import UserSubscriptionList from '../../user-subscription/components/user-subscription-list';
+import SubscriptionSortSelet from './components/subscription-sort-select';
 
 const TODAY_DATE = new Date().toLocaleDateString('sv-SE');
 
 function MainPage() {
   const { active, sortBy, changeSortBy, toggleActiveFilter } =
     useSubscriptionListFilter();
+
+  const { data: subscriptions, isPending: isGetSubscriptionsPending } =
+    useGetMemberSubscriptions({ active, sortBy });
 
   const isOnBoardingConsumed =
     sessionStorage.getItem(STORAGE_KEY.firstLoginOnboardingConsumed) ===
@@ -73,23 +57,6 @@ function MainPage() {
 
     return hiddenDate !== TODAY_DATE && !hasSubmittedFeedback;
   });
-  const [monthlyCard, setMonthlyCard] =
-    useState<MemberSubscribeAmounts>(DEFAULT_MONTHLY_CARD);
-
-  const { data: subscriptions, isPending: isGetSubscriptionsPending } =
-    useGetMemberSubscriptions({ active, sortBy });
-
-  console.log(subscriptions);
-  useEffect(() => {
-    if (!active || !subscriptions) return;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMonthlyCard({
-      currentMonthPaidAmount: subscriptions.currentMonthPaidAmount,
-      currentMonthTotalAmount: subscriptions.currentMonthTotalAmount,
-      paymentProgressPercent: subscriptions.paymentProgressPercent,
-    });
-  }, [active, subscriptions]);
 
   useEffect(() => {
     return () => {
@@ -129,33 +96,20 @@ function MainPage() {
         </div>
 
         <div className="flex-1">
-          {active && (
-            <>
-              <div className="mb-4 flex flex-col items-end gap-4">
-                <MonthlySpendingCard
-                  paidAmount={monthlyCard.currentMonthPaidAmount}
-                  progressPercent={monthlyCard.paymentProgressPercent}
-                  totalAmount={monthlyCard.currentMonthTotalAmount}
-                />
-                <Select
-                  onValueChange={(sortBy: UserSubscriptionSort) =>
-                    changeSortBy(sortBy)
-                  }
-                  defaultValue={sortBy}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent defaultValue={sortBy} position="popper">
-                    {SUBSCRIPTION_SORT_OPTIONS.map((sort) => (
-                      <SelectItem key={sort.value} value={sort.value}>
-                        {sort.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
+          {active && subscriptions && (
+            <div className="mb-4 flex flex-col items-end gap-4">
+              <MonthlySpendingCard
+                {...mappingUserSubscriptionList(
+                  { active, sortBy },
+                  subscriptions,
+                ).summary}
+              />
+
+              <SubscriptionSortSelet
+                changeSortBy={changeSortBy}
+                sortBy={sortBy}
+              />
+            </div>
           )}
 
           {isGetSubscriptionsPending ? (
@@ -177,30 +131,15 @@ function MainPage() {
                 </p>
               )}
 
-              {!active && (
-                <SubscribeList
-                  unActive
-                  subscribeList={
-                    subscriptions!.subscriptions as MemberSubscriptions
-                  }
-                />
-              )}
-
-              {sortBy === 'type' && (
-                <GroupedSubscribeList
-                  subscribeList={
-                    subscriptions!.subscriptions as SubscriptionGroupMap
-                  }
-                />
-              )}
-
-              {sortBy !== 'type' && active && (
-                <SubscribeList
-                  subscribeList={
-                    subscriptions!.subscriptions as MemberSubscriptions
-                  }
-                />
-              )}
+              <UserSubscriptionList
+                active={active}
+                sections={
+                  mappingUserSubscriptionList(
+                    { active, sortBy },
+                    subscriptions!,
+                  ).sections
+                }
+              />
             </>
           )}
         </div>

@@ -1,9 +1,9 @@
 import { getMemberSubscriptions } from '@/api/subscribe';
 import { QUERY_KEY } from '@/constants/query-key';
-import type { MemberSubscriptionsParams } from '@/types/subscribe';
+import type { UserSubscriptionParams } from '@/domains/subscription/user-subscription/types/api';
 import { useQuery } from '@tanstack/react-query';
 
-function useGetMemberSubscriptions(params: MemberSubscriptionsParams) {
+function useGetMemberSubscriptions(params: UserSubscriptionParams) {
   return useQuery({
     queryKey: QUERY_KEY.memberSubscriptions.all(params),
     queryFn: () => getMemberSubscriptions(params),

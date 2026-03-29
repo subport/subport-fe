@@ -1,4 +1,4 @@
-import type { UserSubscriptionSort } from '@/domains/subscription/user-subscription/model/types';
+import type { UserSubscriptionSort } from '@/domains/subscription/user-subscription/types/api';
 import { useSearchParams } from 'react-router-dom';
 import { SUBSCRIPTION_SORT_OPTIONS } from '../constants';
 

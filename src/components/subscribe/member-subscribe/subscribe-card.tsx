@@ -1,13 +1,13 @@
-import type { MemberSubscriptionsItem } from '@/types/subscribe';
 import { Link } from 'react-router-dom';
 import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';
 import { cn, formatKRWInput } from '@/lib/utils';
+import type { UserSubscriptionItem } from '@/domains/subscription/user-subscription/types/api';
 
 function SubscribeCard({
   subscribeInfo,
   unActive = false,
 }: {
-  subscribeInfo: MemberSubscriptionsItem;
+  subscribeInfo: UserSubscriptionItem;
   unActive?: boolean;
 }) {
   return (

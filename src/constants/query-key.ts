@@ -1,4 +1,4 @@
-import type { MemberSubscriptionsParams } from '@/types/subscribe';
+import type { UserSubscriptionParams } from '@/domains/subscription/user-subscription/types/api';
 
 export const QUERY_KEY = {
   subscriptions: {
@@ -14,10 +14,7 @@ export const QUERY_KEY = {
   },
 
   memberSubscriptions: {
-    all: (params: MemberSubscriptionsParams) => [
-      'member-subscriptions',
-      params,
-    ],
+    all: (params: UserSubscriptionParams) => ['member-subscriptions', params],
     byId: (subscribeId: string) => ['member-subscriptions', subscribeId],
   },
 

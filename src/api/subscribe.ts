@@ -2,13 +2,15 @@ import type { AddSubscribeRequestType } from '@/schema/add-subscribe-schema';
 import { client } from './client';
 
 import type {
-  MemberSubscriptionsRes,
   AddCustomSubscribeReq,
   subscribeItemRes,
   subscribeListRes,
-  MemberSubscriptionsParams,
 } from '@/types/subscribe';
 import { buildCustomSubscribeFormData } from '@/lib/utils';
+import type {
+  UserSubscriptionParams,
+  UserSubscriptionRes,
+} from '@/domains/subscription/user-subscription/types/api';
 
 export const getSubscriptions = async (searchTerm: string) => {
   const response = await client.get<subscribeListRes>(
@@ -76,14 +78,12 @@ export const deleteCustomSubscribe = async (subscribeId: string) => {
   return response;
 };
 
-export const getMemberSubscriptions = async <
-  P extends MemberSubscriptionsParams,
->(
+export const getMemberSubscriptions = async <P extends UserSubscriptionParams>(
   params: P,
 ) => {
   const sortBy = params.active ? params.sortBy : ('name' as const);
 
-  const response = await client.get<MemberSubscriptionsRes<typeof sortBy>>(
+  const response = await client.get<UserSubscriptionRes<typeof sortBy>>(
     `/api/member-subscriptions?active=${encodeURIComponent(params.active)}&sortBy=${sortBy}`,
   );
 

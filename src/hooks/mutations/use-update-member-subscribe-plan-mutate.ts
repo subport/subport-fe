@@ -13,18 +13,12 @@ function useUpdateMemberSubscribePlanMutate(
     mutationFn: updateMemberSubscribePlan,
     onSuccess: (data) => {
       queryClient.setQueryData(
-        QUERY_KEY.memberSubscriptions.byId(data.id.toString()),
+        QUERY_KEY.userSubscription.byId(data.id.toString()),
         data,
       );
 
       queryClient.invalidateQueries({
-        queryKey: ['member-subscriptions'],
-        predicate: (q) => {
-          const second = q.queryKey[1];
-          return (
-            typeof second === 'object' && second !== null && 'active' in second
-          );
-        },
+        queryKey: QUERY_KEY.userSubscription.lists,
       });
       callbacks?.onSuccess?.(data);
     },

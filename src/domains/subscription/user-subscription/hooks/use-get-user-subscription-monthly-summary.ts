@@ -4,7 +4,7 @@ import { getUserSubscriptionMonthlySummary } from '../api/user-subscription';
 
 function useGetUserSubscriptionMonthlySummary() {
   return useQuery({
-    queryKey: QUERY_KEY.memberSubscriptions.monthlySummary,
+    queryKey: QUERY_KEY.userSubscription.monthlySummary,
     queryFn: getUserSubscriptionMonthlySummary,
   });
 }

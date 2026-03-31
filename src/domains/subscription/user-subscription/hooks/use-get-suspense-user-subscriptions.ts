@@ -5,7 +5,7 @@ import type { UserSubscriptionParams } from '../types/api';
 
 function useGetSuspenseUserSubscription(params: UserSubscriptionParams) {
   return useSuspenseQuery({
-    queryKey: QUERY_KEY.memberSubscriptions.all(params),
+    queryKey: QUERY_KEY.userSubscription.list(params),
     queryFn: () => getMemberSubscriptions(params),
   });
 }

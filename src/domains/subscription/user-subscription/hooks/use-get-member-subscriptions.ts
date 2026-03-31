@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 function useGetMemberSubscriptions(params: UserSubscriptionParams) {
   return useQuery({
-    queryKey: QUERY_KEY.memberSubscriptions.all(params),
+    queryKey: QUERY_KEY.userSubscription.list(params),
     queryFn: () => getMemberSubscriptions(params),
   });
 }

@@ -13,10 +13,23 @@ export const QUERY_KEY = {
     byId: (planId: string) => ['plan', planId],
   },
 
-  memberSubscriptions: {
-    all: (params: UserSubscriptionParams) => ['member-subscriptions', params],
-    byId: (subscribeId: string) => ['member-subscriptions', subscribeId],
-    monthlySummary: ['subscription', 'user-subscriptions', 'monthly-summary'],
+  userSubscription: {
+    all: ['subscription', 'user-subscription'],
+    lists: ['subscription', 'user-subscription', 'list'],
+    list: (params: UserSubscriptionParams) => [
+      'subscription',
+      'user-subscription',
+      'list',
+      params,
+    ],
+
+    byId: (subscribeId: string) => [
+      'subscription',
+      'user-subscription',
+      'detail',
+      subscribeId,
+    ],
+    monthlySummary: ['subscription', 'user-subscription', 'monthly-summary'],
   },
 
   my: {

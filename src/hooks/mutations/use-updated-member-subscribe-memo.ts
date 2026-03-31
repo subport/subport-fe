@@ -14,7 +14,7 @@ function useUpdatedMemberSubscribeMemo(
       callbacks?.onSuccess?.(data);
 
       queryClient.setQueryData(
-        QUERY_KEY.memberSubscriptions.byId(data.id.toString()),
+        QUERY_KEY.userSubscription.byId(data.id.toString()),
         data,
       );
     },

@@ -1,5 +1,5 @@
 import { updatedCustomSubscribe } from '@/api/subscribe';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

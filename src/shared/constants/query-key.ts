@@ -16,6 +16,7 @@ export const QUERY_KEY = {
   memberSubscriptions: {
     all: (params: UserSubscriptionParams) => ['member-subscriptions', params],
     byId: (subscribeId: string) => ['member-subscriptions', subscribeId],
+    monthlySummary: ['subscription', 'user-subscriptions', 'monthly-summary'],
   },
 
   my: {

@@ -25,7 +25,7 @@ import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layou
 import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
 import MyPageSectionPage from './pages/my-page-section-page';
 import { queryClient } from '@/components/providers/query-provider';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import { getMyAccount, getReminderSettings } from '@/api/profile';
 import FaqPage from './pages/faq-page';
 import UserCommentPage from './pages/user-comment-page';

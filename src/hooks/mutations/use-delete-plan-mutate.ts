@@ -1,5 +1,5 @@
 import { deletePlan } from '@/api/plan';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { ApiErrorRes } from '@/types/error';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

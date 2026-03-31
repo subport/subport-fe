@@ -1,6 +1,6 @@
 import { deleteSpendingRecord } from '@/api/calender';
 import { queryClient } from '@/components/providers/query-provider';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';
 

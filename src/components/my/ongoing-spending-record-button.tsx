@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import useDeactivateMemberSubscribeMutate from '@/hooks/mutations/use-deactivate-member-subscribe-mutate';
 import { useState } from 'react';
 import { queryClient } from '../providers/query-provider';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import ConfirmModal from '../modal/confirm-modal';

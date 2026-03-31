@@ -1,6 +1,6 @@
 import { updateMemberSubscribeMemo } from '@/api/member-subscribe';
 import { queryClient } from '@/components/providers/query-provider';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { MemberSubscribeItem } from '@/types/member-subscribe';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';

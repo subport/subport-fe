@@ -7,6 +7,8 @@ export const client = axios.create({
   withCredentials: true,
 });
 
+let refreshPromise: Promise<string> | null = null;
+
 client.interceptors.request.use(async (config) => {
   const token = useAuthStore.getState().accessToken;
   if (token) {
@@ -42,13 +44,23 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { accessToken } = await refresh();
-
-        if (!accessToken) {
-          throw new Error('Missing refreshed access token');
+        if (!refreshPromise) {
+          refreshPromise = refresh()
+            .then(({ accessToken }) => {
+              if (!accessToken) {
+                throw new Error('Missing refreshed access token');
+              }
+              setAuth('member', accessToken);
+              return accessToken;
+            })
+            .finally(() => {
+              refreshPromise = null;
+            });
         }
 
-        setAuth('member', accessToken);
+        const accessToken = await refreshPromise;
+
+        originalRequest.headers = originalRequest.headers ?? {};
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return client(originalRequest);

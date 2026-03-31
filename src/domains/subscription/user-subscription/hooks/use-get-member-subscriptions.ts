@@ -1,5 +1,5 @@
 import { getMemberSubscriptions } from '@/api/subscribe';
-import { QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { UserSubscriptionParams } from '@/domains/subscription/user-subscription/types/api';
 import { useQuery } from '@tanstack/react-query';
 

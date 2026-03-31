@@ -12,12 +12,6 @@ function mappingUserSubscriptionList(
   params: UserSubscriptionParams,
   response: GroupedUserSubscriptionRes | FlatUserSubscriptionRes,
 ): UserSubscriptionListView {
-  const summary = {
-    currentMonthPaidAmount: response.currentMonthPaidAmount,
-    currentMonthTotalAmount: response.currentMonthTotalAmount,
-    paymentProgressPercent: response.paymentProgressPercent,
-  };
-
   if (params.active && params.sortBy === 'type') {
     const groupedList = response as GroupedUserSubscriptionRes;
     const sections: UserSubscriptionSection[] = Object.entries(
@@ -28,7 +22,7 @@ function mappingUserSubscriptionList(
     }));
 
     return {
-      summary,
+      isEmpty: sections.length === 0,
       sections,
     };
   }
@@ -39,7 +33,7 @@ function mappingUserSubscriptionList(
   ];
 
   return {
-    summary,
+    isEmpty: flatList.subscriptions.length === 0,
     sections,
   };
 }

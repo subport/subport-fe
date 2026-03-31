@@ -1,4 +1,4 @@
-import useGetMemberSubscriptions from '@/hooks/queries/use-get-member-subscriptions';
+import useGetMemberSubscriptions from '@/domains/subscription/user-subscription/hooks/use-get-member-subscriptions';
 import SubscribeListFallback from '../ui/fallback/subscribe-list-fallback';
 import UserSubscriptionList from '@/domains/subscription/user-subscription/components/user-subscription-list';
 import mappingUserSubscriptionList from '@/domains/subscription/user-subscription/model/mapper';

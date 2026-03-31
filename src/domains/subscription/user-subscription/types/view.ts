@@ -1,4 +1,4 @@
-import type { UserSubscribeSummary, UserSubscriptionItem } from './api';
+import type { UserSubscriptionItem } from './api';
 
 export type UserSubscriptionSection = {
   title?: string;
@@ -6,6 +6,6 @@ export type UserSubscriptionSection = {
 };
 
 export type UserSubscriptionListView = {
-  summary: UserSubscribeSummary;
+  isEmpty: boolean;
   sections: UserSubscriptionSection[];
 };

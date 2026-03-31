@@ -13,7 +13,7 @@ interface SubscriptionSortSelectProps {
   sortBy: UserSubscriptionSort;
 }
 
-function SubscriptionSortSelet({
+function SubscriptionSortSelect({
   changeSortBy,
   sortBy,
 }: SubscriptionSortSelectProps) {
@@ -36,4 +36,4 @@ function SubscriptionSortSelet({
   );
 }
 
-export default SubscriptionSortSelet;
+export default SubscriptionSortSelect;

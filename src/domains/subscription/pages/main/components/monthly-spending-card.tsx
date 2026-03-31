@@ -1,20 +1,41 @@
 import BackgroundRectangleImage from '@/assets/background-rectangle-image.png';
 import EmptyFileImage from '@/assets/empty-file-image.png';
 import FillFileImage from '@/assets/fill-file-image.png';
-import type { UserSubscribeSummary } from '@/domains/subscription/user-subscription/types/api';
+import useGetUserSubscriptionMonthlySummary from '@/domains/subscription/user-subscription/hooks/use-get-user-subscription-monthly-summary';
 import { cn, formatKRWInput } from '@/lib/utils';
 import { format } from 'date-fns';
+import { Loader2 } from 'lucide-react';
 
-function MonthlySpendingCard({
-  currentMonthPaidAmount,
-  currentMonthTotalAmount,
-  paymentProgressPercent,
-}: UserSubscribeSummary) {
+function MonthlySpendingCard() {
+  const { data: monthlySummary, isPending: isGetMonthlySummaryPending } =
+    useGetUserSubscriptionMonthlySummary();
+
   const today = new Date();
-  const paidAmountLabel = formatKRWInput(String(currentMonthPaidAmount || 0));
-  const totalAmountLabel = formatKRWInput(String(currentMonthTotalAmount || 0));
+
+  if (isGetMonthlySummaryPending)
+    return (
+      <div className="bg-box-black flex h-52.5 w-full items-center justify-center rounded-2xl">
+        <Loader2 className="stroke-primary animate-spin" />
+      </div>
+    );
+
+  if (!monthlySummary)
+    return (
+      <div className="bg-box-black flex h-52.5 w-full items-center justify-center rounded-2xl">
+        데이터를 불러오지 못했습니다.
+      </div>
+    );
+
+  const paidAmountLabel = formatKRWInput(
+    String(monthlySummary.currentMonthPaidAmount || 0),
+  );
+  const totalAmountLabel = formatKRWInput(
+    String(monthlySummary.currentMonthTotalAmount || 0),
+  );
   const folderImage =
-    currentMonthTotalAmount === 0 ? EmptyFileImage : FillFileImage;
+    monthlySummary.currentMonthTotalAmount === 0
+      ? EmptyFileImage
+      : FillFileImage;
 
   return (
     <section className="relative h-55 w-full overflow-hidden rounded-xl">
@@ -44,11 +65,13 @@ function MonthlySpendingCard({
         </div>
 
         <div className="w-full">
-          <p className="mb-1 text-right text-xs">{paymentProgressPercent}%</p>
+          <p className="mb-1 text-right text-xs">
+            {monthlySummary.paymentProgressPercent}%
+          </p>
           <div className="bg-background-black h-3 overflow-hidden rounded-full">
             <div
               className="bg-primary h-full rounded-full transition-[width]"
-              style={{ width: `${paymentProgressPercent}%` }}
+              style={{ width: `${monthlySummary.paymentProgressPercent}%` }}
             />
           </div>
         </div>

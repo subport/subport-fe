@@ -27,11 +27,11 @@ export type UserSubscribeSummary = {
   paymentProgressPercent: number;
 };
 
-export type GroupedUserSubscriptionRes = UserSubscribeSummary & {
+export type GroupedUserSubscriptionRes = {
   subscriptions: GroupUserSubscriptions;
 };
 
-export type FlatUserSubscriptionRes = UserSubscribeSummary & {
+export type FlatUserSubscriptionRes = {
   subscriptions: FlatUserSubscriptions;
 };
 

@@ -1,11 +1,11 @@
-import useGetMemberSubscriptions from '@/domains/subscription/user-subscription/hooks/use-get-member-subscriptions';
 import SubscribeListFallback from '../ui/fallback/subscribe-list-fallback';
 import UserSubscriptionList from '@/domains/subscription/user-subscription/components/user-subscription-list';
+import useGetUserSubscription from '@/domains/subscription/user-subscription/hooks/use-get-user-subscriptions';
 import mappingUserSubscriptionList from '@/domains/subscription/user-subscription/model/mapper';
 
 function MySubscriptionsList() {
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
-    useGetMemberSubscriptions({ active: true, sortBy: 'createdAt' });
+    useGetUserSubscription({ active: true, sortBy: 'createdAt' });
 
   if (isGetSubscriptionsPending) return <SubscribeListFallback />;
   if (!subscriptions) return <p>목록 불러오기 실패</p>;

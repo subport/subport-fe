@@ -8,13 +8,11 @@ import LoginPage from './pages/login-page';
 import LoginSuccessPage from './pages/login-success-page';
 import AddSubscribeFormPage from './pages/add-subscribe-form-page';
 import MyPage from './pages/my-page';
-import AddCustomSubscribePage from './pages/add-custom-subscribe-page';
 import AddPlanPage from './pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from './pages/plan-editor-page';
 import SubscribeEditorPage from './pages/subscribe-editor-page';
-import EditCustomSubscribePage from './pages/edit-custom-subscribe-page';
 import MemberSubscribeDetailpage from './pages/member-subscribe-detail-page';
 import MemberSubscribeEditLink from '@/components/subscribe/member-subscribe/member-subscribe-edit-link';
 import MemberSubscribeEditPage from './pages/member-subscribe-edit-page';
@@ -31,6 +29,8 @@ import UserCommentPage from './pages/user-comment-page';
 import FeedbackModalPage from './pages/feed-back-modal-page';
 import RootErrorPage from './pages/root-error-page';
 import AddSubscriptionPage from '@/domains/subscription/pages/add-subscription/add-subscription-page';
+import AddCustomServicesPage from '../domains/subscription/pages/add-custom-service-page';
+import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-service-page';
 
 const router = createBrowserRouter([
   {
@@ -75,8 +75,8 @@ const router = createBrowserRouter([
                 handle: { header: { header: true, title: '구독 서비스 관리' } },
               },
               {
-                path: 'edit/:subscribeId',
-                element: <EditCustomSubscribePage />,
+                path: 'edit/:serviceId',
+                element: <EditCustomServicePage />,
                 handle: {
                   header: {
                     header: true,
@@ -113,7 +113,7 @@ const router = createBrowserRouter([
               },
               {
                 path: 'add/custom',
-                element: <AddCustomSubscribePage />,
+                element: <AddCustomServicesPage />,
                 handle: {
                   header: {
                     header: true,

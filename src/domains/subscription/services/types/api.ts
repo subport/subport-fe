@@ -13,4 +13,5 @@ export type SubscriptionServiceByIdRes = {
   type: string;
   id: number;
   name: string;
+  logoImageUrl: string;
 };

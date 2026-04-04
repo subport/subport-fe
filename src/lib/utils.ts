@@ -1,4 +1,4 @@
-import type { AddCustomSubscribeReq } from '@/types/subscribe';
+import type { AddCustomServicesReq } from '@/domains/subscription/services/schemas/custom-services-schema';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -48,22 +48,20 @@ export function deleteComma(v: string) {
   return v.split(',').join('');
 }
 
-export function buildCustomSubscribeFormData(
-  subscribeInfo: AddCustomSubscribeReq,
-) {
+export function buildCustomServiceFormData(serviceInfo: AddCustomServicesReq) {
   const formData = new FormData();
 
-  if (subscribeInfo.image) {
-    formData.append('image', subscribeInfo.image);
+  if (serviceInfo.image) {
+    formData.append('image', serviceInfo.image);
   }
   formData.append(
     'request',
     new Blob(
       [
         JSON.stringify({
-          name: subscribeInfo.name,
-          type: subscribeInfo.type,
-          defaultImageName: subscribeInfo.defaultImageName,
+          name: serviceInfo.name,
+          type: serviceInfo.type,
+          defaultImageName: serviceInfo.defaultImageName,
         }),
       ],
       {

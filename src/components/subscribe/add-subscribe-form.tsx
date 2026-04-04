@@ -5,7 +5,7 @@ import {
   addSubscribeSchema,
   type AddSubscribeType,
 } from '@/schema/add-subscribe-schema';
-import useGetSubscriptionsById from '@/hooks/queries/use-get-subscriptions-by-id';
+import useGetSubscriptionsById from '@/domains/subscription/services/hooks/queries/use-get-service-by-id';
 import { useEffect, useState } from 'react';
 import { Checkbox } from '../ui/checkbox';
 import { cn, formatKRWInput } from '@/lib/utils';

@@ -1,12 +1,7 @@
 import type { AddSubscribeRequestType } from '@/schema/add-subscribe-schema';
 import { client } from './client';
 
-import type {
-  AddCustomSubscribeReq,
-  subscribeItemRes,
-  subscribeListRes,
-} from '@/types/subscribe';
-import { buildCustomSubscribeFormData } from '@/lib/utils';
+import type { subscribeListRes } from '@/types/subscribe';
 import type {
   UserSubscriptionParams,
   UserSubscriptionRes,
@@ -20,47 +15,10 @@ export const getSubscriptions = async (searchTerm: string) => {
   return response.data.subscriptions;
 };
 
-export const getSubscriptionsById = async (id: string) => {
-  const response = await client.get<subscribeItemRes>(
-    `/api/subscriptions/${id}`,
-  );
-
-  return response.data;
-};
-
 export const addSubscribe = async (subscribeInfo: AddSubscribeRequestType) => {
   const response = await client.post<{ id: number }>(
     '/api/member-subscriptions',
     subscribeInfo,
-  );
-
-  return response.data;
-};
-
-export const addCustomSubscribe = async (
-  subscribeInfo: AddCustomSubscribeReq,
-) => {
-  const formData = buildCustomSubscribeFormData(subscribeInfo);
-
-  const response = await client.post<{ id: number }>(
-    '/api/subscriptions',
-    formData,
-  );
-  return response.data;
-};
-
-export const updatedCustomSubscribe = async ({
-  subscribeInfo,
-  subscribeId,
-}: {
-  subscribeInfo: AddCustomSubscribeReq;
-  subscribeId: string;
-}) => {
-  const formData = buildCustomSubscribeFormData(subscribeInfo);
-
-  const response = await client.put<{ id: number }>(
-    `/api/subscriptions/${subscribeId}`,
-    formData,
   );
 
   return response.data;

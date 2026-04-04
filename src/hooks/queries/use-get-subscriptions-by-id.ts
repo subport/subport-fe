@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 function useGetSubscriptionsById(id: string) {
   return useQuery({
-    queryKey: QUERY_KEY.subscriptions.byId(id),
+    queryKey: QUERY_KEY.services.byId(id),
     queryFn: () => getSubscriptionsById(id),
   });
 }

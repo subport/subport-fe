@@ -1,11 +1,12 @@
 import type { UserSubscriptionParams } from '@/domains/subscription/user-subscription/types/api';
 
 export const QUERY_KEY = {
-  subscriptions: {
-    all: ['subscribe'],
-    search: (searchTerm: string) => ['subscribe', searchTerm],
-    byId: (id: string) => ['subscribe', id],
-    types: ['subscribe-type'],
+  services: {
+    all: ['services'],
+    lists: ['services', 'list'],
+    search: (searchTerm: string) => ['services', 'list', searchTerm],
+    byId: (id: string) => ['services', 'detail', id],
+    types: ['services-type'],
   },
 
   plans: {

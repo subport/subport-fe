@@ -12,17 +12,17 @@ function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
       callbacks?.onSuccess?.(_);
 
       const prevSubscriptions = queryClient.getQueryData<subscribeItem[]>(
-        QUERY_KEY.subscriptions.all,
+        QUERY_KEY.services.all,
       );
 
       if (!prevSubscriptions)
         throw new Error('구독 목록을 불러오지 못했습니다');
 
       queryClient.removeQueries({
-        queryKey: QUERY_KEY.subscriptions.byId(variables),
+        queryKey: QUERY_KEY.services.byId(variables),
       });
 
-      queryClient.setQueryData(QUERY_KEY.subscriptions.all, () => {
+      queryClient.setQueryData(QUERY_KEY.services.all, () => {
         return prevSubscriptions.filter(
           (subscribe) => subscribe.id !== Number(variables),
         );

@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 function useGetSubscriptions(searchTerm?: string) {
   return useQuery({
     queryKey: searchTerm
-      ? QUERY_KEY.subscriptions.search(searchTerm)
-      : QUERY_KEY.subscriptions.all,
+      ? QUERY_KEY.services.search(searchTerm)
+      : QUERY_KEY.services.lists,
     queryFn: () => getSubscriptions(searchTerm ?? ''),
   });
 }

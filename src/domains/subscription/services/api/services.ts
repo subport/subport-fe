@@ -3,8 +3,20 @@ import { client } from '@/api/client';
 import type {
   SubscriptionServiceByIdRes,
   SubscriptionServiceItem,
+  SubscriptionServicesRes,
 } from '../types/api';
 import { buildCustomServiceFormData } from '@/lib/utils';
+
+export const getSubscriptionServices = async (searchTerm?: string) => {
+  const response = await client.get<SubscriptionServicesRes>(
+    `/api/subscriptions`,
+    {
+      params: searchTerm ? { name: searchTerm } : undefined,
+    },
+  );
+
+  return response.data.subscriptions;
+};
 
 export const addCustomService = async (serviceInfo: AddCustomServicesReq) => {
   const formData = buildCustomServiceFormData(serviceInfo);
@@ -13,6 +25,14 @@ export const addCustomService = async (serviceInfo: AddCustomServicesReq) => {
     '/api/subscriptions',
     formData,
   );
+  return response.data;
+};
+
+export const getServiceById = async (id: string) => {
+  const response = await client.get<SubscriptionServiceByIdRes>(
+    `/api/subscriptions/${id}`,
+  );
+
   return response.data;
 };
 
@@ -33,10 +53,8 @@ export const updatedCustomService = async ({
   return response.data;
 };
 
-export const getServiceById = async (id: string) => {
-  const response = await client.get<SubscriptionServiceByIdRes>(
-    `/api/subscriptions/${id}`,
-  );
+export const deleteCustomSubscriptionService = async (serviceId: string) => {
+  const response = await client.delete(`/api/subscriptions/${serviceId}`);
 
-  return response.data;
+  return response;
 };

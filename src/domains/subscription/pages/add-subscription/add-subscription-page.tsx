@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
-import useGetSubscriptions from '@/hooks/queries/use-get-subscriptions';
 import { Button } from '@/components/ui/button';
 import { useSubScribe } from '@/store/use-subscribe-store';
 import SubscribeListFallback from '@/components/ui/fallback/subscribe-list-fallback';
@@ -11,6 +10,7 @@ import AddSubscriptionPageSearchInput from './components/add-subscription-page-s
 import AddSubscriptionSelectableCard from './components/add-subscription-selectable-card';
 import { toast } from 'sonner';
 import { useAddUserSubscriptionMutate } from '@/domains/subscription/user-subscription/hooks/use-add-user-subscription';
+import useGetSubscriptionServices from '@/domains/subscription/services/hooks/queries/use-get-subscription-services';
 
 function AddSubscriptionPage() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function AddSubscriptionPage() {
   const debouncedValue = useDebounce(searchTerm, 250);
 
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
-    useGetSubscriptions(debouncedValue);
+    useGetSubscriptionServices(debouncedValue);
 
   const { addSubscriptions, resetSubscribe } = useSubScribe();
 

@@ -1,21 +1,21 @@
-import { deleteCustomSubscribe } from '@/api/subscribe';
+import { deleteCustomSubscriptionService } from '@/domains/subscription/services/api/services';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
-import { type subscribeItem } from '@/types/subscribe';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { SubscriptionServiceItem } from '../../types/api';
 
-function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
+function useDeleteCustomServiceMutate(callbacks?: useMutationCallbacks) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteCustomSubscribe,
+    mutationFn: deleteCustomSubscriptionService,
     onSuccess: (_, variables) => {
       callbacks?.onSuccess?.(_);
 
-      const prevSubscriptions = queryClient.getQueryData<subscribeItem[]>(
-        QUERY_KEY.services.all,
-      );
+      const prevSubscriptionServices = queryClient.getQueryData<
+        SubscriptionServiceItem[]
+      >(QUERY_KEY.services.all);
 
-      if (!prevSubscriptions)
+      if (!prevSubscriptionServices)
         throw new Error('구독 목록을 불러오지 못했습니다');
 
       queryClient.removeQueries({
@@ -23,8 +23,8 @@ function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
       });
 
       queryClient.setQueryData(QUERY_KEY.services.all, () => {
-        return prevSubscriptions.filter(
-          (subscribe) => subscribe.id !== Number(variables),
+        return prevSubscriptionServices.filter(
+          (service) => service.id !== Number(variables),
         );
       });
     },
@@ -35,4 +35,4 @@ function useDeleteCustomSubscribeMutate(callbacks?: useMutationCallbacks) {
   });
 }
 
-export default useDeleteCustomSubscribeMutate;
+export default useDeleteCustomServiceMutate;

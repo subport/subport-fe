@@ -6,7 +6,7 @@ export type SubscriptionServiceItem = {
 };
 
 export type SubscriptionServicesRes = {
-  subscription: SubscriptionServiceItem[];
+  subscriptions: SubscriptionServiceItem[];
 };
 
 export type SubscriptionServiceByIdRes = {

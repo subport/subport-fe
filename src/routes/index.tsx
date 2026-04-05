@@ -12,7 +12,7 @@ import AddPlanPage from './pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from './pages/plan-editor-page';
-import SubscribeEditorPage from './pages/subscribe-editor-page';
+import SubscribeEditorPage from '../domains/subscription/pages/custom-service-editor/custom-service-editor-page';
 import MemberSubscribeDetailpage from './pages/member-subscribe-detail-page';
 import MemberSubscribeEditLink from '@/components/subscribe/member-subscribe/member-subscribe-edit-link';
 import MemberSubscribeEditPage from './pages/member-subscribe-edit-page';

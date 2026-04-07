@@ -1,7 +1,7 @@
-import PlanSelector from '@/components/plan/plan-selector';
+import PlanSelectionList from '@/domains/subscription/plans/components/plan-selection-list';
 import { Button } from '@/components/ui/button';
 import useUpdateMemberSubscribePlanMutate from '@/hooks/mutations/use-update-member-subscribe-plan-mutate';
-import useGetPlanList from '@/hooks/queries/use-get-plan-list';
+import useGetPlanList from '@/domains/subscription/plans/hooks/queries/use-get-plan-list';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -64,10 +64,10 @@ function EditMemberSubscribePlanForm({
       </div>
       <div className="scrollbar-hide flex-1 overflow-scroll">
         {!isGetPlansPending && plans && (
-          <PlanSelector
+          <PlanSelectionList
             plans={plans.plans}
-            defaultValue={prevPlanId}
-            subscribeId={subscribeId!}
+            value={currentPlan || prevPlanId}
+            serviceId={subscribeId!}
             onSelect={(selectPlan) => handleSelect(selectPlan.id.toString())}
           />
         )}

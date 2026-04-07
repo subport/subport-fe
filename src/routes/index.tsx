@@ -6,7 +6,6 @@ import { RequireAuth, RequireGuest } from '@/components/layout/private-route';
 import MainPage from '../domains/subscription/pages/main/main-page';
 import LoginPage from './pages/login-page';
 import LoginSuccessPage from './pages/login-success-page';
-import AddSubscribeFormPage from './pages/add-subscribe-form-page';
 import MyPage from './pages/my-page';
 import AddPlanPage from './pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
@@ -28,9 +27,10 @@ import FaqPage from './pages/faq-page';
 import UserCommentPage from './pages/user-comment-page';
 import FeedbackModalPage from './pages/feed-back-modal-page';
 import RootErrorPage from './pages/root-error-page';
-import AddSubscriptionPage from '@/domains/subscription/pages/add-subscription/add-subscription-page';
 import AddCustomServicesPage from '../domains/subscription/pages/add-custom-service-page';
 import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-service-page';
+import AddUserSubscriptionPage from '../domains/subscription/pages/add-user-subscription-page';
+import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
 
 const router = createBrowserRouter([
   {
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: 'add',
-                    element: <AddSubscriptionPage />,
+                    element: <SubscriptionServiceListPage />,
                     handle: {
                       header: {
                         header: true,
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
                   },
                   {
                     path: 'add/:id',
-                    element: <AddSubscribeFormPage />,
+                    element: <AddUserSubscriptionPage />,
                     handle: { header: true },
                   },
                 ],

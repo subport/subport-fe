@@ -1,31 +1,30 @@
 import { Link } from 'react-router-dom';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Plus } from 'lucide-react';
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from '../../../../components/ui/radio-group';
 import { cn } from '@/lib/utils';
-import type { PlanType } from '../subscribe/add-subscribe-form';
-import { useState } from 'react';
-import type { PlanItem } from '@/types/plan';
+import type { PlanItem } from '@/domains/subscription/plans/types/api';
+import { Plus } from 'lucide-react';
+import type { PlanSelectionItem } from '../types/view';
 
-type PlanSelectorProps = {
-  subscribeId: string;
-  defaultValue?: string;
-  onSelect: (selectPlan: PlanType) => void;
+type PlanSelectionListProps = {
+  serviceId: string;
+  value?: string;
+  onSelect: (selectPlan: PlanSelectionItem) => void;
   plans: PlanItem[];
 };
 
-function PlanSelector({
-  subscribeId,
-  defaultValue,
+function PlanSelectionList({
+  serviceId,
+  value,
   onSelect,
   plans,
-}: PlanSelectorProps) {
-  const [currentPlan, setCurrentPlan] = useState(defaultValue || null);
-
+}: PlanSelectionListProps) {
   const handleValueChange = (value: string) => {
-    const selectedPlan = plans!.find((plan) => plan.id.toString() === value)!;
-    setCurrentPlan(value);
-
+    const selectedPlan = plans.find((plan) => plan.id.toString() === value);
     if (!selectedPlan) return;
+
     onSelect({
       amountUnit: selectedPlan.amountUnit,
       id: selectedPlan.id,
@@ -36,9 +35,9 @@ function PlanSelector({
 
   return (
     <div className="scrollbar-hide space-y-4 overflow-y-scroll">
-      {plans && plans.length > 0 && (
+      {plans.length > 0 && (
         <>
-          <RadioGroup value={currentPlan}>
+          <RadioGroup value={value}>
             {plans.map((plan) => (
               <div
                 onClick={() => handleValueChange(plan.id.toString())}
@@ -59,23 +58,15 @@ function PlanSelector({
             ))}
           </RadioGroup>
           <Link
-            to={`/subscribe/${subscribeId}/plan/add`}
+            to={`/subscribe/${serviceId}/plan/add`}
             className="hover:bg-box-black/80 bg-box-black flex h-32 w-full items-center justify-center rounded-2xl transition-colors"
           >
             <Plus className="size-10" strokeWidth={2} />
           </Link>
         </>
       )}
-      {plans && plans.length <= 0 && (
-        <Link
-          to={`/subscribe/${subscribeId}/plan/add`}
-          className="hover:bg-box-black/80 bg-box-black flex h-32 w-full items-center justify-center rounded-2xl transition-colors"
-        >
-          <Plus className="size-10" strokeWidth={2} />
-        </Link>
-      )}
     </div>
   );
 }
 
-export default PlanSelector;
+export default PlanSelectionList;

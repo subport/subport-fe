@@ -1,19 +1,5 @@
-import type { PlanItem, AddPlanReq, PlanList } from '@/types/plan';
+import type { AddPlanReq } from '@/types/plan';
 import { client } from './client';
-
-export const getPlans = async (planId: string) => {
-  const response = await client.get<PlanList>(
-    `/api/subscriptions/${planId}/plans`,
-  );
-
-  return response.data;
-};
-
-export const getPlan = async (planId: string) => {
-  const response = await client.get<PlanItem>(`/api/plans/${planId}`);
-
-  return response.data;
-};
 
 export const addPlan = async ({
   amount,

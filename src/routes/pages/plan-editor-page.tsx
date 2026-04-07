@@ -1,4 +1,4 @@
-import useGetPlanList from '@/hooks/queries/use-get-plan-list';
+import useGetPlanList from '@/domains/subscription/plans/hooks/queries/use-get-plan-list';
 import EditIcon from '@/assets/icons/edit-icon.svg?react';
 import DeleteIcon from '@/assets/icons/delete-icon.svg?react';
 import { Link, useParams } from 'react-router-dom';

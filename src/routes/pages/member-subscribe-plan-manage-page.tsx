@@ -1,6 +1,6 @@
 import PlanEditCard from '@/components/plan/plan-edit-card';
 import useGetMemberSubscribeById from '@/hooks/queries/use-get-member-subscribe-by-id';
-import useGetPlanList from '@/hooks/queries/use-get-plan-list';
+import useGetPlanList from '@/domains/subscription/plans/hooks/queries/use-get-plan-list';
 import { useParams } from 'react-router-dom';
 
 function MemberSubscribePlanManagePage() {

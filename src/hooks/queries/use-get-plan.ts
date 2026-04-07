@@ -1,4 +1,4 @@
-import { getPlan } from '@/api/plan';
+import { getPlan } from '@/domains/subscription/plans/api/plan';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
 

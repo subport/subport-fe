@@ -1,6 +1,6 @@
-import { getPlans } from '@/api/plan';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
+import { getPlans } from '../../api/plan';
 
 function useGetPlanList(subscribeId: string) {
   return useQuery({

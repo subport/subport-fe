@@ -1,23 +1,31 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Informationicon from '@/assets/icons/information-icon.svg?react';
 
-import { Button } from '../ui/button';
-import { Drawer, DrawerContent, DrawerTitle } from '../ui/drawer';
+import { Button } from '../../../../components/ui/button';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+} from '../../../../components/ui/drawer';
 
 import { useState } from 'react';
-import type { PlanType } from '../subscribe/add-subscribe-form';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
-import PlanSelector from '../plan/plan-selector';
-import useGetPlanList from '@/hooks/queries/use-get-plan-list';
-import { Loader2 } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/ui/tooltip';
+import useGetPlanList from '@/domains/subscription/plans/hooks/queries/use-get-plan-list';
+import { Loader2, Plus } from 'lucide-react';
+import PlanSelectionList from './plan-selection-list';
+import type { PlanSelectionItem } from '../types/view';
 
 interface PlanListBottomModalProps {
   open: boolean;
   onClose: () => void;
-  onSelect: (selectPlan: PlanType) => void;
+  onSelect: (selectPlan: PlanSelectionItem) => void;
   defaultValue?: string;
-  id: string;
+  serviceId: string;
 }
 
 function PlanListBottomModal({
@@ -25,36 +33,36 @@ function PlanListBottomModal({
   onClose,
   onSelect,
   defaultValue,
-  id,
+  serviceId,
 }: PlanListBottomModalProps) {
-  const { data: plans, isPending: isGetPlansPending } = useGetPlanList(id);
+  const { data: plans, isPending: isGetPlansPending } =
+    useGetPlanList(serviceId);
+
   const navigate = useNavigate();
   const [openDrawer, setOpenDarwer] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<PlanType>();
-  console.log('current selected plan', selectedPlan);
+  const [selectedPlan, setSelectedPlan] = useState<PlanSelectionItem>();
+
   const showUsdTooltip = selectedPlan?.amountUnit === 'USD';
 
   const handleSelectPlan = () => {
     if (!selectedPlan) {
-      console.log('selectedPlan undefined');
       onClose();
       return;
     }
-
-    console.log('selected Plan success');
     onSelect(selectedPlan);
     onClose();
   };
 
   const handleOpenChange = () => {
+    setSelectedPlan(undefined);
     onClose();
   };
 
-  if (isGetPlansPending) return null;
+  if (isGetPlansPending || !plans) return null;
 
   return (
     <>
-      <Drawer open={open} onOpenChange={onClose}>
+      <Drawer open={open} onOpenChange={handleOpenChange}>
         <DrawerContent
           onAnimationEnd={() => {
             if (open) {
@@ -101,7 +109,7 @@ function PlanListBottomModal({
               </div>
               <button
                 type="button"
-                onClick={() => navigate(`/subscribe/${id}/plan/edit`)}
+                onClick={() => navigate(`/subscribe/${serviceId}/plan/edit`)}
                 className="bg-box-black block cursor-pointer rounded-full px-5 py-1.5 text-xs"
               >
                 관리
@@ -110,17 +118,28 @@ function PlanListBottomModal({
           </DrawerTitle>
 
           <div className="scrollbar-hide overflow-scroll pb-4">
-            {isGetPlansPending ? (
+            {isGetPlansPending && (
               <div className="bg-box-black mb-4 flex h-32 w-full animate-pulse items-center justify-center rounded-2xl">
                 <Loader2 className="animate-spin" />
               </div>
-            ) : (
-              <PlanSelector
-                plans={plans!.plans}
-                defaultValue={defaultValue}
-                subscribeId={id!}
-                onSelect={(selectedPlan) => setSelectedPlan(selectedPlan)}
+            )}
+
+            {!isGetPlansPending && plans && plans.plans.length > 0 ? (
+              <PlanSelectionList
+                plans={plans.plans}
+                value={selectedPlan?.id.toString() || defaultValue}
+                serviceId={serviceId}
+                onSelect={(selectedPlan) => {
+                  setSelectedPlan(selectedPlan);
+                }}
               />
+            ) : (
+              <Link
+                to={`/subscribe/${serviceId}/plan/add`}
+                className="hover:bg-box-black/80 bg-box-black flex h-32 w-full items-center justify-center rounded-2xl transition-colors"
+              >
+                <Plus className="size-10" strokeWidth={2} />
+              </Link>
             )}
           </div>
 

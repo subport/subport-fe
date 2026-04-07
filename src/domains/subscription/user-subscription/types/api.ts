@@ -1,3 +1,5 @@
+import type { AddUserSubscriptionValues } from '../schemas/add-user-subscription-schema';
+
 export type UserSubscriptionSort =
   | 'type'
   | 'nextPaymentDate'
@@ -44,3 +46,9 @@ export type SubscriptionsResBySort = {
 
 export type UserSubscriptionRes<S extends UserSubscriptionSort> =
   SubscriptionsResBySort[S];
+
+export type AddUserSubscriptionReq = AddUserSubscriptionValues & {
+  subscriptionId: number;
+  price: string;
+  amountUnit: 'KRW' | 'USD';
+};

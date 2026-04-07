@@ -1,4 +1,4 @@
-import AddSubscribeForm from '@/components/subscribe/add-subscribe-form';
+import AddUserSubscriptionForm from '@/domains/subscription/user-subscription/components/add-user-subscription-form';
 import MemberSubscribeDateForm from '@/components/subscribe/member-subscribe/member-subscribe-date-form';
 
 import useMemberSubscribeActivateMutate from '@/hooks/mutations/use-member-subscribe-activate-mutate';
@@ -87,7 +87,8 @@ function MemberSubscribeReactivatePage() {
           : '결제 시작을 설정해 주세요'}
       </p>
       {reuse === 'custom' && (
-        <AddSubscribeForm
+        <AddUserSubscriptionForm
+          serviceName={subscribe!.name}
           minDate={parse(
             subscribe!.paymentDate.toString(),
             'yyyy-MM-dd',

@@ -6,6 +6,7 @@ function useGetServiceById(id: string) {
   return useQuery({
     queryKey: QUERY_KEY.services.byId(id),
     queryFn: () => getServiceById(id),
+    enabled: !!id,
   });
 }
 

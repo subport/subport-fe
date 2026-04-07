@@ -1,66 +1,64 @@
-import FieldWrapper from '../ui/field-wrapper';
-import { Controller, useForm } from 'react-hook-form';
+import FieldWrapper from '../../../../components/ui/field-wrapper';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  addSubscribeSchema,
-  type AddSubscribeType,
-} from '@/schema/add-subscribe-schema';
-import useGetSubscriptionsById from '@/domains/subscription/services/hooks/queries/use-get-service-by-id';
+
 import { useEffect, useState } from 'react';
-import { Checkbox } from '../ui/checkbox';
+import { Checkbox } from '../../../../components/ui/checkbox';
 import { cn, formatKRWInput } from '@/lib/utils';
-import { Button } from '../ui/button';
-import PlanListBottomModal from '../modal/plan-list-bottom-modal';
+import { Button } from '../../../../components/ui/button';
 
-import DatePicker from '../form/date-picker';
+import DatePicker from '../../../../components/form/date-picker';
 import { addMonths, format } from 'date-fns';
-import type { PlanItem } from '@/types/plan';
+import {
+  addUserSubscriptionSchema,
+  type AddUserSubscriptionDefaultValues,
+  type AddUserSubscriptionValues,
+} from '../schemas/add-user-subscription-schema';
+import type { AddUserSubscriptionReq } from '../types/api';
+import PlanListBottomModal from '../../plans/components/select-plan-bottom-modal';
+import type { PlanSelectionItem } from '../../plans/types/view';
 
-export type PlanType = Pick<PlanItem, 'id' | 'name' | 'amountUnit'> & {
-  price?: number;
-};
-
-type SubscribeFormProps = {
+interface SelectPlanBottomModalProps {
   id: string;
-  onSubmit: (
-    subscribeInfo: AddSubscribeType & {
-      subscriptionId: number;
-      price: string;
-      amountUnit: 'KRW' | 'USD';
-    },
-  ) => void;
-
-  defaultValues?: AddSubscribeType;
+  serviceName: string;
+  onSubmit: (subscribeInfo: AddUserSubscriptionReq) => void;
+  defaultValues?: AddUserSubscriptionDefaultValues;
   minDate?: Date;
-};
+}
 
-function AddSubscribeForm({
+function SelectPlanBottomModal({
   id,
   onSubmit,
   defaultValues,
   minDate,
-}: SubscribeFormProps) {
-  const { data: subscribe, isPending: isGetSubscribePending } =
-    useGetSubscriptionsById(id);
+  serviceName,
+}: SelectPlanBottomModalProps) {
   const [plan, setPlan] = useState(false);
-  const [selectPlan, setSelctPlan] = useState<PlanType>();
-  const [dutchPay, setDutchPay] = useState(false);
+  const [selectPlan, setSelctPlan] = useState<PlanSelectionItem | null>(null);
 
-  const form = useForm({
-    resolver: zodResolver(addSubscribeSchema),
+  const form = useForm<AddUserSubscriptionValues>({
+    resolver: zodResolver(addUserSubscriptionSchema),
     defaultValues: {
       dutchPay: defaultValues?.dutchPay ?? false,
       dutchPayAmount: defaultValues?.dutchPayAmount ?? '0',
       memo: defaultValues?.memo ?? '',
       startDate: defaultValues?.startDate ?? format(new Date(), 'yyyy-MM-dd'),
-      planId: defaultValues?.planId ?? undefined,
+      ...(defaultValues?.planId !== undefined && {
+        planId: defaultValues.planId,
+      }),
     },
   });
 
-  const onSelectPlan = (plan: PlanType) => {
-    console.log('subscribe-form-page', plan);
-    setSelctPlan(plan);
+  const dutchPay = useWatch({ control: form.control, name: 'dutchPay' });
+  const dutchPayAmount = useWatch({
+    control: form.control,
+    name: 'dutchPayAmount',
+  });
+  const planId = useWatch({ control: form.control, name: 'planId' });
+
+  const onSelectPlan = (plan: PlanSelectionItem) => {
     form.setValue('planId', Number(plan.id), { shouldValidate: true });
+    setSelctPlan(plan);
   };
 
   useEffect(() => {
@@ -69,10 +67,9 @@ function AddSubscribeForm({
     }
   }, [dutchPay, form]);
 
-  const dutchPayAmount = form.watch('dutchPayAmount');
-  const isDutchPayAmountValid = !dutchPay || dutchPayAmount !== '0';
+  const handleSubmit = (formData: AddUserSubscriptionValues) => {
+    console.log(formData);
 
-  const handleSubmit = (formData: AddSubscribeType) => {
     onSubmit({
       subscriptionId: Number(id),
       dutchPay: formData.dutchPay,
@@ -81,21 +78,11 @@ function AddSubscribeForm({
       memo: formData.memo,
       startDate: formData.startDate,
       price: formData.dutchPay
-        ? (formData.dutchPayAmount as string)
-        : (selectPlan!.price as unknown as string),
+        ? formData.dutchPayAmount!
+        : String(selectPlan!.price),
       amountUnit: selectPlan!.amountUnit,
     });
   };
-  if (isGetSubscribePending || !subscribe)
-    return (
-      <div className="flex flex-col">
-        <div className="bg-box-black mb-4 h-22 animate-pulse rounded-lg"></div>
-        <div className="bg-box-black mb-4 h-22 animate-pulse rounded-lg"></div>
-        <div className="bg-box-black mb-4 h-8 animate-pulse rounded-lg"></div>
-        <div className="bg-box-black mb-4 h-22 animate-pulse rounded-lg"></div>
-        <div className="bg-box-black mb-4 h-29 animate-pulse rounded-lg"></div>
-      </div>
-    );
 
   return (
     <>
@@ -106,7 +93,7 @@ function AddSubscribeForm({
       >
         <div className="mb-10 space-y-4">
           <FieldWrapper label="서비스 이름" id="service-name">
-            <div className="text-lg">{subscribe.name}</div>
+            <div className="text-lg">{serviceName}</div>
           </FieldWrapper>
 
           <Controller
@@ -128,27 +115,32 @@ function AddSubscribeForm({
           />
 
           <PlanListBottomModal
-            id={id}
+            serviceId={id}
             open={plan}
-            onClose={() => setPlan((prev) => !prev)}
+            onClose={() => setPlan(false)}
             onSelect={onSelectPlan}
-            defaultValue={selectPlan?.id.toString()}
+            defaultValue={planId ? planId.toString() : undefined}
           />
 
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="dutchPay"
-              checked={dutchPay}
-              onClick={() => {
-                form.setValue('dutchPay', !dutchPay);
-                setDutchPay((prev) => !prev);
-              }}
-              className="data-[state=checked]:bg-primary"
-            />
-            <label htmlFor="dutchPay" className="cursor-pointer">
-              다른 사람과 함께 이용중이에요
-            </label>
-          </div>
+          <Controller
+            name="dutchPay"
+            control={form.control}
+            render={({ field }) => (
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="dutchPay"
+                  checked={field.value}
+                  onClick={() => {
+                    field.onChange(!field.value);
+                  }}
+                  className="data-[state=checked]:bg-primary"
+                />
+                <label htmlFor="dutchPay" className="cursor-pointer">
+                  다른 사람과 함께 이용중이에요
+                </label>
+              </div>
+            )}
+          />
 
           {dutchPay && (
             <Controller
@@ -228,7 +220,7 @@ function AddSubscribeForm({
           <span className="text-sub-font-black">지출금액</span>
           <span className="text-2xl font-semibold">
             {dutchPay
-              ? `${form.watch('dutchPayAmount')} 원`
+              ? `${dutchPayAmount} 원`
               : `${Number(selectPlan?.price || 0).toLocaleString()} ${selectPlan?.amountUnit === 'KRW' ? '원' : '$'}`}
           </span>
         </div>
@@ -236,11 +228,7 @@ function AddSubscribeForm({
         <Button
           form="add-subscribe-form"
           type="submit"
-          disabled={
-            !form.formState.isValid ||
-            (!selectPlan && !form.formState.isValid) ||
-            !isDutchPayAmountValid
-          }
+          disabled={!form.formState.isValid || !selectPlan}
           className="w-full self-end"
         >
           저장하기
@@ -250,4 +238,4 @@ function AddSubscribeForm({
   );
 }
 
-export default AddSubscribeForm;
+export default SelectPlanBottomModal;

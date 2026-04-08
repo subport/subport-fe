@@ -1,20 +1,22 @@
-import ConfirmModal from '@/components/modal/confirm-modal';
-import CustomPlanEditCard from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card';
-import useGetCustomPlanList from '@/domains/subscription/plans/hooks/queries/use-get-custom-plan-list';
-import useDeleteCustomPlan from '@/domains/subscription/plans/hooks/mutate/use-delete-custom-plan';
-import { getApiErrorMessage } from '@/lib/error';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'sonner';
-import CustomPlanEditCardSkeleton from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card-skeleton';
+import { useState } from 'react';
 
-function MemberSubscribePlanManagePage() {
+import ConfirmModal from '@/components/modal/confirm-modal';
+import { toast } from 'sonner';
+import { getApiErrorMessage } from '@/lib/error';
+import useGetCustomPlanList from '../../plans/hooks/queries/use-get-custom-plan-list';
+import CustomPlanEditCard from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card';
+import useDeleteCustomPlan from '@/domains/subscription/plans/hooks/mutate/use-delete-custom-plan';
+import CustomPlanEditCardSkeleton from './components/custom-plan-edit-card-skeleton';
+
+function PlanEditorPage() {
   const navigate = useNavigate();
-  const { subscribeId } = useParams();
-  const [modal, setModal] = useState(false);
+
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
-  const { data: customPlans, isPending: isGetCustomPlansPending } =
-    useGetCustomPlanList(subscribeId!);
+  const [modal, setModal] = useState(false);
+  const { subscribeId } = useParams();
+  const { data: customPlans, isPending: isGetPlanListPending } =
+    useGetCustomPlanList(subscribeId as string);
 
   const { mutate: deletePlan } = useDeleteCustomPlan({
     onSuccess: () => {
@@ -28,7 +30,8 @@ function MemberSubscribePlanManagePage() {
     },
   });
 
-  if (isGetCustomPlansPending) return <CustomPlanEditCardSkeleton />;
+  if (isGetPlanListPending) return <CustomPlanEditCardSkeleton />;
+
   const handleCloseModal = () => {
     setModal(false);
   };
@@ -36,32 +39,29 @@ function MemberSubscribePlanManagePage() {
   return (
     <>
       {customPlans && customPlans.length > 0 && (
-        <ul className="space-y-4 pt-4">
-          {customPlans.map((plan) => (
-            <li key={plan.id}>
-              <CustomPlanEditCard
-                plan={plan}
-                key={plan.id}
-                onEdit={() => {
-                  navigate(`/subscribe/${subscribeId}/plan/edit/${plan.id}`);
-                }}
-                onDelete={() => {
-                  setModal(true);
-                  setSelectedPlanId(plan.id);
-                }}
-              />
-            </li>
+        <ul className="flex flex-col gap-4">
+          {customPlans?.map((plan) => (
+            <CustomPlanEditCard
+              plan={plan}
+              key={plan.id}
+              onEdit={() => {
+                navigate(`${plan.id}`);
+              }}
+              onDelete={() => {
+                setModal(true);
+                setSelectedPlanId(plan.id);
+              }}
+            />
           ))}
         </ul>
       )}
 
       {!customPlans ||
         (customPlans.length <= 0 && (
-          <p className="text-sub-font-black flex h-full flex-1 items-center justify-center">
-            수정 가능한 멤버십이 존재하지 않습니다
+          <p className="text-sub-font-black flex flex-1 items-center justify-center">
+            직접 등록한 멤버십이 존재하지 않습니다.
           </p>
         ))}
-
       {modal && (
         <ConfirmModal
           onConfirm={() => {
@@ -84,4 +84,4 @@ function MemberSubscribePlanManagePage() {
   );
 }
 
-export default MemberSubscribePlanManagePage;
+export default PlanEditorPage;

@@ -8,7 +8,7 @@ import LoginPage from './pages/login-page';
 import LoginSuccessPage from './pages/login-success-page';
 import MyPage from './pages/my-page';
 import AddPlanPage from '../domains/subscription/pages/add-plan-page';
-import EditPlanPage from './pages/edit-plan-page';
+import EditPlanPage from '../domains/subscription/pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from '../domains/subscription/pages/plan-editor/plan-editor-page';
 import SubscribeEditorPage from '../domains/subscription/pages/custom-service-editor/custom-service-editor-page';

@@ -5,7 +5,7 @@ import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
-function useDeletePlanMutate(callbacks?: useMutationCallbacks) {
+function useDeleteCustomPlan(callbacks?: useMutationCallbacks) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -26,4 +26,4 @@ function useDeletePlanMutate(callbacks?: useMutationCallbacks) {
   });
 }
 
-export default useDeletePlanMutate;
+export default useDeleteCustomPlan;

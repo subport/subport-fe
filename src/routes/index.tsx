@@ -10,13 +10,12 @@ import MyPage from './pages/my-page';
 import AddPlanPage from '../domains/subscription/pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
-import PlanEditorPage from './pages/plan-editor-page';
+import PlanEditorPage from '../domains/subscription/pages/plan-editor/plan-editor-page';
 import SubscribeEditorPage from '../domains/subscription/pages/custom-service-editor/custom-service-editor-page';
 import MemberSubscribeDetailpage from './pages/member-subscribe-detail-page';
 import MemberSubscribeEditLink from '@/components/subscribe/member-subscribe/member-subscribe-edit-link';
 import MemberSubscribeEditPage from './pages/member-subscribe-edit-page';
 import EditMemberSubscribeFormPage from './pages/edit-member-subscribe-form-page';
-import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
 import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layout';
 import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
 import MyPageSectionPage from './pages/my-page-section-page';
@@ -31,6 +30,7 @@ import AddCustomServicesPage from '../domains/subscription/pages/add-custom-serv
 import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-service-page';
 import AddUserSubscriptionPage from '../domains/subscription/pages/add-user-subscription-page';
 import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
+import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
 
 const router = createBrowserRouter([
   {

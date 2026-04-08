@@ -3,7 +3,7 @@ import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-function useAddPlanMutate(callbacks?: useMutationCallbacks) {
+function useAddCustomPlan(callbacks?: useMutationCallbacks) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -17,4 +17,4 @@ function useAddPlanMutate(callbacks?: useMutationCallbacks) {
   });
 }
 
-export default useAddPlanMutate;
+export default useAddCustomPlan;

@@ -6,6 +6,7 @@ import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import type { PlanFormValues } from '@/domains/subscription/plans/schemas/plan-form-schema';
+import PageTitle from '@/components/ui/page-title';
 
 function EditPlanPage() {
   const navigate = useNavigate();
@@ -45,9 +46,9 @@ function EditPlanPage() {
 
   return (
     <>
-      <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
-        멤버십 정보를 입력해주세요
-      </p>
+      <PageTitle>
+        멤버십 정보를 <br /> 입력해주세요
+      </PageTitle>
       <PlanForm
         amount={
           plan.amountUnit === 'KRW'

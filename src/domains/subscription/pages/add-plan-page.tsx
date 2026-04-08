@@ -1,11 +1,12 @@
-import type { PlanFormValues } from '@/components/plan/plan-form';
-import PlanForm from '@/components/plan/plan-form';
+import PlanForm from '@/domains/subscription/plans/components/plan-form';
+import PageTitle from '@/components/ui/page-title';
 
-import useAddPlanMutate from '@/hooks/mutations/use-add-plan-mutate';
+import useAddPlanMutate from '@/domains/subscription/plans/hooks/mutate/use-add-plan-mutate';
 import { deleteComma } from '@/lib/utils';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import type { PlanFormValues } from '../plans/schemas/plan-form-schema';
 
 function AddPlanPage() {
   const { subscribeId } = useParams();
@@ -22,14 +23,16 @@ function AddPlanPage() {
       ...formData,
       subscribeId: Number(subscribeId),
       amount: Number(deleteComma(formData.amount)),
+      durationMonths: Number(formData.durationMonths),
     });
   };
 
   return (
     <>
-      <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
-        멤버십 정보를 입력해주세요
-      </p>
+      <PageTitle>
+        멤버십 정보를 <br />
+        입력해주세요
+      </PageTitle>
       <PlanForm onSubmit={onSubmit} disabled={isAddPlanPending} />
     </>
   );

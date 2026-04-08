@@ -7,7 +7,7 @@ import MainPage from '../domains/subscription/pages/main/main-page';
 import LoginPage from './pages/login-page';
 import LoginSuccessPage from './pages/login-success-page';
 import MyPage from './pages/my-page';
-import AddPlanPage from './pages/add-plan-page';
+import AddPlanPage from '../domains/subscription/pages/add-plan-page';
 import EditPlanPage from './pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from './pages/plan-editor-page';

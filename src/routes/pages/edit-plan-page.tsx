@@ -1,10 +1,11 @@
-import PlanForm, { type PlanFormValues } from '@/components/plan/plan-form';
+import PlanForm from '@/domains/subscription/plans/components/plan-form';
 import { Spinner } from '@/components/ui/spinner';
 import useUpdatePlanMutate from '@/hooks/mutations/use-update-plan-mutate';
 import useGetPlan from '@/hooks/queries/use-get-plan';
 import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import type { PlanFormValues } from '@/domains/subscription/plans/schemas/plan-form-schema';
 
 function EditPlanPage() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ function EditPlanPage() {
       planId: Number(planId),
       subscribeId: Number(subscribeId),
       amount: Number(deleteComma(formData.amount)),
+      durationMonths: Number(formData.durationMonths),
     });
   };
 
@@ -53,7 +55,7 @@ function EditPlanPage() {
             : formatUSDInput(plan.amount.toString())
         }
         amountUnit={plan.amountUnit as 'KRW' | 'USD'}
-        durationMonths={plan.durationMonths}
+        durationMonths={plan.durationMonths.toString()}
         name={plan.name}
         onSubmit={onSubmit}
       />

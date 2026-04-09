@@ -1,4 +1,4 @@
-import { guestLogin } from '@/api/auth';
+import { guestLogin } from '@/domains/auth/api/auth';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 

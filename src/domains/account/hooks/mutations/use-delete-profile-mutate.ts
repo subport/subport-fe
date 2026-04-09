@@ -1,6 +1,6 @@
-import { deleteProfile } from '@/api/profile';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';
+import { deleteProfile } from '../../api/account';
 
 function useDeleteProfileMutate(callbacks?: useMutationCallbacks) {
   return useMutation({

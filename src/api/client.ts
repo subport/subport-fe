@@ -1,5 +1,5 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
-import { refresh } from './auth';
+import { refresh } from '../domains/auth/api/auth';
 import { useAuthStore } from '@/store/use-auth-store';
 
 export const client = axios.create({

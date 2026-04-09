@@ -1,7 +1,7 @@
-import { logout } from '@/api/auth';
+import { logout } from '@/domains/auth/api/auth';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import ConfirmModal from '../modal/confirm-modal';
+import ConfirmModal from '../../../../../components/modal/confirm-modal';
 import { useGetAuthActions, useGetAuthRole } from '@/store/use-auth-store';
 import { STORAGE_KEY } from '@/constants/storage-key';
 

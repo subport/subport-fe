@@ -1,5 +1,5 @@
 import QuitIcon from '@/assets/icons/quit-icon.svg';
-import useDeleteProfileMutate from '@/hooks/mutations/use-delete-profile-mutate';
+import useDeleteProfileMutate from '@/domains/account/hooks/mutations/use-delete-profile-mutate';
 import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
+} from '../../../../../components/ui/dialog';
+import { Button } from '../../../../../components/ui/button';
+import { Checkbox } from '../../../../../components/ui/checkbox';
 import { useGetAuthRole } from '@/store/use-auth-store';
 
 interface DeleteProfileButtonProps {

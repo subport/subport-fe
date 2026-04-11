@@ -21,7 +21,7 @@ import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-p
 import MyPageSectionPage from './pages/my-page-section-page';
 import { queryClient } from '@/components/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import { getMyAccount, getReminderSettings } from '@/api/profile';
+import { getReminderSettings } from '@/api/profile';
 import FaqPage from './pages/faq-page';
 import UserCommentPage from './pages/user-comment-page';
 import FeedbackModalPage from './pages/feed-back-modal-page';
@@ -31,6 +31,7 @@ import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-serv
 import AddUserSubscriptionPage from '../domains/subscription/pages/add-user-subscription-page';
 import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
 import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
+import EditAccountPage from '@/domains/account/pages/edit-account-page/edit-account-page';
 
 const router = createBrowserRouter([
   {
@@ -208,13 +209,6 @@ const router = createBrowserRouter([
                   header: { header: true, backTo: '/my' },
                 },
                 loader: async ({ params }) => {
-                  if (params.section === 'edit-account') {
-                    await queryClient.ensureQueryData({
-                      queryKey: QUERY_KEY.my.account,
-                      queryFn: getMyAccount,
-                    });
-                  }
-
                   if (params.section === 'reminder') {
                     await queryClient.ensureQueryData({
                       queryKey: QUERY_KEY.my.reminderSettings,
@@ -223,6 +217,13 @@ const router = createBrowserRouter([
                   }
 
                   return null;
+                },
+              },
+              {
+                path: 'edit-account',
+                element: <EditAccountPage />,
+                handle: {
+                  header: { header: true },
                 },
               },
             ],

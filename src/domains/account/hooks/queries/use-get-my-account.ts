@@ -1,4 +1,4 @@
-import { getMyAccount } from '@/api/profile';
+import { getMyAccount } from '@/domains/account/api/account';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
 

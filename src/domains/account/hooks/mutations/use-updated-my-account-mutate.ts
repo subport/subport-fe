@@ -1,4 +1,4 @@
-import { updatedMyAccount } from '@/api/profile';
+import { updatedMyAccount } from '@/domains/account/api/account';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import type { MyProfileRes, MyAccountRes } from '@/types/profile';

@@ -1,4 +1,3 @@
-import EditMyAccountForm from '@/components/my/edit-my-accrount-form';
 import EditPayMentDateNotificationForm from '@/components/my/edit-payment-date-notification-form';
 import MySubscriptionsList from '@/components/my/my-subscriptions-list';
 import { useEffect } from 'react';
@@ -24,7 +23,6 @@ function MyPageSectionPage() {
     <section className="h-full">
       {section === 'subscribe' && <MySubscriptionsList />}
       {section === 'reminder' && <EditPayMentDateNotificationForm />}
-      {section === 'edit-account' && <EditMyAccountForm />}
       {section === 'schedule' && <MySubscribeSchedulePage />}
     </section>
   );

@@ -1,5 +1,5 @@
 import PageTitle from '@/components/ui/page-title';
-import EditAccountForm from './components/edit-accrount-form';
+import EditAccountForm from './components/edit-account-form';
 
 function EditAccountPage() {
   return (

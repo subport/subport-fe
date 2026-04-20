@@ -9,7 +9,7 @@ import type { PlanFormValues } from '../plans/schemas/plan-form-schema';
 import useAddCustomPlan from '@/domains/subscription/plans/hooks/mutate/use-add-custom-plan-mutate';
 
 function AddPlanPage() {
-  const { subscribeId } = useParams();
+  const { serviceId } = useParams();
   const navigate = useNavigate();
   const { mutate: addPlan, isPending: isAddPlanPending } = useAddCustomPlan({
     onSuccess: () => {
@@ -21,7 +21,7 @@ function AddPlanPage() {
   const onSubmit = (formData: PlanFormValues) => {
     addPlan({
       ...formData,
-      subscriptionId: Number(subscribeId),
+      subscriptionId: Number(serviceId),
       amount: Number(deleteComma(formData.amount)),
       durationMonths: Number(formData.durationMonths),
     });

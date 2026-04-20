@@ -43,7 +43,7 @@ function UserSubscriptionPlanManagePage() {
                 plan={plan}
                 key={plan.id}
                 onEdit={() => {
-                  navigate(`/subscribe/${subscribeId}/plan/edit/${plan.id}`);
+                  navigate(`/service/${subscribeId}/plan/edit/${plan.id}`);
                 }}
                 onDelete={() => {
                   setModal(true);

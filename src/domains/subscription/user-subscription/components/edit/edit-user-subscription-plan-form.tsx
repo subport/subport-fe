@@ -19,7 +19,7 @@ function EditUserSubscriptionPlanForm({
   const navigate = useNavigate();
 
   const [currentPlan, setCurrentPlan] = useState(prevPlanId);
-  const { memberSubscribeId: currentMemberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
   const [disabled, setDisabled] = useState(true);
 
   const { mutate: updatePlan } = useUpdatedUserSubscriptionPlanMutate({
@@ -43,9 +43,9 @@ function EditUserSubscriptionPlanForm({
   };
 
   const handleClick = () => {
-    if (currentPlan && currentMemberSubscribeId) {
+    if (currentPlan && userSubscribeId) {
       updatePlan({
-        subscriptionId: currentMemberSubscribeId.toString(),
+        subscriptionId: userSubscribeId.toString(),
         planId: currentPlan,
       });
     }

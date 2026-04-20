@@ -3,9 +3,9 @@ import useGetUserSubscriptionById from '../../hooks/queries/use-get-user-subscri
 import { Loader2 } from 'lucide-react';
 
 function UserSubscriptionEditLayout() {
-  const { memberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
   const { data: userSubscription, isPending } = useGetUserSubscriptionById(
-    memberSubscribeId!,
+    userSubscribeId!,
   );
 
   if (isPending)

@@ -51,7 +51,7 @@ function UserSubscriptionCard({
 }) {
   return (
     <Link
-      to={`/member-subscribe/${subscribeInfo.id}`}
+      to={`/user-subscription/${subscribeInfo.id}`}
       className="bg-box-black block rounded-xl p-5"
     >
       <div className="flex items-center gap-3">

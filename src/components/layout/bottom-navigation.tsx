@@ -22,7 +22,7 @@ function BottomNavigation() {
           <span>홈</span>
         </Link>
         <Link
-          to="/subscribe/add"
+          to="/service/add"
           className="flex w-13 flex-col items-center justify-center gap-1 text-xs"
         >
           <AddIcon className="fill-icon-default size-6" />

@@ -109,7 +109,7 @@ function PlanListBottomModal({
               </div>
               <button
                 type="button"
-                onClick={() => navigate(`/subscribe/${serviceId}/plan/edit`)}
+                onClick={() => navigate(`/service/${serviceId}/plan/edit`)}
                 className="bg-box-black block cursor-pointer rounded-full px-5 py-1.5 text-xs"
               >
                 관리
@@ -135,7 +135,7 @@ function PlanListBottomModal({
               />
             ) : (
               <Link
-                to={`/subscribe/${serviceId}/plan/add`}
+                to={`/service/${serviceId}/plan/add`}
                 className="hover:bg-box-black/80 bg-box-black flex h-32 w-full items-center justify-center rounded-2xl transition-colors"
               >
                 <Plus className="size-10" strokeWidth={2} />

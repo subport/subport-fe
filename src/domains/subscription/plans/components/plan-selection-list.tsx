@@ -58,7 +58,7 @@ function PlanSelectionList({
             ))}
           </RadioGroup>
           <Link
-            to={`/subscribe/${serviceId}/plan/add`}
+            to={`/service/${serviceId}/plan/add`}
             className="hover:bg-box-black/80 bg-box-black flex h-32 w-full items-center justify-center rounded-2xl transition-colors"
           >
             <Plus className="size-10" strokeWidth={2} />

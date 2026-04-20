@@ -22,7 +22,7 @@ const SUBSCRIBE_STATE = [
 ];
 
 function EditUserSubscriptionStateForm() {
-  const { memberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
@@ -46,11 +46,11 @@ function EditUserSubscriptionStateForm() {
 
   const handleChangeSubscribeState = () => {
     if (subscribeState === 'deActivate') {
-      deactivateUserSubscription({ userSubscriptionId: memberSubscribeId! });
+      deactivateUserSubscription({ userSubscriptionId: userSubscribeId! });
     }
 
     if (subscribeState === 'delete') {
-      deleteUserSubscription({ userSubscriptionId: memberSubscribeId! });
+      deleteUserSubscription({ userSubscriptionId: userSubscribeId! });
     }
   };
 

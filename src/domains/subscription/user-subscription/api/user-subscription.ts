@@ -39,9 +39,9 @@ export const getUserSubscriptions = async <P extends UserSubscriptionParams>(
   return response.data;
 };
 
-export const getUserSubscriptionById = async (memberSubscribeId: string) => {
+export const getUserSubscriptionById = async (userSubscribeId: string) => {
   const response = await client.get<UserSubscriptionByIdItem>(
-    `/api/member-subscriptions/${memberSubscribeId}`,
+    `/api/member-subscriptions/${userSubscribeId}`,
   );
   return response.data;
 };
@@ -74,16 +74,16 @@ export const deleteUserSubscription = async ({
 };
 
 export const updatedUserSubscriptionDutchPay = async ({
-  memberSubscribeId,
+  userSubscribeId,
   dutchPay,
   dutchPayAmount,
 }: {
-  memberSubscribeId: string;
+  userSubscribeId: string;
   dutchPay: boolean;
   dutchPayAmount: number | null;
 }) => {
   const response = await client.put<UserSubscriptionByIdItem>(
-    `/api/member-subscriptions/${memberSubscribeId}/dutch-pay`,
+    `/api/member-subscriptions/${userSubscribeId}/dutch-pay`,
     { dutchPay, dutchPayAmount },
   );
 

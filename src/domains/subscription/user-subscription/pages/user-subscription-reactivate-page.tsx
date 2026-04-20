@@ -16,13 +16,13 @@ function UserSubscriptionReactivatePage() {
   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { memberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
 
   const reuse = searchParams.get('reuse');
   const isValidReuse = reuse !== null && VALID_REUSE.has(reuse as ReuseMode);
 
-  const { data: subscribe, isPending: isGetMemberSubscribePending } =
-    useGetUserSubscriptionById(memberSubscribeId!);
+  const { data: subscribe, isPending: isGetUserSubscriptionPending } =
+    useGetUserSubscriptionById(userSubscribeId!);
 
   const { mutate: activateUserSubscription } =
     useActivateUserSubscriptionMutate({
@@ -35,12 +35,12 @@ function UserSubscriptionReactivatePage() {
     });
 
   useEffect(() => {
-    if (!isValidReuse) navigate(-1);
-  }, [isValidReuse, navigate]);
+    if (!isValidReuse) navigate(`/user-subscription/${userSubscribeId}`);
+  }, [isValidReuse, navigate, userSubscribeId]);
 
   if (!isValidReuse) return null;
+  if (isGetUserSubscriptionPending) return null;
   if (!subscribe) return null;
-  if (isGetMemberSubscribePending) return <p>로딩</p>;
 
   const onChangeStartDate = (selectDate: Date) => {
     setStartDate(format(selectDate, 'yyyy-MM-dd'));
@@ -60,7 +60,7 @@ function UserSubscriptionReactivatePage() {
     },
   ) => {
     activateUserSubscription({
-      userSubscriptionId: memberSubscribeId!,
+      userSubscriptionId: userSubscribeId!,
       userSubscriptionInfo: {
         reusePreviousInfo: false,
         ...formData,
@@ -73,7 +73,7 @@ function UserSubscriptionReactivatePage() {
 
   const onSubmitReactivatePrevious = () => {
     activateUserSubscription({
-      userSubscriptionId: memberSubscribeId!,
+      userSubscriptionId: userSubscribeId!,
       userSubscriptionInfo: {
         reusePreviousInfo: true,
         startDate,

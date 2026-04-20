@@ -24,7 +24,7 @@ function EditPlanPage() {
       if (window.history.state?.idx > 0) {
         navigate(-1);
       } else {
-        navigate(`/subscribe/${subscribeId}/plan/edit`, { replace: true });
+        navigate(`/service/${subscribeId}/plan/edit`, { replace: true });
       }
     },
   });

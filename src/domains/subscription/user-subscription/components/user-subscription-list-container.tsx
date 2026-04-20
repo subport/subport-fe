@@ -27,7 +27,7 @@ function UserSubscriptionListContainer({
     <>
       {active && userSubscriptionView.isEmpty && (
         <Link
-          to="/subscribe/add"
+          to="/service/add"
           className="hover:bg-primary/90 bg-primary text-primary-foreground block w-full rounded-2xl py-4.5 text-center text-lg font-bold transition-colors"
         >
           첫 구독 등록하기

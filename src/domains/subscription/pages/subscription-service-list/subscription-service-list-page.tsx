@@ -118,7 +118,7 @@ function SubscriptionServiceListPage() {
 
       {addSubscriptions.length === 0 && (
         <Link
-          to="/subscribe/add/custom"
+          to="/service/add/custom"
           className={cn(
             'bg-primary absolute right-1 bottom-1 z-999 flex cursor-pointer items-center justify-center rounded-xl p-4 transition-opacity hover:opacity-80',
           )}

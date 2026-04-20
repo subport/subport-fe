@@ -74,7 +74,7 @@ function SpendingSubscriptionRecords({
 
               {variant === 'ongoing' && (
                 <OngoingSpendingRecordButton
-                  memberSubscribeId={(
+                  userSubscribeId={(
                     record as OngoingRecord
                   ).memberSubscriptionId.toString()}
                   selectedDate={selectedDate}

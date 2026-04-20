@@ -87,7 +87,11 @@ function EditReminderForm() {
 
   return (
     <div className="flex h-full flex-col justify-between">
-      <form className="flex-1" onSubmit={form.handleSubmit(handleSubmit)}>
+      <form
+        id="reminder"
+        className="flex-1"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
         <div className="bg-box-black mb-4 flex justify-between rounded-lg p-3">
           <div className="flex flex-col">
             <span className="font-semibold">결제일 알림</span>
@@ -180,7 +184,9 @@ function EditReminderForm() {
           </FieldWrapper>
         )}
       </form>
-      <Button disabled={!isDirty || !isValid || isSubmitting}>저장하기</Button>
+      <Button form="reminder" disabled={!isDirty || !isValid || isSubmitting}>
+        저장하기
+      </Button>
     </div>
   );
 }

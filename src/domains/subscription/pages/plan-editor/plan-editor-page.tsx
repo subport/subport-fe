@@ -14,9 +14,9 @@ function PlanEditorPage() {
 
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [modal, setModal] = useState(false);
-  const { subscribeId } = useParams();
+  const { serviceId } = useParams();
   const { data: customPlans, isPending: isGetPlanListPending } =
-    useGetCustomPlanList(subscribeId as string);
+    useGetCustomPlanList(serviceId as string);
 
   const { mutate: deletePlan } = useDeleteCustomPlan({
     onSuccess: () => {
@@ -69,7 +69,7 @@ function PlanEditorPage() {
 
             deletePlan({
               planId: selectedPlanId,
-              subscriptionId: Number(subscribeId),
+              subscriptionId: Number(serviceId),
             });
           }}
           open={modal}

@@ -17,7 +17,7 @@ function EditUserSubscriptionDutchPayForm({
   defaultDutchPay,
 }: EditUserSubscriptionDutchPayFormProps) {
   const navigate = useNavigate();
-  const { memberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
 
   const [dutchPayAmount, setDutchPayAmount] = useState(
     defaultAmount ? formatKRWInput(defaultAmount) : '0',
@@ -32,7 +32,7 @@ function EditUserSubscriptionDutchPayForm({
 
   const handleUpdateNotDutchPay = () => {
     updateDutchPay({
-      memberSubscribeId: memberSubscribeId!,
+      userSubscribeId: userSubscribeId!,
       dutchPay: false,
       dutchPayAmount: null,
     });
@@ -40,7 +40,7 @@ function EditUserSubscriptionDutchPayForm({
 
   const handleUpdateDutchPay = () => {
     updateDutchPay({
-      memberSubscribeId: memberSubscribeId!,
+      userSubscribeId: userSubscribeId!,
       dutchPay: true,
       dutchPayAmount: Number(deleteComma(dutchPayAmount)),
     });

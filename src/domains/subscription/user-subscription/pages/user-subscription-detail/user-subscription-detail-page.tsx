@@ -24,10 +24,13 @@ const formatDateKorean = (dateStr: string) => {
 function UserSubscriptionDetailPage() {
   const navigate = useNavigate();
   const [modal, setModal] = useState<'reactivate' | 'delete' | null>(null);
-  const { memberSubscribeId } = useParams();
+  const { userSubscribeId } = useParams();
 
-  const { data: subscribe, isPending: isGetMemberSubscribePending } =
-    useGetUserSubscriptionById(memberSubscribeId!);
+  const {
+    data: subscribe,
+    isPending: isGetUserSubscriptionPending,
+    refetch,
+  } = useGetUserSubscriptionById(userSubscribeId!);
 
   const { mutate: deleteUserSubscription } = useDeleteUserSubscriptionMutate({
     onSuccess: () => {
@@ -36,8 +39,28 @@ function UserSubscriptionDetailPage() {
     },
   });
 
-  if (isGetMemberSubscribePending) return <UserSubscriptionDetailSkeleton />;
-  if (!subscribe) return <p>구독 정보를 불러오지 못했습니다.</p>;
+  if (isGetUserSubscriptionPending) return <UserSubscriptionDetailSkeleton />;
+  if (!subscribe)
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-4">
+        <p className="text-lg">구독 정보를 불러오지 못했습니다</p>
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => refetch()}
+            className="rounded-full px-8 py-3 font-semibold"
+          >
+            다시 시도
+          </Button>
+
+          <Button
+            onClick={() => navigate('/')}
+            className="text-background-black rounded-full bg-white px-8 py-3 font-semibold hover:bg-white"
+          >
+            돌아가기
+          </Button>
+        </div>
+      </div>
+    );
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-between pt-5">
@@ -136,21 +159,21 @@ function UserSubscriptionDetailPage() {
           onConfirm={() => {
             if (modal === 'reactivate') {
               navigate(
-                `/member-subscribe/${memberSubscribeId}/reactivate?reuse=previous`,
+                `/user-subscription/${userSubscribeId}/reactivate?reuse=previous`,
               );
               return;
             }
 
             if (modal === 'delete') {
               deleteUserSubscription({
-                userSubscriptionId: memberSubscribeId!,
+                userSubscriptionId: userSubscribeId!,
               });
             }
           }}
           onCancel={() => {
             if (modal === 'reactivate') {
               navigate(
-                `/member-subscribe/${memberSubscribeId}/reactivate?reuse=custom`,
+                `/user-subscription/${userSubscribeId}/reactivate?reuse=custom`,
               );
               return;
             } else {

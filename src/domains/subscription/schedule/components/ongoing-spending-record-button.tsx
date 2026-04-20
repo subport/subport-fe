@@ -8,7 +8,7 @@ import {
 import EditIcon from '@/assets/icons/edit-icon.svg?react';
 import ReloadIcon from '@/assets/icons/reload-icon.svg?react';
 import { Link } from 'react-router-dom';
-import useDeactivateMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
+import useDeactivateUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
 import { useState } from 'react';
 import { queryClient } from '../../../../shared/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
@@ -17,17 +17,17 @@ import { toast } from 'sonner';
 import ConfirmModal from '../../../../components/modal/confirm-modal';
 
 interface OngoingSpendingRecordButtonProps {
-  memberSubscribeId: string;
+  userSubscribeId: string;
   selectedDate: Date;
 }
 
 function OngoingSpendingRecordButton({
-  memberSubscribeId,
+  userSubscribeId,
   selectedDate,
 }: OngoingSpendingRecordButtonProps) {
   const [modal, setModal] = useState(false);
-  const { mutate: deActiveMemberSubscribe } =
-    useDeactivateMemberSubscribeMutate({
+  const { mutate: deactivateUserSubscription } =
+    useDeactivateUserSubscriptionMutate({
       onSuccess: () => {
         const dateKey = format(selectedDate, 'yyyy-MM-dd');
         const monthKey = format(selectedDate, 'yyyy-MM');
@@ -61,7 +61,7 @@ function OngoingSpendingRecordButton({
             className="bg-box-black w-40 overflow-hidden rounded-lg border-none p-0 text-white drop-shadow-xl"
           >
             <Link
-              to={`/member-subscribe/${memberSubscribeId}`}
+              to={`/user-subscription/${userSubscribeId}`}
               className="hover:bg-background-black/50 flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-semibold transition-colors"
             >
               <span>상세보기</span>
@@ -86,7 +86,7 @@ function OngoingSpendingRecordButton({
         confirmText="네"
         description="비활성화하면 저장된 구독 정보는 그대로 남아있습니다. 이후 다시 사용 가능합니다."
         onConfirm={() =>
-          deActiveMemberSubscribe({ userSubscriptionId: memberSubscribeId })
+          deactivateUserSubscription({ userSubscriptionId: userSubscribeId })
         }
         title="비활성화 하시겠어요?"
       />

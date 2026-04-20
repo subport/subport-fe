@@ -1,4 +1,4 @@
-import EditUserSubscriptionStateForm from '@/domains/subscription/user-subscription/components/edit/edit-member-subscribe-state-form';
+import EditUserSubscriptionStateForm from '@/domains/subscription/user-subscription/components/edit/edit-user-subscription-state-form';
 import PageTitle from '@/components/ui/page-title';
 
 function EditUserSubscriptionStatePage() {

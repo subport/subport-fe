@@ -1,8 +1,8 @@
 import ConfirmModal from '@/components/modal/confirm-modal';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import useDeactivateMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
-import useDeleteMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-delete-user-subscription-mutate';
+import useDeactivateUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
+import useDeleteUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-delete-user-subscription-mutate';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,15 +26,15 @@ function EditUserSubscriptionStateForm() {
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
-  const { mutate: deleteMemberSubscribe } = useDeleteMemberSubscribeMutate({
+  const { mutate: deleteUserSubscription } = useDeleteUserSubscriptionMutate({
     onSuccess: () => {
       navigate('/');
       toast.success('정상적으로 삭제되었습니다', { position: 'bottom-center' });
     },
   });
 
-  const { mutate: deactivateMemberSubscribe } =
-    useDeactivateMemberSubscribeMutate({
+  const { mutate: deactivateUserSubscription } =
+    useDeactivateUserSubscriptionMutate({
       onSuccess: () => {
         navigate(-1);
         toast.success('구독 서비스가 비활성화 되었습니다', {
@@ -46,11 +46,11 @@ function EditUserSubscriptionStateForm() {
 
   const handleChangeSubscribeState = () => {
     if (subscribeState === 'deActivate') {
-      deactivateMemberSubscribe({ userSubscriptionId: memberSubscribeId! });
+      deactivateUserSubscription({ userSubscriptionId: memberSubscribeId! });
     }
 
     if (subscribeState === 'delete') {
-      deleteMemberSubscribe({ userSubscriptionId: memberSubscribeId! });
+      deleteUserSubscription({ userSubscriptionId: memberSubscribeId! });
     }
   };
 

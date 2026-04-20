@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import ErrorMessage from '@/components/ui/error-message';
 import FieldWrapper from '@/components/ui/field-wrapper';
-import useUpdateMemberSubscribeDutchPayMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-update-member-subscribe-dutch-pay-mutate';
+import useUpdatedUserSubscriptionDutchPayMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-dutch-pay-mutate';
 import { deleteComma, formatKRWInput } from '@/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,7 +23,7 @@ function EditUserSubscriptionDutchPayForm({
     defaultAmount ? formatKRWInput(defaultAmount) : '0',
   );
 
-  const { mutate: updateDutchPay } = useUpdateMemberSubscribeDutchPayMutate({
+  const { mutate: updateDutchPay } = useUpdatedUserSubscriptionDutchPayMutate({
     onSuccess: () => {
       navigate(-1);
       toast.success('수정이 완료되었습니다', { position: 'bottom-center' });

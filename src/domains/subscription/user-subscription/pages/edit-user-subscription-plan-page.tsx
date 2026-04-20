@@ -1,7 +1,7 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import type { UserSubscriptionByIdItem } from '../types/api';
 import PageTitle from '@/components/ui/page-title';
-import EditUserSubscrpitionPlanForm from '../components/edit/edit-user-subscription-plan-form';
+import EditUserSubscriptionPlanForm from '../components/edit/edit-user-subscription-plan-form';
 
 function EditUserSubscriptionPlanPage() {
   const { userSubscription } = useOutletContext<{
@@ -23,7 +23,7 @@ function EditUserSubscriptionPlanPage() {
           </Link>
         </div>
       </div>
-      <EditUserSubscrpitionPlanForm
+      <EditUserSubscriptionPlanForm
         subscribeId={userSubscription.subscriptionId.toString()}
         prevPlanId={userSubscription.planId.toString()}
       />

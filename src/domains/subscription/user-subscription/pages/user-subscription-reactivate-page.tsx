@@ -13,7 +13,7 @@ const VALID_REUSE = new Set(['previous', 'custom'] as const);
 type ReuseMode = 'previous' | 'custom';
 
 function UserSubscriptionReactivatePage() {
-  const [date, setDate] = useState(format(new Date(), ' yyyy-MM-dd'));
+  const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { memberSubscribeId } = useParams();
@@ -24,7 +24,7 @@ function UserSubscriptionReactivatePage() {
   const { data: subscribe, isPending: isGetMemberSubscribePending } =
     useGetUserSubscriptionById(memberSubscribeId!);
 
-  const { mutate: activateUserSubscrpition } =
+  const { mutate: activateUserSubscription } =
     useActivateUserSubscriptionMutate({
       onSuccess: () => {
         navigate(-1);
@@ -36,13 +36,14 @@ function UserSubscriptionReactivatePage() {
 
   useEffect(() => {
     if (!isValidReuse) navigate(-1);
-  }, [isValidReuse, navigate, memberSubscribeId]);
+  }, [isValidReuse, navigate]);
 
   if (!isValidReuse) return null;
+  if (!subscribe) return null;
   if (isGetMemberSubscribePending) return <p>로딩</p>;
 
   const onChangeStartDate = (selectDate: Date) => {
-    setDate(format(selectDate, 'yyyy-MM-dd'));
+    setStartDate(format(selectDate, 'yyyy-MM-dd'));
   };
 
   const onSubmitReactivateCustom = (
@@ -58,7 +59,7 @@ function UserSubscriptionReactivatePage() {
       amountUnit: 'KRW' | 'USD';
     },
   ) => {
-    activateUserSubscrpition({
+    activateUserSubscription({
       userSubscriptionId: memberSubscribeId!,
       userSubscriptionInfo: {
         reusePreviousInfo: false,
@@ -71,11 +72,11 @@ function UserSubscriptionReactivatePage() {
   };
 
   const onSubmitReactivatePrevious = () => {
-    activateUserSubscrpition({
+    activateUserSubscription({
       userSubscriptionId: memberSubscribeId!,
       userSubscriptionInfo: {
         reusePreviousInfo: true,
-        startDate: format(date, 'yyyy-MM-dd'),
+        startDate,
       },
     });
   };
@@ -89,13 +90,13 @@ function UserSubscriptionReactivatePage() {
 
       {reuse === 'custom' && (
         <AddUserSubscriptionForm
-          serviceName={subscribe!.name}
+          serviceName={subscribe.name}
           minDate={parse(
-            subscribe!.paymentDate.toString(),
+            subscribe.paymentDate.toString(),
             'yyyy-MM-dd',
             new Date(),
           )}
-          id={subscribe!.subscriptionId.toString()}
+          id={subscribe.subscriptionId.toString()}
           onSubmit={onSubmitReactivateCustom}
         />
       )}
@@ -104,7 +105,7 @@ function UserSubscriptionReactivatePage() {
         <div className="flex h-full flex-col justify-between">
           <UserSubscriptionDateForm
             lastPaymentDate={parse(
-              subscribe!.paymentDate.toString(),
+              subscribe.paymentDate.toString(),
               'yyyy-MM-dd',
               new Date(),
             )}

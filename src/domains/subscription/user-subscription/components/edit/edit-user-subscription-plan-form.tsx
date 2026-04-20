@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import useUpdatedUserSubscriptionPlanMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-plan-mutate';
 
-function EditUserSubscrpitionPlanForm({
+function EditUserSubscriptionPlanForm({
   subscribeId,
   prevPlanId,
 }: {
@@ -19,7 +19,7 @@ function EditUserSubscrpitionPlanForm({
   const navigate = useNavigate();
 
   const [currentPlan, setCurrentPlan] = useState(prevPlanId);
-  const { memberSubscribeId: currentMemberSubscirbeId } = useParams();
+  const { memberSubscribeId: currentMemberSubscribeId } = useParams();
   const [disabled, setDisabled] = useState(true);
 
   const { mutate: updatePlan } = useUpdatedUserSubscriptionPlanMutate({
@@ -43,9 +43,9 @@ function EditUserSubscrpitionPlanForm({
   };
 
   const handleClick = () => {
-    if (currentPlan && currentMemberSubscirbeId) {
+    if (currentPlan && currentMemberSubscribeId) {
       updatePlan({
-        subscriptionId: currentMemberSubscirbeId?.toString(),
+        subscriptionId: currentMemberSubscribeId.toString(),
         planId: currentPlan,
       });
     }
@@ -72,4 +72,4 @@ function EditUserSubscrpitionPlanForm({
   );
 }
 
-export default EditUserSubscrpitionPlanForm;
+export default EditUserSubscriptionPlanForm;

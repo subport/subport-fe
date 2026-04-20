@@ -1,6 +1,6 @@
-import { getReminderSettings } from '@/api/profile';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
+import { getReminderSettings } from '../../api/account';
 
 function useGetReminderSettings() {
   return useQuery({

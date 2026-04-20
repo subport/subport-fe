@@ -19,9 +19,6 @@ import EditMemberSubscribeFormPage from './pages/edit-member-subscribe-form-page
 import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layout';
 import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
 import MyPageSectionPage from './pages/my-page-section-page';
-import { queryClient } from '@/components/providers/query-provider';
-import { QUERY_KEY } from '@/shared/constants/query-key';
-import { getReminderSettings } from '@/api/profile';
 import FaqPage from './pages/faq-page';
 import UserCommentPage from './pages/user-comment-page';
 import FeedbackModalPage from './pages/feed-back-modal-page';
@@ -32,6 +29,7 @@ import AddUserSubscriptionPage from '../domains/subscription/pages/add-user-subs
 import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
 import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
 import EditAccountPage from '@/domains/account/pages/edit-account-page/edit-account-page';
+import EditReminderPage from '@/domains/account/pages/edit-reminder-page/edit-reminder-page';
 
 const router = createBrowserRouter([
   {
@@ -208,20 +206,17 @@ const router = createBrowserRouter([
                 handle: {
                   header: { header: true, backTo: '/my' },
                 },
-                loader: async ({ params }) => {
-                  if (params.section === 'reminder') {
-                    await queryClient.ensureQueryData({
-                      queryKey: QUERY_KEY.my.reminderSettings,
-                      queryFn: getReminderSettings,
-                    });
-                  }
-
-                  return null;
-                },
               },
               {
                 path: 'edit-account',
                 element: <EditAccountPage />,
+                handle: {
+                  header: { header: true },
+                },
+              },
+              {
+                path: 'reminder',
+                element: <EditReminderPage />,
                 handle: {
                   header: { header: true },
                 },

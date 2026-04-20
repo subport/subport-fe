@@ -1,5 +1,9 @@
 import { client } from '@/api/client';
-import type { MyAccountRes, MyProfileRes } from '../types/api';
+import type {
+  MyAccountRes,
+  MyProfileRes,
+  ReminderSettingsRes,
+} from '../types/api';
 import type { EditAccountValues } from '../schemas/edit-account-schema';
 
 export const getMyProfile = async () => {
@@ -25,6 +29,34 @@ export const updatedMyAccount = async (updatedAccount: EditAccountValues) => {
 
 export const deleteProfile = async () => {
   const response = await client.delete('/api/members/me');
+
+  return response.data;
+};
+
+type ReminderReqType =
+  | {
+      paymentReminderEnabled: true;
+      reminderDaysBefore: number;
+    }
+  | {
+      paymentReminderEnabled: false;
+    };
+
+export const getReminderSettings = async () => {
+  const response = await client.get<ReminderSettingsRes>(
+    '/api/members/me/reminder-settings',
+  );
+
+  return response.data;
+};
+
+export const updatedReminderSettings = async (
+  reminderSettings: ReminderReqType,
+) => {
+  const response = await client.put<ReminderSettingsRes>(
+    '/api/members/me/reminder-settings',
+    reminderSettings,
+  );
 
   return response.data;
 };

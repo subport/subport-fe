@@ -1,4 +1,3 @@
-import EditPayMentDateNotificationForm from '@/components/my/edit-payment-date-notification-form';
 import MySubscriptionsList from '@/components/my/my-subscriptions-list';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,7 +21,6 @@ function MyPageSectionPage() {
   return (
     <section className="h-full">
       {section === 'subscribe' && <MySubscriptionsList />}
-      {section === 'reminder' && <EditPayMentDateNotificationForm />}
       {section === 'schedule' && <MySubscribeSchedulePage />}
     </section>
   );

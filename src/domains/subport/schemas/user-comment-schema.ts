@@ -1,4 +1,4 @@
-import { FEEDBACK_CATEGORIES } from '@/constants/feedback-categories';
+import { FEEDBACK_CATEGORIES } from '@/domains/subport/constants/feedback-categories';
 import z from 'zod';
 
 export const userCommentSchema = z

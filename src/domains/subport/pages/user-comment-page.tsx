@@ -1,14 +1,15 @@
 import { Button } from '@/components/ui/button';
+import PageTitle from '@/components/ui/page-title';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/text-area';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { FEEDBACK_CATEGORIES } from '@/constants/feedback-categories';
-import useSendUserComment from '@/hooks/mutations/use-send-user-comment';
+import { FEEDBACK_CATEGORIES } from '@/domains/subport/constants/feedback-categories';
+import useSendUserComment from '@/domains/subport/hooks/mutations/use-send-user-comment';
 import {
   type UserCommentFormPayload,
   type UserCommentFormValues,
   userCommentSchema,
-} from '@/schema/user-comment-schema';
+} from '@/domains/subport/schemas/user-comment-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
@@ -53,9 +54,9 @@ function UserCommentPage() {
 
   return (
     <section className="flex h-full flex-col justify-between">
-      <p className="mb-6 text-xl font-semibold">
+      <PageTitle>
         사용하면서 느낀 점을 <br /> 자유롭게 들려주세요
-      </p>
+      </PageTitle>
 
       <form
         id="user-comment-form"

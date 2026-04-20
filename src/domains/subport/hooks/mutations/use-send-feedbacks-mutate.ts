@@ -1,14 +1,14 @@
-import { sendUserComment } from '@/api/subport';
+import { sendUserFeedback } from '@/domains/subport/api/subport';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 
-function useSendUserComment(callbacks?: useMutationCallbacks) {
+function useSendFeedBacksMutate(callbacks?: useMutationCallbacks) {
   return useMutation({
-    mutationFn: sendUserComment,
+    mutationFn: sendUserFeedback,
     onSuccess: (data) => {
       callbacks?.onSuccess?.(data);
     },
   });
 }
 
-export default useSendUserComment;
+export default useSendFeedBacksMutate;

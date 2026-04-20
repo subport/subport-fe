@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import showSuccessToast from '@/components/ui/show-success-toast';
 import { Textarea } from '@/components/ui/text-area';
 import { STORAGE_KEY } from '@/constants/storage-key';
-import useSendFeedBacksMutate from '@/hooks/mutations/use-send-feedbacks-mutate';
+import useSendFeedBacksMutate from '@/domains/subport/hooks/mutations/use-send-feedbacks-mutate';
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { getFaqList } from '@/api/faq';
+import { getFaqList } from '@/domains/subport/api/subport';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
 

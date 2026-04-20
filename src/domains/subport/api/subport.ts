@@ -1,5 +1,12 @@
-import type { UserCommentFormPayload } from '@/schema/user-comment-schema';
-import { client } from './client';
+import { client } from '@/api/client';
+import type { FaqRes } from '../types/api';
+import type { UserCommentFormPayload } from '../schemas/user-comment-schema';
+
+export const getFaqList = async () => {
+  const response = await client.get<FaqRes>('/api/faqs');
+
+  return response.data;
+};
 
 export const sendUserComment = async (payload: UserCommentFormPayload) => {
   const response = await client.post('/api/feedbacks', payload);

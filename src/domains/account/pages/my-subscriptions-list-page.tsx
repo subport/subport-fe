@@ -1,14 +1,22 @@
-import SubscribeListFallback from '../ui/fallback/subscribe-list-fallback';
+import SubscribeListFallback from '../../../components/ui/fallback/subscribe-list-fallback';
 import UserSubscriptionList from '@/domains/subscription/user-subscription/components/user-subscription-list';
 import useGetUserSubscription from '@/domains/subscription/user-subscription/hooks/use-get-user-subscriptions';
 import mappingUserSubscriptionList from '@/domains/subscription/user-subscription/model/mapper';
 
-function MySubscriptionsList() {
+function MySubscriptionsListPage() {
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
     useGetUserSubscription({ active: true, sortBy: 'createdAt' });
 
   if (isGetSubscriptionsPending) return <SubscribeListFallback />;
-  if (!subscriptions) return <p>목록 불러오기 실패</p>;
+
+  if (!subscriptions)
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-2">
+        <p className="text-center">
+          구독 목록을 불러오지 못했습니다 <br /> 잠시 후 다시 시도해주세요.
+        </p>
+      </div>
+    );
 
   const userSubscriptionList = mappingUserSubscriptionList(
     { active: true, sortBy: 'createdAt' },
@@ -33,4 +41,4 @@ function MySubscriptionsList() {
   );
 }
 
-export default MySubscriptionsList;
+export default MySubscriptionsListPage;

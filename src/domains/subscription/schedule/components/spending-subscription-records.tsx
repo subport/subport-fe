@@ -1,6 +1,10 @@
-import type { CompletedRecord, OngoingRecord } from '@/api/calender';
+import type {} from '@/domains/subscription/schedule/api/schedule';
 import { formatKRWInput } from '@/lib/utils';
 import SpendingStateDot from './spending-state-dot';
+import type {
+  CompletedRecord,
+  OngoingRecord,
+} from '@/domains/subscription/schedule/types/api';
 import DeleteSpendingRecordsButton from './delete-spending-records-button';
 import OngoingSpendingRecordButton from './ongoing-spending-record-button';
 

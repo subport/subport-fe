@@ -1,16 +1,20 @@
 import { EllipsisVertical } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../../../../components/ui/popover';
 
 import EditIcon from '@/assets/icons/edit-icon.svg?react';
 import ReloadIcon from '@/assets/icons/reload-icon.svg?react';
 import { Link } from 'react-router-dom';
 import useDeactivateMemberSubscribeMutate from '@/hooks/mutations/use-deactivate-member-subscribe-mutate';
 import { useState } from 'react';
-import { queryClient } from '../providers/query-provider';
+import { queryClient } from '../../../../components/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
-import ConfirmModal from '../modal/confirm-modal';
+import ConfirmModal from '../../../../components/modal/confirm-modal';
 
 interface OngoingSpendingRecordButtonProps {
   memberSubscribeId: string;

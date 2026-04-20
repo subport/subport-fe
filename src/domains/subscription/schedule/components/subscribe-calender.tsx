@@ -4,10 +4,10 @@ import { addMonths, isAfter, startOfMonth } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import { cn, formatKRWInput } from '@/lib/utils';
-import CalenDerTrigger from '../calender/calender-trigger';
-import type { PaymentDates } from '@/api/calender';
+import CalenDerTrigger from './calender-trigger';
 import SpendingStateDot from './spending-state-dot';
 import { useRef } from 'react';
+import type { PaymentDates } from '@/domains/subscription/schedule/types/api';
 
 interface SubscribeCalenderProps {
   totalAmount: number;
@@ -32,13 +32,9 @@ function SubscribeCalender({
   const clientY = useRef(0);
   return (
     <>
-      <CalenDerTrigger
-        onSelectedDay={onSelectDay}
-        onMonthChange={onMonthChange}
-        currentDate={viewMonth}
-      />
+      <CalenDerTrigger onMonthChange={onMonthChange} currentDate={viewMonth} />
 
-      <div className="py-5">
+      <div className="py-4">
         <p className="text-2xl font-semibold">{`${formatKRWInput(totalAmount.toString())}원`}</p>
         <p
           className={cn(
@@ -94,7 +90,6 @@ function SubscribeCalender({
           mode="single"
           selected={selectedDay}
           onSelect={onSelectDay}
-          onMonthChange={onMonthChange}
           hideNavigation
           locale={ko}
           lang="ko-KR"

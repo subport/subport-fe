@@ -97,7 +97,7 @@ function MyPage() {
           />
         </Link>
         <Link
-          to="/my/subscribe"
+          to="/my/subscriptions"
           className="bg-box-black relative aspect-square w-1/2 overflow-hidden rounded-2xl p-4 font-semibold"
         >
           <span>구독 관리</span>

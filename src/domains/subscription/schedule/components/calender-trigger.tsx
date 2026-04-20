@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../../../../components/ui/popover';
 import { ChevronDown } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../../../components/ui/button';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
@@ -17,21 +21,14 @@ const monthList = Array.from({ length: 12 }, (_, i) => ({
 interface CalenDerTriggerProps {
   currentDate: Date;
   onMonthChange: (d: Date) => void;
-  onSelectedDay: (d: Date | undefined) => void;
 }
 
-function CalenDerTrigger({
-  currentDate,
-  onMonthChange,
-  onSelectedDay,
-}: CalenDerTriggerProps) {
+function CalenDerTrigger({ currentDate, onMonthChange }: CalenDerTriggerProps) {
   const [mode, setMode] = useState<'year' | 'month'>('year');
   const [open, setOpen] = useState(false);
 
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-
-  console.log(currentDate);
 
   return (
     <Popover
@@ -141,7 +138,6 @@ function CalenDerTrigger({
             disabled={!selectedYear || !selectedMonth}
             onClick={() => {
               onMonthChange(new Date(selectedYear!, selectedMonth! - 1));
-              onSelectedDay(undefined);
               setOpen(false);
               setMode('year');
             }}

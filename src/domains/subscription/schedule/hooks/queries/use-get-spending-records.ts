@@ -1,4 +1,4 @@
-import { getSpendingRecords } from '@/api/calender';
+import { getSpendingRecords } from '@/domains/subscription/schedule/api/schedule';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';

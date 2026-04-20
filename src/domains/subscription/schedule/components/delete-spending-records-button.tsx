@@ -1,7 +1,7 @@
 import DeleteIcon from '@/assets/icons/delete-icon.svg?react';
-import useDeleteSpendingRecordMutate from '@/hooks/mutations/use-delete-spending-record-mutate';
+import useDeleteSpendingRecordMutate from '@/domains/subscription/schedule/hooks/mutations/use-delete-spending-record-mutate';
 import { useState } from 'react';
-import ConfirmModal from '../modal/confirm-modal';
+import ConfirmModal from '../../../../components/modal/confirm-modal';
 
 interface DeleteSpendingRecordsButtonProps {
   selectedDate: Date;

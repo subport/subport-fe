@@ -1,7 +1,7 @@
 ﻿import { Button } from '../../../../../components/ui/button';
 import { Switch } from '../../../../../components/ui/switch';
 import Picker from 'react-mobile-picker';
-import { ChevronUp, Loader2 } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import FieldWrapper from '../../../../../components/ui/field-wrapper';
 import PickerScrollGuard from '../../../../../components/ui/picker-scroll-guard';
 import { cn } from '@/shared/lib/utils';
@@ -16,6 +16,7 @@ import {
   type EditReminderFormValues,
   editReminderSchema,
 } from '@/domains/account/schemas/edit-reminder-schema';
+import PageLoader from '@/components/ui/page-loader';
 
 const REMINDER_DAY = [
   {
@@ -79,11 +80,7 @@ function EditReminderForm() {
   };
 
   if (isGetReminderSettingsPending || !reminderSettings)
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <Loader2 className="stroke-primary animate-spin" />
-      </div>
-    );
+    return <PageLoader label="알림 설정을 불러오는 중..." />;
 
   return (
     <div className="flex h-full flex-col justify-between">

@@ -1,15 +1,28 @@
+import { Link, type RouteObject } from 'react-router-dom';
+import { headerHandle, withHeader, withPageSuspense } from './route-handles';
+import { lazy } from 'react';
+
 import AddSubscribePageLayout from '@/components/layout/add-user-subscription-page-layout';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
-import AddCustomServicesPage from '@/domains/subscription/pages/add-custom-service-page';
-import AddPlanPage from '@/domains/subscription/pages/add-plan-page';
-import AddUserSubscriptionPage from '@/domains/subscription/pages/add-user-subscription-page';
 import SubscribeEditorPage from '@/domains/subscription/pages/custom-service-editor/custom-service-editor-page';
-import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-service-page';
-import EditPlanPage from '@/domains/subscription/pages/edit-plan-page';
 import PlanEditorPage from '@/domains/subscription/pages/plan-editor/plan-editor-page';
 import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
-import { Link, type RouteObject } from 'react-router-dom';
-import { headerHandle, withHeader } from './route-handles';
+
+const AddUserSubscriptionPage = lazy(
+  () => import('@/domains/subscription/pages/add-user-subscription-page'),
+);
+const AddCustomServicesPage = lazy(
+  () => import('@/domains/subscription/pages/add-custom-service-page'),
+);
+const EditCustomServicePage = lazy(
+  () => import('@/domains/subscription/pages/edit-custom-service-page'),
+);
+const AddPlanPage = lazy(
+  () => import('@/domains/subscription/pages/add-plan-page'),
+);
+const EditPlanPage = lazy(
+  () => import('@/domains/subscription/pages/edit-plan-page'),
+);
 
 export const serviceRoutes: RouteObject[] = [
   {
@@ -22,7 +35,7 @@ export const serviceRoutes: RouteObject[] = [
       },
       {
         path: 'edit/:serviceId',
-        element: <EditCustomServicePage />,
+        element: withPageSuspense(<EditCustomServicePage />),
         handle: withHeader,
       },
       {
@@ -43,14 +56,14 @@ export const serviceRoutes: RouteObject[] = [
           },
           {
             path: 'add/:id',
-            element: <AddUserSubscriptionPage />,
+            element: withPageSuspense(<AddUserSubscriptionPage />),
             handle: withHeader,
           },
         ],
       },
       {
         path: 'add/custom',
-        element: <AddCustomServicesPage />,
+        element: withPageSuspense(<AddCustomServicesPage />),
         handle: withHeader,
       },
       {
@@ -59,7 +72,7 @@ export const serviceRoutes: RouteObject[] = [
         children: [
           {
             path: 'add',
-            element: <AddPlanPage />,
+            element: withPageSuspense(<AddPlanPage />),
             handle: withHeader,
           },
           {
@@ -69,7 +82,7 @@ export const serviceRoutes: RouteObject[] = [
           },
           {
             path: 'edit/:planId',
-            element: <EditPlanPage />,
+            element: withPageSuspense(<EditPlanPage />),
             handle: withHeader,
           },
         ],

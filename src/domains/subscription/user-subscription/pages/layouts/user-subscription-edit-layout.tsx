@@ -1,6 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom';
 import useGetUserSubscriptionById from '../../hooks/queries/use-get-user-subscription-by-id';
-import { Loader2 } from 'lucide-react';
+import PageLoader from '@/components/ui/page-loader';
 
 function UserSubscriptionEditLayout() {
   const { userSubscribeId } = useParams();
@@ -8,12 +8,7 @@ function UserSubscriptionEditLayout() {
     userSubscribeId!,
   );
 
-  if (isPending)
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Loader2 className="text-primary animate-spin" />
-      </div>
-    );
+  if (isPending) return <PageLoader label="구독 정보를 불러오는 중..." />;
 
   if (!userSubscription) return <p>데이터 없음</p>;
   return <Outlet context={{ userSubscription }} />;

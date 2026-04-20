@@ -34,7 +34,6 @@ function LoginSuccessPage() {
       sessionStorage.setItem(STORAGE_KEY.feedbackEntrySuppressed, 'true');
       setAuth('member', accessToken);
       if (redirectTo) {
-        console.log(redirectTo);
         navigate(redirectTo, {
           replace: true,
           state: { showOnboarding: isFirstLogin },

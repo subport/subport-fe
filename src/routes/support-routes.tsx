@@ -1,7 +1,11 @@
 import FaqPage from '@/domains/subport/pages/faq-page';
-import UserCommentPage from '@/domains/subport/pages/user-comment-page';
 import type { RouteObject } from 'react-router-dom';
-import { headerHandle, withHeader } from './route-handles';
+import { headerHandle, withHeader, withPageSuspense } from './route-handles';
+import { lazy } from 'react';
+
+const UserCommentPage = lazy(
+  () => import('@/domains/subport/pages/user-comment-page'),
+);
 
 export const supportRoutes: RouteObject[] = [
   {
@@ -11,7 +15,7 @@ export const supportRoutes: RouteObject[] = [
   },
   {
     path: '/user-comment',
-    element: <UserCommentPage />,
+    element: withPageSuspense(<UserCommentPage />),
     handle: withHeader,
   },
 ];

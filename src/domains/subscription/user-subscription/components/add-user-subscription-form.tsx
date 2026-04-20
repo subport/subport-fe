@@ -68,8 +68,6 @@ function SelectPlanBottomModal({
   }, [dutchPay, form]);
 
   const handleSubmit = (formData: AddUserSubscriptionValues) => {
-    console.log(formData);
-
     onSubmit({
       subscriptionId: Number(id),
       dutchPay: formData.dutchPay,
@@ -182,7 +180,6 @@ function SelectPlanBottomModal({
                       Number(day),
                     );
 
-                    console.log(startDate);
                     form.setValue(
                       'startDate',
                       format(startDate, 'yyyy-MM-dd'),

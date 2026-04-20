@@ -61,7 +61,7 @@ function RootLayout() {
       </div>
       <Toaster />
 
-      <ReactQueryDevtools />
+      {import.meta.env.DEV && <ReactQueryDevtools />}
     </Provider>
   );
 }

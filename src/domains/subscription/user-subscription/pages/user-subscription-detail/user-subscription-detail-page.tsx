@@ -2,10 +2,10 @@ import { Button } from '@/components/ui/button';
 import { formatKRWInput, formatUSDInput } from '@/shared/lib/utils';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import ProccessBarCoin from '@/assets/icons/proccess-bar-icon.svg?react';
+import ProccessBarCoin from '@/assets/icons/progressbar-icon.png';
 
 import SettingsIcon from '@/assets/icons/settings-icon.svg?react';
-import WalletIcon from '@/assets/icons/wallet-icon.svg?react';
+import WalletIcon from '@/assets/icons/wallet.png';
 import ConfirmModal from '@/components/modal/confirm-modal';
 import { ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
@@ -247,7 +247,10 @@ function UserSubscriptionDetailProgressBar({
             className={`bg-primary absolute top-0 left-0 h-2.5 rounded-full`}
           >
             <div className="relative h-full w-full">
-              <ProccessBarCoin className="absolute top-1/2 right-0 size-6 -translate-y-1/2" />
+              <img
+                src={ProccessBarCoin}
+                className="absolute top-1/2 right-0 size-6 -translate-y-1/2"
+              />
             </div>
           </div>
         </div>
@@ -275,7 +278,7 @@ function UserSubscriptionDetailPaymentSummanry({
         </div>
       </div>
       <div className="bg-background-black flex items-center justify-center gap-2 rounded-lg px-4 py-2">
-        <WalletIcon className="size-8" />
+        <img src={WalletIcon} className="size-8" />
         <span className="text-sm">{`${formatKRWInput(actualPayment)}원`}</span>
       </div>
     </div>
@@ -307,8 +310,8 @@ function UserSubscriptionDetailPaymentList({
       )}
       {spendingRecords.length > 0 && (
         <ul className="space-y-4">
-          {spendingRecords.map((records) => (
-            <li className="flex items-center gap-2">
+          {spendingRecords.map((records, idx) => (
+            <li className="flex items-center gap-2" key={`${records}-${idx}`}>
               <img
                 src={logoImageUrl}
                 className="aspect-square size-12 rounded-lg"

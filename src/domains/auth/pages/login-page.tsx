@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import kakaoSymol from '@/assets/icons/kakao-symbol.svg';
-import OnbordingImage from '@/assets/onbording-image.svg';
+import OnbordingImage from '@/assets/login-page-background-image.png';
 import GuestLoginButton from '@/domains/auth/components/guest-login-button';
 const KAKAO_OAUTH_URL = `${import.meta.env.VITE_API_URL}/oauth2/authorization/kakao`;
 

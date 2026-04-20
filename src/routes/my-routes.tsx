@@ -1,11 +1,21 @@
-import EditAccountPage from '@/domains/account/pages/edit-account-page/edit-account-page';
-import EditReminderPage from '@/domains/account/pages/edit-reminder-page/edit-reminder-page';
+import type { RouteObject } from 'react-router-dom';
+import { withBottomNav, withHeader, withPageSuspense } from './route-handles';
+import { lazy } from 'react';
+
 import MyPage from '@/domains/account/pages/my-page/my-page';
 import MySubscriptionsListPage from '@/domains/account/pages/my-subscriptions-list-page';
-import MySubscriptionSchedulePage from '@/domains/subscription/schedule/pages/my-subscription-schedule/my-subscription-schedule-page';
-import type { RouteObject } from 'react-router-dom';
-import { withBottomNav, withHeader } from './route-handles';
 
+const MySubscriptionSchedulePage = lazy(
+  () =>
+    import('@/domains/subscription/schedule/pages/my-subscription-schedule/my-subscription-schedule-page'),
+);
+
+const EditAccountPage = lazy(
+  () => import('@/domains/account/pages/edit-account-page/edit-account-page'),
+);
+const EditReminderPage = lazy(
+  () => import('@/domains/account/pages/edit-reminder-page/edit-reminder-page'),
+);
 export const myRoutes: RouteObject[] = [
   {
     path: '/my',
@@ -17,12 +27,12 @@ export const myRoutes: RouteObject[] = [
       },
       {
         path: 'edit-account',
-        element: <EditAccountPage />,
+        element: withPageSuspense(<EditAccountPage />),
         handle: withHeader,
       },
       {
         path: 'reminder',
-        element: <EditReminderPage />,
+        element: withPageSuspense(<EditReminderPage />),
         handle: withHeader,
       },
       {
@@ -32,7 +42,7 @@ export const myRoutes: RouteObject[] = [
       },
       {
         path: 'schedule',
-        element: <MySubscriptionSchedulePage />,
+        element: withPageSuspense(<MySubscriptionSchedulePage />),
         handle: withHeader,
       },
     ],

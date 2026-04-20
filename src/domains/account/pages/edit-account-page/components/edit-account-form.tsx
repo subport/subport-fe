@@ -14,7 +14,7 @@ import {
   editAccountSchema,
   type EditAccountValues,
 } from '@/domains/account/schemas/edit-account-schema';
-import { Loader2 } from 'lucide-react';
+import PageLoader from '@/components/ui/page-loader';
 
 const FrequencyEmails = [
   'naver.com',
@@ -92,11 +92,7 @@ function EditAccountForm() {
   };
 
   if (isGetMyAccountPending || !account)
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <Loader2 className="stroke-primary animate-spin" />
-      </div>
-    );
+    return <PageLoader label="계정 정보를 불러오는 중..." />;
 
   return (
     <>

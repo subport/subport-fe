@@ -1,18 +1,18 @@
 import AddUserSubscriptionForm from '@/domains/subscription/user-subscription/components/add-user-subscription-form';
 import MemberSubscribeDateForm from '@/components/subscribe/member-subscribe/member-subscribe-date-form';
 
-import useMemberSubscribeActivateMutate from '@/hooks/mutations/use-member-subscribe-activate-mutate';
-import useGetMemberSubscribeById from '@/hooks/queries/use-get-member-subscribe-by-id';
 import { deleteComma } from '@/lib/utils';
 import { format, parse } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import useActivateUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-activate-user-subscription-mutate';
+import useGetUserSubscriptionById from '@/domains/subscription/user-subscription/hooks/queries/use-get-user-subscription-by-id';
 
 const VALID_REUSE = new Set(['previous', 'custom'] as const);
 type ReuseMode = 'previous' | 'custom';
 
-function MemberSubscribeReactivatePage() {
+function UserSubscriptionReactivatePage() {
   const [date, setDate] = useState(format(new Date(), ' yyyy-MM-dd'));
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -22,16 +22,17 @@ function MemberSubscribeReactivatePage() {
   const isValidReuse = reuse !== null && VALID_REUSE.has(reuse as ReuseMode);
 
   const { data: subscribe, isPending: isGetMemberSubscribePending } =
-    useGetMemberSubscribeById(memberSubscribeId!);
+    useGetUserSubscriptionById(memberSubscribeId!);
 
-  const { mutate: activateMemberSubscribe } = useMemberSubscribeActivateMutate({
-    onSuccess: () => {
-      navigate(-1);
-      toast.success('구독이 다시 활성화 되었습니다', {
-        position: 'bottom-center',
-      });
-    },
-  });
+  const { mutate: activateUserSubscrpition } =
+    useActivateUserSubscriptionMutate({
+      onSuccess: () => {
+        navigate(-1);
+        toast.success('구독이 다시 활성화 되었습니다', {
+          position: 'bottom-center',
+        });
+      },
+    });
 
   useEffect(() => {
     if (!isValidReuse) navigate(-1);
@@ -44,7 +45,6 @@ function MemberSubscribeReactivatePage() {
     setDate(format(selectDate, 'yyyy-MM-dd'));
   };
 
-  console.log(date);
   const onSubmitReactivateCustom = (
     formData: {
       startDate: string;
@@ -58,9 +58,9 @@ function MemberSubscribeReactivatePage() {
       amountUnit: 'KRW' | 'USD';
     },
   ) => {
-    activateMemberSubscribe({
-      memberSubscribeId: memberSubscribeId!,
-      memberSubscribeInfo: {
+    activateUserSubscrpition({
+      userSubscriptionId: memberSubscribeId!,
+      userSubscriptionInfo: {
         reusePreviousInfo: false,
         ...formData,
         dutchPayAmount: formData.dutchPay
@@ -71,9 +71,9 @@ function MemberSubscribeReactivatePage() {
   };
 
   const onSubmitReactivatePrevious = () => {
-    activateMemberSubscribe({
-      memberSubscribeId: memberSubscribeId!,
-      memberSubscribeInfo: {
+    activateUserSubscrpition({
+      userSubscriptionId: memberSubscribeId!,
+      userSubscriptionInfo: {
         reusePreviousInfo: true,
         startDate: format(date, 'yyyy-MM-dd'),
       },
@@ -86,6 +86,7 @@ function MemberSubscribeReactivatePage() {
           ? '구독 서비스 정보를 입력해주세요'
           : '결제 시작을 설정해 주세요'}
       </p>
+
       {reuse === 'custom' && (
         <AddUserSubscriptionForm
           serviceName={subscribe!.name}
@@ -98,6 +99,7 @@ function MemberSubscribeReactivatePage() {
           onSubmit={onSubmitReactivateCustom}
         />
       )}
+
       {reuse === 'previous' && (
         <div className="flex h-full flex-col justify-between">
           <MemberSubscribeDateForm
@@ -115,4 +117,4 @@ function MemberSubscribeReactivatePage() {
   );
 }
 
-export default MemberSubscribeReactivatePage;
+export default UserSubscriptionReactivatePage;

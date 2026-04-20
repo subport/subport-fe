@@ -8,7 +8,7 @@ import {
 import EditIcon from '@/assets/icons/edit-icon.svg?react';
 import ReloadIcon from '@/assets/icons/reload-icon.svg?react';
 import { Link } from 'react-router-dom';
-import useDeactivateMemberSubscribeMutate from '@/hooks/mutations/use-deactivate-member-subscribe-mutate';
+import useDeactivateMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
 import { useState } from 'react';
 import { queryClient } from '../../../../components/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';

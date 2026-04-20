@@ -1,6 +1,6 @@
 import PlanForm from '@/domains/subscription/plans/components/plan-form';
 import { Spinner } from '@/components/ui/spinner';
-import useUpdatePlanMutate from '@/hooks/mutations/use-update-plan-mutate';
+import useUpdatePlanMutate from '@/domains/subscription/plans/hooks/mutate/use-update-plan-mutate';
 import useGetPlan from '@/hooks/queries/use-get-plan';
 import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';

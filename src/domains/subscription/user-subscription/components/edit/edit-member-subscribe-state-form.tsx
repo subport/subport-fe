@@ -1,8 +1,8 @@
 import ConfirmModal from '@/components/modal/confirm-modal';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import useDeactivateMemberSubscribeMutate from '@/hooks/mutations/use-deactivate-member-subscribe-mutate';
-import useDeleteMemberSubscribeMutate from '@/hooks/mutations/use-delete-member-subscribe-mutate';
+import useDeactivateMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
+import useDeleteMemberSubscribeMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-delete-user-subscription-mutate';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ const SUBSCRIBE_STATE = [
   },
 ];
 
-function EditMemberSubscribeStateForm() {
+function EditUserSubscriptionStateForm() {
   const { memberSubscribeId } = useParams();
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
@@ -46,54 +46,48 @@ function EditMemberSubscribeStateForm() {
 
   const handleChangeSubscribeState = () => {
     if (subscribeState === 'deActivate') {
-      deactivateMemberSubscribe({ memberSubscribeId: memberSubscribeId! });
+      deactivateMemberSubscribe({ userSubscriptionId: memberSubscribeId! });
     }
 
     if (subscribeState === 'delete') {
-      deleteMemberSubscribe({ memberSubscribeId: memberSubscribeId! });
+      deleteMemberSubscribe({ userSubscriptionId: memberSubscribeId! });
     }
   };
 
   return (
     <>
-      <section className="flex h-full flex-col justify-between">
-        <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
-          구독 상태를 변경할까요?
-        </p>
-
-        <div className="scrollbar-hide flex-1 overflow-scroll">
-          <RadioGroup value={subscribeState}>
-            {SUBSCRIBE_STATE.map((state) => (
-              <div
-                onClick={() => setSubscribeState(state.value)}
-                key={state.value}
-                className="bg-box-black hover:bg-box-black/80 flex cursor-pointer items-center justify-between gap-4 rounded-2xl px-5 py-4 transition-colors"
-              >
-                <div>
-                  <p className={cn('text-lg font-semibold')}>{state.label}</p>
-                  <span className="text-sub-font-black text-sm">
-                    {state.value === 'deActivate' &&
-                      '저장된 구독 정보는 그대로 남아있어요'}
-                    {state.value === 'delete' &&
-                      '저장된 구독 정보가 모두 사라져요'}
-                  </span>
-                </div>
-
-                <RadioGroupItem value={state.value} />
+      <div className="scrollbar-hide flex-1 overflow-scroll">
+        <RadioGroup value={subscribeState}>
+          {SUBSCRIBE_STATE.map((state) => (
+            <div
+              onClick={() => setSubscribeState(state.value)}
+              key={state.value}
+              className="bg-box-black hover:bg-box-black/80 flex cursor-pointer items-center justify-between gap-4 rounded-2xl px-5 py-4 transition-colors"
+            >
+              <div>
+                <p className={cn('text-lg font-semibold')}>{state.label}</p>
+                <span className="text-sub-font-black text-sm">
+                  {state.value === 'deActivate' &&
+                    '저장된 구독 정보는 그대로 남아있어요'}
+                  {state.value === 'delete' &&
+                    '저장된 구독 정보가 모두 사라져요'}
+                </span>
               </div>
-            ))}
-          </RadioGroup>
-        </div>
-        <div className="rounded-t-2xl pt-4">
-          <Button
-            onClick={() => setModal(true)}
-            disabled={!subscribeState}
-            className="w-full"
-          >
-            확인하기
-          </Button>
-        </div>
-      </section>
+
+              <RadioGroupItem value={state.value} />
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
+      <div className="rounded-t-2xl pt-4">
+        <Button
+          onClick={() => setModal(true)}
+          disabled={!subscribeState}
+          className="w-full"
+        >
+          확인하기
+        </Button>
+      </div>
       <ConfirmModal
         open={modal}
         onOpenChange={() => setModal(false)}
@@ -115,4 +109,4 @@ function EditMemberSubscribeStateForm() {
   );
 }
 
-export default EditMemberSubscribeStateForm;
+export default EditUserSubscriptionStateForm;

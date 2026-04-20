@@ -1,15 +1,15 @@
-import { updateMemberSubscribeDutchPay } from '@/api/member-subscribe';
+import { updatedUserSubscriptionDutchPay } from '@/domains/subscription/user-subscription/api/user-subscription';
+import type { UserSubscriptionByIdItem } from '@/domains/subscription/user-subscription/types/api';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { MemberSubscribeItem } from '@/types/member-subscribe';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-function useUpdateMemberSubscribeDutchPayMutate(
-  callbacks?: useMutationCallbacks<MemberSubscribeItem>,
+function useUpdatedUserSubscriptionDutchPayMutate(
+  callbacks?: useMutationCallbacks<UserSubscriptionByIdItem>,
 ) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: updateMemberSubscribeDutchPay,
+    mutationFn: updatedUserSubscriptionDutchPay,
     onSuccess: (data) => {
       queryClient.setQueryData(
         QUERY_KEY.userSubscription.byId(data.id.toString()),
@@ -25,4 +25,4 @@ function useUpdateMemberSubscribeDutchPayMutate(
   });
 }
 
-export default useUpdateMemberSubscribeDutchPayMutate;
+export default useUpdatedUserSubscriptionDutchPayMutate;

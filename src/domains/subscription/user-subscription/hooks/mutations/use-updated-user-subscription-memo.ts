@@ -1,15 +1,15 @@
-import { updateMemberSubscribeMemo } from '@/api/member-subscribe';
 import { queryClient } from '@/components/providers/query-provider';
+import { updateUserSubscriptionMemo } from '@/domains/subscription/user-subscription/api/user-subscription';
+import type { UserSubscriptionByIdItem } from '@/domains/subscription/user-subscription/types/api';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { MemberSubscribeItem } from '@/types/member-subscribe';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 
-function useUpdatedMemberSubscribeMemo(
-  callbacks?: useMutationCallbacks<MemberSubscribeItem>,
+function useUpdatedUserSubscriptionMemo(
+  callbacks?: useMutationCallbacks<UserSubscriptionByIdItem>,
 ) {
   return useMutation({
-    mutationFn: updateMemberSubscribeMemo,
+    mutationFn: updateUserSubscriptionMemo,
     onSuccess: (data) => {
       callbacks?.onSuccess?.(data);
 
@@ -21,4 +21,4 @@ function useUpdatedMemberSubscribeMemo(
   });
 }
 
-export default useUpdatedMemberSubscribeMemo;
+export default useUpdatedUserSubscriptionMemo;

@@ -1,19 +1,21 @@
 import { Button } from '@/components/ui/button';
 import ErrorMessage from '@/components/ui/error-message';
 import FieldWrapper from '@/components/ui/field-wrapper';
-import useUpdateMemberSubscribeDutchPayMutate from '@/hooks/mutations/use-update-member-subscribe-dutch-pay-mutate';
+import useUpdateMemberSubscribeDutchPayMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-update-member-subscribe-dutch-pay-mutate';
 import { deleteComma, formatKRWInput } from '@/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
-type EditMemberSubscribeDutchPayFormProps = {
-  defaultAmount?: string;
+type EditUserSubscriptionDutchPayFormProps = {
+  defaultAmount: string;
+  defaultDutchPay?: boolean;
 };
 
-function EditMemberSubscribeDutchPayForm({
+function EditUserSubscriptionDutchPayForm({
   defaultAmount,
-}: EditMemberSubscribeDutchPayFormProps) {
+  defaultDutchPay,
+}: EditUserSubscriptionDutchPayFormProps) {
   const navigate = useNavigate();
   const { memberSubscribeId } = useParams();
 
@@ -46,10 +48,6 @@ function EditMemberSubscribeDutchPayForm({
 
   return (
     <div className="flex h-full flex-col">
-      <p className="mr-auto mb-5 w-[50%] text-xl/relaxed font-semibold break-keep">
-        더치페이 금액을 입력해 주세요.
-      </p>
-
       <div className="h-full flex-1">
         <FieldWrapper
           error={!dutchPayAmount}
@@ -82,6 +80,7 @@ function EditMemberSubscribeDutchPayForm({
         </div>
         <div className="flex w-full gap-4">
           <Button
+            disabled={!defaultDutchPay}
             className="w-[40%] shrink"
             variant={'secondary'}
             onClick={handleUpdateNotDutchPay}
@@ -90,7 +89,12 @@ function EditMemberSubscribeDutchPayForm({
           </Button>
           <Button
             disabled={
-              !dutchPayAmount || Number(deleteComma(dutchPayAmount)) === 0
+              !dutchPayAmount ||
+              Number(deleteComma(dutchPayAmount)) === 0 ||
+              defaultAmount
+                ? Number(deleteComma(dutchPayAmount)) ===
+                  Number(deleteComma(defaultAmount))
+                : false
             }
             className="w-full shrink"
             onClick={handleUpdateDutchPay}
@@ -103,4 +107,4 @@ function EditMemberSubscribeDutchPayForm({
   );
 }
 
-export default EditMemberSubscribeDutchPayForm;
+export default EditUserSubscriptionDutchPayForm;

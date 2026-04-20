@@ -52,3 +52,44 @@ export type AddUserSubscriptionReq = AddUserSubscriptionValues & {
   price: string;
   amountUnit: 'KRW' | 'USD';
 };
+
+export type UserSubscriptionSpendingRecord = {
+  amount: number;
+  paymentDate: number;
+};
+
+export type UserSubscriptionActivateReq =
+  | {
+      reusePreviousInfo: true;
+      startDate: string;
+    }
+  | {
+      reusePreviousInfo: false;
+      planId: number;
+      startDate: string;
+      memo: string;
+      dutchPay: boolean;
+      dutchPayAmount: number | null;
+    };
+
+export type UserSubscriptionByIdItem = {
+  id: number;
+  subscriptionId: number;
+  name: string;
+  logoImageUrl: string;
+  planId: number;
+  planName: string;
+  planAmount: number;
+  planAmountUnit: 'KRW' | 'USD';
+  durationMonths: number;
+  daysUntilPayment: number;
+  daysSinceStart: number;
+  paymentProgressPercent: number;
+  paymentDate: number;
+  reminderDaysBefore: number;
+  active: boolean;
+  dutchPay: boolean;
+  actualPayment: number;
+  spendingRecords: UserSubscriptionSpendingRecord[];
+  memo: string;
+};

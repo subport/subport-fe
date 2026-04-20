@@ -1,31 +1,28 @@
-import { activateMemberSubscribe } from '@/api/member-subscribe';
+import type { UserSubscriptionByIdItem } from '@/domains/subscription/user-subscription/types/api';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { MemberSubscribeItem } from '@/types/member-subscribe';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updatedUserSubscriptionPlan } from '../../api/user-subscription';
 
-function useMemberSubscribeActivateMutate(
-  callbacks?: useMutationCallbacks<MemberSubscribeItem>,
+function useUpdatedUserSubscriptionPlanMutate(
+  callbacks?: useMutationCallbacks<UserSubscriptionByIdItem>,
 ) {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: activateMemberSubscribe,
-    onSuccess: (data) => {
-      callbacks?.onSuccess?.(data);
 
+  return useMutation({
+    mutationFn: updatedUserSubscriptionPlan,
+    onSuccess: (data) => {
       queryClient.setQueryData(
         QUERY_KEY.userSubscription.byId(data.id.toString()),
         data,
       );
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.spendingRecords.all,
-      });
 
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.userSubscription.lists,
       });
+      callbacks?.onSuccess?.(data);
     },
   });
 }
 
-export default useMemberSubscribeActivateMutate;
+export default useUpdatedUserSubscriptionPlanMutate;

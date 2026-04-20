@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import CustomPlanEditCardSkeleton from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card-skeleton';
 
-function MemberSubscribePlanManagePage() {
+function UserSubscriptionPlanManagePage() {
   const navigate = useNavigate();
   const { subscribeId } = useParams();
   const [modal, setModal] = useState(false);
@@ -84,4 +84,4 @@ function MemberSubscribePlanManagePage() {
   );
 }
 
-export default MemberSubscribePlanManagePage;
+export default UserSubscriptionPlanManagePage;

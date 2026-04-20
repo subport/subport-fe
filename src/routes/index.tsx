@@ -12,10 +12,7 @@ import EditPlanPage from '../domains/subscription/pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from '../domains/subscription/pages/plan-editor/plan-editor-page';
 import SubscribeEditorPage from '../domains/subscription/pages/custom-service-editor/custom-service-editor-page';
-import MemberSubscribeDetailpage from './pages/member-subscribe-detail-page';
 import MemberSubscribeEditLink from '@/components/subscribe/member-subscribe/member-subscribe-edit-link';
-import MemberSubscribeEditPage from './pages/member-subscribe-edit-page';
-import EditMemberSubscribeFormPage from './pages/edit-member-subscribe-form-page';
 import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layout';
 import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
 import FaqPage from '../domains/subport/pages/faq-page';
@@ -31,6 +28,12 @@ import EditAccountPage from '@/domains/account/pages/edit-account-page/edit-acco
 import EditReminderPage from '@/domains/account/pages/edit-reminder-page/edit-reminder-page';
 import MySubscriptionsListPage from '@/domains/account/pages/my-subscriptions-list-page';
 import MySubscriptionSchedulePage from '@/domains/subscription/schedule/pages/my-subscription-schedule/my-subscription-schedule-page';
+import UserSubscriptionDetailPage from '../domains/subscription/user-subscription/pages/user-subscription-detail/user-subscription-detail-page';
+import UserSubscriptionEditLayout from '@/domains/subscription/user-subscription/pages/layouts/user-subscription-edit-layout';
+import EditUserSubscriptionPlanPage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-plan-page';
+import EditUserSubscriptionPage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-page';
+import EditUserSubscriptionDutchPayPage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-dutchpay-page';
+import EditUserSubscriptionStatePage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-state-page';
 
 const router = createBrowserRouter([
   {
@@ -155,7 +158,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: ':memberSubscribeId',
-                element: <MemberSubscribeDetailpage />,
+                element: <UserSubscriptionDetailPage />,
                 handle: {
                   header: {
                     header: true,
@@ -165,17 +168,28 @@ const router = createBrowserRouter([
               },
               {
                 path: ':memberSubscribeId/edit',
-                element: <MemberSubscribeEditPage />,
+                element: <UserSubscriptionEditLayout />,
                 handle: {
                   header: { header: true },
                 },
-              },
-              {
-                path: ':memberSubscribeId/edit/:editSection',
-                element: <EditMemberSubscribeFormPage />,
-                handle: {
-                  header: { header: true },
-                },
+                children: [
+                  {
+                    index: true,
+                    element: <EditUserSubscriptionPage />,
+                  },
+                  {
+                    path: 'plan',
+                    element: <EditUserSubscriptionPlanPage />,
+                  },
+                  {
+                    path: 'dutchpay',
+                    element: <EditUserSubscriptionDutchPayPage />,
+                  },
+                  {
+                    path: 'state',
+                    element: <EditUserSubscriptionStatePage />,
+                  },
+                ],
               },
 
               {

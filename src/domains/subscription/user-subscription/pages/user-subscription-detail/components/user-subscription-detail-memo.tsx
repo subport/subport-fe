@@ -1,17 +1,17 @@
-import useUpdatedMemberSubscribeMemo from '@/hooks/mutations/use-updated-member-subscribe-memo';
+import useUpdatedUserSubscriptionMemo from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-memo';
 import useDebounce from '@/hooks/use-debunce';
 import { tokenStorage } from '@/lib/token-storage';
 import { useEffect, useRef, useState } from 'react';
 
-interface MemberSubscribeMemoInputProps {
+interface UserSubscriptionDetailMemoProps {
   memo: string;
-  memberSubscribeId: number;
+  userSubscriptionId: number;
 }
 
-function MemberSubscribeMemoInput({
+function UserSubscriptionDetailMemo({
   memo,
-  memberSubscribeId,
-}: MemberSubscribeMemoInputProps) {
+  userSubscriptionId,
+}: UserSubscriptionDetailMemoProps) {
   const memoInputRef = useRef<HTMLTextAreaElement>(null);
 
   const [value, setValue] = useState(memo);
@@ -20,7 +20,7 @@ function MemberSubscribeMemoInput({
   const latestSavedValueRef = useRef(memo);
   const [edit, setEdit] = useState(false);
 
-  const { mutate: updateMemo } = useUpdatedMemberSubscribeMemo({
+  const { mutate: updateMemo } = useUpdatedUserSubscriptionMemo({
     onSuccess: () => {
       latestSavedValueRef.current = debouncedValue;
     },
@@ -29,7 +29,7 @@ function MemberSubscribeMemoInput({
   const handleUpdatedMemo = () => {
     updateMemo({
       updatedMemo: value,
-      memberSubscribeId: memberSubscribeId.toString(),
+      userSubscriptionId: userSubscriptionId.toString(),
     });
   };
 
@@ -39,10 +39,10 @@ function MemberSubscribeMemoInput({
 
     updateMemo({
       updatedMemo: debouncedValue,
-      memberSubscribeId: memberSubscribeId.toString(),
+      userSubscriptionId: userSubscriptionId.toString(),
     });
     latestValueRef.current = debouncedValue;
-  }, [debouncedValue, edit, memberSubscribeId, updateMemo]);
+  }, [debouncedValue, edit, userSubscriptionId, updateMemo]);
 
   useEffect(() => {
     if (!edit) return;
@@ -66,14 +66,14 @@ function MemberSubscribeMemoInput({
     if (mode === 'normal') {
       updateMemo({
         updatedMemo: nextValue,
-        memberSubscribeId: memberSubscribeId.toString(),
+        userSubscriptionId: userSubscriptionId.toString(),
       });
       latestSavedValueRef.current = nextValue;
       return;
     }
 
     await fetch(
-      `${import.meta.env.VITE_API_URL}/api/member-subscriptions/${memberSubscribeId}/memo`,
+      `${import.meta.env.VITE_API_URL}/api/member-subscriptions/${userSubscriptionId}/memo`,
       {
         method: 'PUT',
         headers: {
@@ -127,7 +127,7 @@ function MemberSubscribeMemoInput({
               </p>
             )}
             {memo.trim().length > 0 && (
-              <p className="break-words whitespace-pre-wrap">{memo}</p>
+              <p className="wrap-break-words whitespace-pre-wrap">{memo}</p>
             )}
           </>
         )}
@@ -153,4 +153,4 @@ function MemberSubscribeMemoInput({
   );
 }
 
-export default MemberSubscribeMemoInput;
+export default UserSubscriptionDetailMemo;

@@ -4,17 +4,16 @@ import RootLayout from '@/components/layout/root-layout';
 import { RequireAuth, RequireGuest } from '@/components/layout/private-route';
 
 import MainPage from '../domains/subscription/pages/main/main-page';
-import LoginPage from './pages/login-page';
-import LoginSuccessPage from './pages/login-success-page';
+import LoginPage from '../domains/auth/pages/login-page';
+import LoginSuccessPage from '../domains/auth/pages/login-success-page';
 import MyPage from '../domains/account/pages/my-page/my-page';
 import AddPlanPage from '../domains/subscription/pages/add-plan-page';
 import EditPlanPage from '../domains/subscription/pages/edit-plan-page';
 import PlanPageLayout from '@/components/layout/plan-page-layout';
 import PlanEditorPage from '../domains/subscription/pages/plan-editor/plan-editor-page';
 import SubscribeEditorPage from '../domains/subscription/pages/custom-service-editor/custom-service-editor-page';
-import MemberSubscribeEditLink from '@/components/subscribe/member-subscribe/member-subscribe-edit-link';
-import AddSubscribePageLayout from '@/components/layout/add-subscribe-page-layout';
-import MemberSubscribeReactivatePage from './pages/member-subscribe-reactivate-page';
+import AddSubscribePageLayout from '@/components/layout/add-user-subscription-page-layout';
+import MemberSubscribeReactivatePage from '../domains/subscription/user-subscription/pages/user-subscription-reactivate-page';
 import FaqPage from '../domains/subport/pages/faq-page';
 import UserCommentPage from '../domains/subport/pages/user-comment-page';
 import FeedbackModalPage from '../domains/subport/pages/feed-back-modal-page';
@@ -23,7 +22,7 @@ import AddCustomServicesPage from '../domains/subscription/pages/add-custom-serv
 import EditCustomServicePage from '@/domains/subscription/pages/edit-custom-service-page';
 import AddUserSubscriptionPage from '../domains/subscription/pages/add-user-subscription-page';
 import SubscriptionServiceListPage from '@/domains/subscription/pages/subscription-service-list/subscription-service-list-page';
-import MemberSubscribePlanManagePage from './pages/member-subscribe-plan-manage-page';
+import MemberSubscribePlanManagePage from '../domains/subscription/user-subscription/pages/user-subscription-plan-manage-page';
 import EditAccountPage from '@/domains/account/pages/edit-account-page/edit-account-page';
 import EditReminderPage from '@/domains/account/pages/edit-reminder-page/edit-reminder-page';
 import MySubscriptionsListPage from '@/domains/account/pages/my-subscriptions-list-page';
@@ -34,6 +33,7 @@ import EditUserSubscriptionPlanPage from '@/domains/subscription/user-subscripti
 import EditUserSubscriptionPage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-page';
 import EditUserSubscriptionDutchPayPage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-dutchpay-page';
 import EditUserSubscriptionStatePage from '@/domains/subscription/user-subscription/pages/edit-user-subscription-state-page';
+import UserSubscriptionEditLink from '@/domains/subscription/user-subscription/components/edit/user-subscription-edit-link';
 
 const router = createBrowserRouter([
   {
@@ -162,7 +162,7 @@ const router = createBrowserRouter([
                 handle: {
                   header: {
                     header: true,
-                    right: <MemberSubscribeEditLink />,
+                    right: <UserSubscriptionEditLink />,
                   },
                 },
               },

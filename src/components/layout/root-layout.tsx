@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { Outlet, useMatches } from 'react-router-dom';
 import GlobalHeader from './global-header';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import BottomNavigation from './bottom-navigation';
-import Provider from '../providers';
+import Provider from '../../shared/providers';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from '../ui/sonner';
 

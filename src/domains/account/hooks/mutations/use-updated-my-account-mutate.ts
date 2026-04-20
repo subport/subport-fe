@@ -1,8 +1,8 @@
 import { updatedMyAccount } from '@/domains/account/api/account';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { useMutationCallbacks } from '@/types/mutate';
-import type { MyProfileRes, MyAccountRes } from '@/types/profile';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { MyAccountRes, MyProfileRes } from '../../types/api';
 
 function useUpdatedMyAccountMutate(
   callbacks?: useMutationCallbacks<MyAccountRes>,

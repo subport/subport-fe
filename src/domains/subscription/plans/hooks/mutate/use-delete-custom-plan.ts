@@ -1,6 +1,6 @@
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { ApiErrorRes } from '@/types/error';
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { ApiErrorRes } from '@/shared/types/error';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { deletePlan } from '../../api/plan';

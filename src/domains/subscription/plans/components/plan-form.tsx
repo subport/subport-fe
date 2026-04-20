@@ -1,7 +1,7 @@
 import { Controller, useForm, useFormState, useWatch } from 'react-hook-form';
 import FieldWrapper from '../../../../components/ui/field-wrapper';
 import ErrorMessage from '../../../../components/ui/error-message';
-import { cn, formatKRWInput, formatUSDInput } from '@/lib/utils';
+import { cn, formatKRWInput, formatUSDInput } from '@/shared/lib/utils';
 import { useState } from 'react';
 import Picker from 'react-mobile-picker';
 import PickerScrollGuard from '../../../../components/ui/picker-scroll-guard';

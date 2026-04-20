@@ -2,11 +2,11 @@
 import { Suspense } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import OnBoardingBottomModal from '@/components/modal/onboarding-bottom-modal';
+import OnBoardingBottomModal from '@/domains/subscription/pages/main/components/onboarding-bottom-modal';
 import MonthlySpendingCard from '@/domains/subscription/pages/main/components/monthly-spending-card';
 
 import MessageIcon from '@/assets/icons/message-icon.svg?react';
-import FeedbackEntryBottomModal from '@/components/modal/feedback-entry-bottom-modal';
+import FeedbackEntryBottomModal from '@/domains/subscription/pages/main/components/feedback-entry-bottom-modal';
 import useSubscriptionListFilter from './hooks/use-subscription-list-filter';
 import useMainPageOnboarding from './hooks/use-main-page-onboarding';
 import useMainPageFeedbackEntry from './hooks/use-main-page-feedback-entry';

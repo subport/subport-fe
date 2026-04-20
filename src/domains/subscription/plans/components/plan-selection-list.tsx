@@ -3,7 +3,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from '../../../../components/ui/radio-group';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import type { PlanItem } from '@/domains/subscription/plans/types/api';
 import { Plus } from 'lucide-react';
 import type { PlanSelectionItem } from '../types/view';

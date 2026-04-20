@@ -1,5 +1,5 @@
 import type {} from '@/domains/subscription/schedule/api/schedule';
-import { formatKRWInput } from '@/lib/utils';
+import { formatKRWInput } from '@/shared/lib/utils';
 import SpendingStateDot from './spending-state-dot';
 import type {
   CompletedRecord,

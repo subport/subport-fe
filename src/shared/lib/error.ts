@@ -1,4 +1,4 @@
-import type { ApiErrorRes } from '@/types/error';
+import type { ApiErrorRes } from '@/shared/types/error';
 import { isAxiosError } from 'axios';
 
 export const getApiErrorRes = (error: unknown) => {

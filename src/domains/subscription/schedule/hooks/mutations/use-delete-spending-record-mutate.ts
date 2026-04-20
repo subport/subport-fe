@@ -1,5 +1,5 @@
 import { deleteSpendingRecord } from '@/domains/subscription/schedule/api/schedule';
-import { queryClient } from '@/components/providers/query-provider';
+import { queryClient } from '@/shared/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';

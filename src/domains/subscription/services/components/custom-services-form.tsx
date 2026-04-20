@@ -5,12 +5,12 @@ import { ChevronUp, Plus } from 'lucide-react';
 import Picker from 'react-mobile-picker';
 import PickerScrollGuard from '../../../../components/ui/picker-scroll-guard';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 import { Button } from '../../../../components/ui/button';
 import FieldWrapper from '../../../../components/ui/field-wrapper';
 import ErrorMessage from '../../../../components/ui/error-message';
-import CustomSubscribeImageSelectModal from '../../../../components/modal/custom-subscribe-image-select-modal';
+import CustomSubscribeImageSelectModal from './custom-subscribe-image-select-modal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   customServicesSchema,

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ChevronUp } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import PickerScrollGuard from '@/components/ui/picker-scroll-guard';
 import Picker from 'react-mobile-picker';
 import { format } from 'date-fns';
@@ -10,7 +10,7 @@ import {
   getMonthRange,
   getMonthsByMonthRange,
   getYearsByMonthRange,
-} from '@/lib/date-utils';
+} from '@/shared/lib/date-utils';
 
 type DateState = {
   year: string;
@@ -103,44 +103,24 @@ function DatePicker({
         >
           <PickerScrollGuard enabled={selectDate}>
             <Picker
-            height={selectDate ? 110 : 0}
-            style={{
-              maskImage: 'none',
-              WebkitMaskImage: 'none',
-            }}
-            aria-hidden={!selectDate}
-            wheelMode="natural"
-            value={pickerValue}
-            onChange={(nextValue) => {
-              setPickerValue(normalizePickerValue(nextValue));
+              height={selectDate ? 110 : 0}
+              style={{
+                maskImage: 'none',
+                WebkitMaskImage: 'none',
+              }}
+              aria-hidden={!selectDate}
+              wheelMode="natural"
+              value={pickerValue}
+              onChange={(nextValue) => {
+                setPickerValue(normalizePickerValue(nextValue));
 
-              onChange(nextValue);
-            }}
-            className="transition-all [&>div:last-child]:rounded-sm [&>div:last-child]:bg-[#B1DFDA] [&>div:last-child>div]:hidden"
-          >
-            <Picker.Column name="year" className="z-10">
-              {years.map((y) => (
-                <Picker.Item key={y} value={y}>
-                  {({ selected }) => (
-                    <div
-                      className={cn(
-                        selected
-                          ? 'text-background-black'
-                          : 'text-sub-font-black',
-                        'transition-colors',
-                      )}
-                    >
-                      {y}년
-                    </div>
-                  )}
-                </Picker.Item>
-              ))}
-            </Picker.Column>
-
-            <Picker.Column name="month" className="z-10">
-              {getMonthsByMonthRange(monthRange, pickerValue.year).map(
-                (month) => (
-                  <Picker.Item key={month} value={month}>
+                onChange(nextValue);
+              }}
+              className="transition-all [&>div:last-child]:rounded-sm [&>div:last-child]:bg-[#B1DFDA] [&>div:last-child>div]:hidden"
+            >
+              <Picker.Column name="year" className="z-10">
+                {years.map((y) => (
+                  <Picker.Item key={y} value={y}>
                     {({ selected }) => (
                       <div
                         className={cn(
@@ -150,37 +130,57 @@ function DatePicker({
                           'transition-colors',
                         )}
                       >
-                        {Number(month)}월
+                        {y}년
                       </div>
                     )}
                   </Picker.Item>
-                ),
-              )}
-            </Picker.Column>
+                ))}
+              </Picker.Column>
 
-            <Picker.Column name="day" className="z-10">
-              {getDaysByMonthRange({
-                year: pickerValue.year,
-                month: pickerValue.month,
-                minDate,
-                maxDate,
-              }).map((day) => (
-                <Picker.Item key={day} value={day}>
-                  {({ selected }) => (
-                    <div
-                      className={cn(
-                        selected
-                          ? 'text-background-black'
-                          : 'text-sub-font-black',
-                        'transition-colors',
+              <Picker.Column name="month" className="z-10">
+                {getMonthsByMonthRange(monthRange, pickerValue.year).map(
+                  (month) => (
+                    <Picker.Item key={month} value={month}>
+                      {({ selected }) => (
+                        <div
+                          className={cn(
+                            selected
+                              ? 'text-background-black'
+                              : 'text-sub-font-black',
+                            'transition-colors',
+                          )}
+                        >
+                          {Number(month)}월
+                        </div>
                       )}
-                    >
-                      {Number(day)}일
-                    </div>
-                  )}
-                </Picker.Item>
-              ))}
-            </Picker.Column>
+                    </Picker.Item>
+                  ),
+                )}
+              </Picker.Column>
+
+              <Picker.Column name="day" className="z-10">
+                {getDaysByMonthRange({
+                  year: pickerValue.year,
+                  month: pickerValue.month,
+                  minDate,
+                  maxDate,
+                }).map((day) => (
+                  <Picker.Item key={day} value={day}>
+                    {({ selected }) => (
+                      <div
+                        className={cn(
+                          selected
+                            ? 'text-background-black'
+                            : 'text-sub-font-black',
+                          'transition-colors',
+                        )}
+                      >
+                        {Number(day)}일
+                      </div>
+                    )}
+                  </Picker.Item>
+                ))}
+              </Picker.Column>
             </Picker>
           </PickerScrollGuard>
         </div>

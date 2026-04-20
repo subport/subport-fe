@@ -1,6 +1,6 @@
 import FeedbackRequestMascot from '@/assets/feedback-request-mascot.png';
 import CloseIcon from '@/assets/icons/close-button-icon.svg?react';
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 import {
   Drawer,
   DrawerContent,
@@ -8,8 +8,8 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from '../ui/drawer';
-import { Button } from '../ui/button';
+} from '../../../../../components/ui/drawer';
+import { Button } from '../../../../../components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 interface FeedbackEntryBottomModalProps {

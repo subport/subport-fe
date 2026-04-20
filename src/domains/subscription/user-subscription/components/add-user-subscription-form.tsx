@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useEffect, useState } from 'react';
 import { Checkbox } from '../../../../components/ui/checkbox';
-import { cn, formatKRWInput } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/shared/lib/utils';
 import { Button } from '../../../../components/ui/button';
 
-import DatePicker from '../../../../components/form/date-picker';
+import DatePicker from '../../../../shared/form/date-picker';
 import { addMonths, format } from 'date-fns';
 import {
   addUserSubscriptionSchema,

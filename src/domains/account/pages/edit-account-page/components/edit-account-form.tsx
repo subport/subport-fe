@@ -4,7 +4,7 @@ import FieldWrapper from '../../../../../components/ui/field-wrapper';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '../../../../../components/ui/error-message';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import useGetMyAccount from '@/domains/account/hooks/queries/use-get-my-account';
 import useUpdatedMyAccountMutate from '@/domains/account/hooks/mutations/use-updated-my-account-mutate';
 import { toast } from 'sonner';

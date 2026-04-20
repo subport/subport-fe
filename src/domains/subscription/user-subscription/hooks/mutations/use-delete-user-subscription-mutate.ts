@@ -1,4 +1,4 @@
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteUserSubscription } from '../../api/user-subscription';
 import { QUERY_KEY } from '@/shared/constants/query-key';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { client } from '../../../api/client';
+import { client } from '../../../shared/api/client';
 
 type RefreshRes = {
   accessToken: string;

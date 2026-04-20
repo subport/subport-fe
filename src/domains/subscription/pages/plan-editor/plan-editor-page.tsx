@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import ConfirmModal from '@/components/modal/confirm-modal';
 import { toast } from 'sonner';
-import { getApiErrorMessage } from '@/lib/error';
+import { getApiErrorMessage } from '@/shared/lib/error';
 import useGetCustomPlanList from '../../plans/hooks/queries/use-get-custom-plan-list';
 import CustomPlanEditCard from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card';
 import useDeleteCustomPlan from '@/domains/subscription/plans/hooks/mutate/use-delete-custom-plan';

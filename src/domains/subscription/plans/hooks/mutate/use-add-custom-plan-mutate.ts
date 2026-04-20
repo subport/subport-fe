@@ -1,5 +1,5 @@
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addPlan } from '../../api/plan';
 

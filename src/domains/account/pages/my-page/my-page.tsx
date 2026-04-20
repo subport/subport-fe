@@ -13,7 +13,7 @@ import LogoutButton from '@/domains/account/pages/my-page/components/logout-butt
 import DeleteProfileButton from '@/domains/account/pages/my-page/components/delete-profile-button';
 import { useGetAuthRole } from '@/domains/auth/store/use-auth-store';
 import { Suspense, useState } from 'react';
-import LoginModal from '@/components/modal/login-modal';
+import LoginModal from '@/domains/auth/components/login-modal';
 import MyPageProfileSummary from './components/my-page-profile-summary';
 import MyPageGuestSummary from './components/my-page-guest-summary';
 import MyPageSummarySkeleton from './components/my-page-summary-skeleton';

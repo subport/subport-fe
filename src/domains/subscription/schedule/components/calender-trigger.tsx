@@ -6,7 +6,7 @@ import {
 } from '../../../../components/ui/popover';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { format } from 'date-fns';
 
 const yearList = Array.from({ length: 12 }, (_, i) => {

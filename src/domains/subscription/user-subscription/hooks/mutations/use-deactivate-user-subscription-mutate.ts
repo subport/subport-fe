@@ -1,7 +1,7 @@
 import { deactivateUserSubscription } from '@/domains/subscription/user-subscription/api/user-subscription';
 import type { UserSubscriptionByIdItem } from '@/domains/subscription/user-subscription/types/api';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 function useDeactivateUserSubscriptionMutate(

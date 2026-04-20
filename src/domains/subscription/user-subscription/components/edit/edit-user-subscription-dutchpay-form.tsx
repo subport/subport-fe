@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import ErrorMessage from '@/components/ui/error-message';
 import FieldWrapper from '@/components/ui/field-wrapper';
 import useUpdatedUserSubscriptionDutchPayMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-dutch-pay-mutate';
-import { deleteComma, formatKRWInput } from '@/lib/utils';
+import { deleteComma, formatKRWInput } from '@/shared/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';

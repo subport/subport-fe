@@ -1,7 +1,7 @@
 import PlanForm from '@/domains/subscription/plans/components/plan-form';
 import PageTitle from '@/components/ui/page-title';
 
-import { deleteComma } from '@/lib/utils';
+import { deleteComma } from '@/shared/lib/utils';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';

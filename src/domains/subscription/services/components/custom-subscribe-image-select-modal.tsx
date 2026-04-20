@@ -1,4 +1,8 @@
-import { Drawer, DrawerContent, DrawerTitle } from '../ui/drawer';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+} from '../../../../components/ui/drawer';
 import ExercisetEmoticon from '@/assets/emoticon/exercise.png';
 import MusicEmoticon from '@/assets/emoticon/music.png';
 import ArtEmoticon from '@/assets/emoticon/art.png';

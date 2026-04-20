@@ -1,5 +1,5 @@
 import { sendUserComment } from '@/domains/subport/api/subport';
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 
 function useSendUserComment(callbacks?: useMutationCallbacks) {

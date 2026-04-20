@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import type { SubscriptionServiceItem } from '@/domains/subscription/services/types/api';
-import { cn, formatKRWInput } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/shared/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
 import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';

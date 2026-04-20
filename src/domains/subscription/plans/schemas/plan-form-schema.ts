@@ -1,4 +1,4 @@
-import { deleteComma } from '@/lib/utils';
+import { deleteComma } from '@/shared/lib/utils';
 import { z } from 'zod';
 
 export const planFormSchema = z

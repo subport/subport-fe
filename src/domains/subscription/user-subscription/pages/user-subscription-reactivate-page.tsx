@@ -1,6 +1,6 @@
 import AddUserSubscriptionForm from '@/domains/subscription/user-subscription/components/add-user-subscription-form';
 
-import { deleteComma } from '@/lib/utils';
+import { deleteComma } from '@/shared/lib/utils';
 import { format, parse } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';

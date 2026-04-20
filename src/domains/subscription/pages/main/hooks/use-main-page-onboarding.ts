@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 import { useGetAuthRole } from '@/domains/auth/store/use-auth-store';
 import { useLocation } from 'react-router-dom';
 

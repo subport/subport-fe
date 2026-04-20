@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 import {
   useGetAuthActions,
   useGetAuthRole,

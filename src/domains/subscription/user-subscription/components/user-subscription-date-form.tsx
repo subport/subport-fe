@@ -1,4 +1,4 @@
-import DatePicker from '@/components/form/date-picker';
+import DatePicker from '@/shared/form/date-picker';
 import { Button } from '@/components/ui/button';
 import FieldWrapper from '@/components/ui/field-wrapper';
 

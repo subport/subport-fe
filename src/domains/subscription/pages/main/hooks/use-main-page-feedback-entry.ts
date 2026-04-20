@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 

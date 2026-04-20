@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { client } from '../../../../api/client';
+import { client } from '../../../../shared/api/client';
 import type {
   SubscriptionRecordsResponse,
   SubscriptionSummaryRes,

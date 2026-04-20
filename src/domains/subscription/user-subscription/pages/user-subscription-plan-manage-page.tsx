@@ -2,7 +2,7 @@ import ConfirmModal from '@/components/modal/confirm-modal';
 import CustomPlanEditCard from '@/domains/subscription/pages/plan-editor/components/custom-plan-edit-card';
 import useGetCustomPlanList from '@/domains/subscription/plans/hooks/queries/use-get-custom-plan-list';
 import useDeleteCustomPlan from '@/domains/subscription/plans/hooks/mutate/use-delete-custom-plan';
-import { getApiErrorMessage } from '@/lib/error';
+import { getApiErrorMessage } from '@/shared/lib/error';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';

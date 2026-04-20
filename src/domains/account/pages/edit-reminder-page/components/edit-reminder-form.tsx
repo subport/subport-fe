@@ -4,7 +4,7 @@ import Picker from 'react-mobile-picker';
 import { ChevronUp, Loader2 } from 'lucide-react';
 import FieldWrapper from '../../../../../components/ui/field-wrapper';
 import PickerScrollGuard from '../../../../../components/ui/picker-scroll-guard';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import useGetReminderSettings from '@/domains/account/hooks/queries/use-get-reminder-settings';
 import useUpdatedReminderSettings from '@/domains/account/hooks/mutations/use-updated-reminder-settings-mutate';
 import { toast } from 'sonner';

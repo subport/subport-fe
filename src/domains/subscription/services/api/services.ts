@@ -1,11 +1,11 @@
 import type { AddCustomServicesReq } from '../schemas/custom-services-schema';
-import { client } from '@/api/client';
+import { client } from '@/shared/api/client';
 import type {
   SubscriptionServiceByIdRes,
   SubscriptionServiceItem,
   SubscriptionServicesRes,
 } from '../types/api';
-import { buildCustomServiceFormData } from '@/lib/utils';
+import { buildCustomServiceFormData } from '@/shared/lib/utils';
 
 export const getSubscriptionServices = async (searchTerm?: string) => {
   const response = await client.get<SubscriptionServicesRes>(

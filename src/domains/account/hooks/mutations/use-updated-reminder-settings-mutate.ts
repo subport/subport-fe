@@ -1,9 +1,9 @@
-import { queryClient } from '@/components/providers/query-provider';
+import { queryClient } from '@/shared/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { useMutationCallbacks } from '@/types/mutate';
-import type { ReminderSettingsRes } from '@/types/profile';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 import { updatedReminderSettings } from '../../api/account';
+import type { ReminderSettingsRes } from '../../types/api';
 
 function useUpdatedReminderSettings(
   callbacks?: useMutationCallbacks<ReminderSettingsRes>,

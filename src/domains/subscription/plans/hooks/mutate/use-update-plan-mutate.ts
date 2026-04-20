@@ -1,8 +1,8 @@
 import { QUERY_KEY } from '@/shared/constants/query-key';
-import type { useMutationCallbacks } from '@/types/mutate';
-import { type PlanItem, type PlanList } from '@/types/plan';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updatePlan } from '../../api/plan';
+import type { PlanItem, PlanList } from '../../types/api';
 
 function useUpdatePlanMutate(callbacks?: useMutationCallbacks<PlanItem>) {
   const queryClient = useQueryClient();

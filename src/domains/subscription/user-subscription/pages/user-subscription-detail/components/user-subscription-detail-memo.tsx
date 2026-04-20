@@ -1,6 +1,6 @@
+import { useAuthStore } from '@/domains/auth/store/use-auth-store';
 import useUpdatedUserSubscriptionMemo from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-memo';
 import useDebounce from '@/hooks/use-debunce';
-import { tokenStorage } from '@/lib/token-storage';
 import { useEffect, useRef, useState } from 'react';
 
 interface UserSubscriptionDetailMemoProps {
@@ -13,7 +13,7 @@ function UserSubscriptionDetailMemo({
   userSubscriptionId,
 }: UserSubscriptionDetailMemoProps) {
   const memoInputRef = useRef<HTMLTextAreaElement>(null);
-
+  const { accessToken } = useAuthStore();
   const [value, setValue] = useState(memo);
   const debouncedValue = useDebounce(value, 500);
   const latestValueRef = useRef(memo);
@@ -78,7 +78,7 @@ function UserSubscriptionDetailMemo({
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tokenStorage.getToken()}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         credentials: 'include',
         keepalive: true,

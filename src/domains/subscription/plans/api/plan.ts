@@ -1,4 +1,4 @@
-import { client } from '@/api/client';
+import { client } from '@/shared/api/client';
 import type { AddPlanReq, PlanItem, PlanList } from '../types/api';
 
 export const getPlans = async (planId: string) => {

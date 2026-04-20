@@ -1,12 +1,12 @@
 import CloseButton from '@/assets/icons/close-button-icon.svg?react';
-import SendingSuccessModal from '@/components/modal/sending-success-modal';
 import { Button } from '@/components/ui/button';
 import showSuccessToast from '@/components/ui/show-success-toast';
 import { Textarea } from '@/components/ui/text-area';
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 import useSendFeedBacksMutate from '@/domains/subport/hooks/mutations/use-send-feedbacks-mutate';
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SendingSuccessModal from '@/domains/subscription/pages/main/components/sending-success-modal';
 
 function FeedbackModalPage() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import HomeIcon from '@/assets/icons/home-icon.svg?react';
 import AddIcon from '@/assets/icons/add-subscribe-icon.svg?react';
 import MyPageIcon from '@/assets/icons/my-page-icon.svg?react';
 import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 function BottomNavigation() {
   const { pathname } = useLocation();

@@ -1,4 +1,4 @@
-import { client } from '@/api/client';
+import { client } from '@/shared/api/client';
 import type { FaqRes } from '../types/api';
 import type { UserCommentFormPayload } from '../schemas/user-comment-schema';
 

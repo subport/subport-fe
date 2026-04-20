@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import ConfirmModal from '@/components/modal/confirm-modal';
-import { getApiErrorMessage } from '@/lib/error';
+import { getApiErrorMessage } from '@/shared/lib/error';
 import useGetCustomSubscriptionServices from '../../services/hooks/queries/use-get-custom-subscription-serivces';
 import CustomServiceEditCard from './components/custom-service-edit-card';
 import { useNavigate } from 'react-router-dom';

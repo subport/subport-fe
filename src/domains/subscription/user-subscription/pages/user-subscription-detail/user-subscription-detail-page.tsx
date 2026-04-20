@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { formatKRWInput, formatUSDInput } from '@/lib/utils';
+import { formatKRWInput, formatUSDInput } from '@/shared/lib/utils';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProccessBarCoin from '@/assets/icons/proccess-bar-icon.svg?react';

@@ -1,7 +1,7 @@
 import type { UserSubscriptionSection } from '../types/view';
 import type { UserSubscriptionItem } from '../types/api';
 import { Link } from 'react-router-dom';
-import { cn, formatKRWInput } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/shared/lib/utils';
 import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';
 
 interface UserSubscriptionListProps {

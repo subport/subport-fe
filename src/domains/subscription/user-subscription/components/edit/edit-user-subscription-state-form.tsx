@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import useDeactivateUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-deactivate-user-subscription-mutate';
 import useDeleteUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-delete-user-subscription-mutate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';

@@ -6,7 +6,7 @@ import {
   useGetAuthActions,
   useGetAuthRole,
 } from '@/domains/auth/store/use-auth-store';
-import { STORAGE_KEY } from '@/constants/storage-key';
+import { STORAGE_KEY } from '@/shared/constants/storage-key';
 
 function LogoutButton({ children }: { children: React.ReactNode }) {
   const { clearAuth } = useGetAuthActions();

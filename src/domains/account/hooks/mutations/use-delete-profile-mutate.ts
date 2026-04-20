@@ -1,4 +1,4 @@
-import type { useMutationCallbacks } from '@/types/mutate';
+import type { useMutationCallbacks } from '@/shared/types/mutate';
 import { useMutation } from '@tanstack/react-query';
 import { deleteProfile } from '../../api/account';
 

@@ -2,7 +2,11 @@ import PlanForm from '@/domains/subscription/plans/components/plan-form';
 import { Spinner } from '@/components/ui/spinner';
 import useUpdatePlanMutate from '@/domains/subscription/plans/hooks/mutate/use-update-plan-mutate';
 import useGetPlan from '@/domains/subscription/plans/hooks/queries/use-get-plan';
-import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
+import {
+  deleteComma,
+  formatKRWInput,
+  formatUSDInput,
+} from '@/shared/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import type { PlanFormValues } from '@/domains/subscription/plans/schemas/plan-form-schema';

@@ -2,7 +2,7 @@ import BackgroundRectangleImage from '@/assets/background-rectangle-image.png';
 import EmptyFileImage from '@/assets/empty-file-image.png';
 import FillFileImage from '@/assets/fill-file-image.png';
 import useGetUserSubscriptionMonthlySummary from '@/domains/subscription/user-subscription/hooks/use-get-user-subscription-monthly-summary';
-import { cn, formatKRWInput } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/shared/lib/utils';
 import { format } from 'date-fns';
 import { Loader2 } from 'lucide-react';
 

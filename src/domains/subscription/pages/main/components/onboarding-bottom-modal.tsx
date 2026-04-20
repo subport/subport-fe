@@ -5,13 +5,13 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from '../ui/drawer';
-import { Button } from '../ui/button';
+} from '../../../../../components/ui/drawer';
+import { Button } from '../../../../../components/ui/button';
 import OnBoardingSearchIcon from '@/assets/icons/onboarding-search-icon.png';
 import OnBoardingNotiIcon from '@/assets/icons/onboarding-notification-icon.png';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import {
   useGetAuthActions,
   useGetAuthRole,

@@ -3,7 +3,7 @@ import 'react-day-picker/style.css';
 import { addMonths, isAfter, startOfMonth } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
-import { cn, formatKRWInput } from '@/lib/utils';
+import { cn, formatKRWInput } from '@/shared/lib/utils';
 import CalenDerTrigger from './calender-trigger';
 import SpendingStateDot from './spending-state-dot';
 import { useRef } from 'react';

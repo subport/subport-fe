@@ -21,7 +21,7 @@ function AddPlanPage() {
   const onSubmit = (formData: PlanFormValues) => {
     addPlan({
       ...formData,
-      subscribeId: Number(subscribeId),
+      subscriptionId: Number(subscribeId),
       amount: Number(deleteComma(formData.amount)),
       durationMonths: Number(formData.durationMonths),
     });

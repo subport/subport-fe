@@ -69,7 +69,7 @@ function PlanEditorPage() {
 
             deletePlan({
               planId: selectedPlanId,
-              subscribeId: Number(subscribeId),
+              subscriptionId: Number(subscribeId),
             });
           }}
           open={modal}

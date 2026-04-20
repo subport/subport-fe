@@ -58,3 +58,9 @@ export const deleteCustomSubscriptionService = async (serviceId: string) => {
 
   return response;
 };
+
+export const getSubscriptionServiceTypes = async () => {
+  const response = await client.get<string[]>('/api/subscriptions/types');
+
+  return response.data;
+};

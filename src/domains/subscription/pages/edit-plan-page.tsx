@@ -1,7 +1,7 @@
 import PlanForm from '@/domains/subscription/plans/components/plan-form';
 import { Spinner } from '@/components/ui/spinner';
 import useUpdatePlanMutate from '@/domains/subscription/plans/hooks/mutate/use-update-plan-mutate';
-import useGetPlan from '@/hooks/queries/use-get-plan';
+import useGetPlan from '@/domains/subscription/plans/hooks/queries/use-get-plan';
 import { deleteComma, formatKRWInput, formatUSDInput } from '@/lib/utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -29,7 +29,7 @@ function EditPlanPage() {
     updatePlan({
       ...formData,
       planId: Number(planId),
-      subscribeId: Number(subscribeId),
+      subscriptionId: Number(subscribeId),
       amount: Number(deleteComma(formData.amount)),
       durationMonths: Number(formData.durationMonths),
     });

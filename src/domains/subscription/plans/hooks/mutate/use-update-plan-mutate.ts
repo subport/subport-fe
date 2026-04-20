@@ -1,8 +1,8 @@
-import { updatePlan } from '@/api/plan';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { type PlanItem, type PlanList } from '@/types/plan';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updatePlan } from '../../api/plan';
 
 function useUpdatePlanMutate(callbacks?: useMutationCallbacks<PlanItem>) {
   const queryClient = useQueryClient();
@@ -11,7 +11,7 @@ function useUpdatePlanMutate(callbacks?: useMutationCallbacks<PlanItem>) {
     mutationFn: updatePlan,
     onSuccess: (data, variables) => {
       const prevPlanList = queryClient.getQueryData<PlanList>(
-        QUERY_KEY.plans.list(variables.subscribeId.toString()),
+        QUERY_KEY.plans.list(variables.subscriptionId.toString()),
       );
 
       const prevPlanItem = queryClient.getQueryData<PlanItem>(
@@ -27,7 +27,7 @@ function useUpdatePlanMutate(callbacks?: useMutationCallbacks<PlanItem>) {
       );
 
       queryClient.setQueryData<PlanList>(
-        QUERY_KEY.plans.list(variables.subscribeId.toString()),
+        QUERY_KEY.plans.list(variables.subscriptionId.toString()),
         { planUrl: prevPlanList.planUrl, plans: updatedPlanList },
       );
 

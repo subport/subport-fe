@@ -1,6 +1,6 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
 import { refresh } from '../domains/auth/api/auth';
-import { useAuthStore } from '@/store/use-auth-store';
+import { useAuthStore } from '@/domains/auth/store/use-auth-store';
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,

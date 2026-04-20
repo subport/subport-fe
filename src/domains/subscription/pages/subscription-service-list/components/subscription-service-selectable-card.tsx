@@ -1,10 +1,10 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import type { SubscriptionServiceItem } from '@/domains/subscription/services/types/api';
 import { cn, formatKRWInput } from '@/lib/utils';
-import { useSubScribe } from '@/store/use-subscribe-store';
 import { useNavigate } from 'react-router-dom';
 
 import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';
+import { useUserSubscriptionSelection } from '@/domains/subscription/user-subscription/store/use-user-subscription-selection-store';
 
 interface SubscriptionServiceSelectableCardProps {
   subscription: SubscriptionServiceItem;
@@ -20,7 +20,7 @@ function SubscriptionServiceSelectableCard({
   selectedSubscription,
   isSelected,
 }: SubscriptionServiceSelectableCardProps) {
-  const { removeSubscribe } = useSubScribe();
+  const { removeSubscribe } = useUserSubscriptionSelection();
   const navigate = useNavigate();
 
   return (

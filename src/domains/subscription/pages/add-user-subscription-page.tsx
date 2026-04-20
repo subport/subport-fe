@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { AddSubscribeType } from '@/schema/add-subscribe-schema';
-import { useAddSubscribe } from '@/store/use-subscribe-store';
 import PageTitle from '@/components/ui/page-title';
 import useGetServiceById from '../services/hooks/queries/use-get-service-by-id';
 import AddUserSubscriptionForm from '@/domains/subscription/user-subscription/components/add-user-subscription-form';
 import AddUserSubscriptionFormSkeleton from '../user-subscription/components/ui/add-user-subscription-form-skeleton';
+import type { AddUserSubscriptionReq } from '../user-subscription/types/api';
+import { useAddUserSubscriptionSelect } from '../user-subscription/store/use-user-subscription-selection-store';
 
 function AddUserSubscriptionPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const addSubscribe = useAddSubscribe();
+  const addSubscribe = useAddUserSubscriptionSelect();
 
   const {
     data: subscriptionService,
@@ -23,13 +23,7 @@ function AddUserSubscriptionPage() {
     }
   }, [id, navigate]);
 
-  const onSubmit = (
-    formData: AddSubscribeType & {
-      subscriptionId: number;
-      price: string;
-      amountUnit: 'KRW' | 'USD';
-    },
-  ) => {
+  const onSubmit = (formData: AddUserSubscriptionReq) => {
     addSubscribe(formData);
 
     navigate(-1);

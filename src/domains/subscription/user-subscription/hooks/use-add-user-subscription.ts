@@ -1,14 +1,14 @@
-import { addSubscribe } from '@/api/subscribe';
 import { queryClient } from '@/components/providers/query-provider';
 import { QUERY_KEY } from '@/shared/constants/query-key';
 import type { useMutationCallbacks } from '@/types/mutate';
 import { useMutation } from '@tanstack/react-query';
+import { addUserSubscription } from '../api/user-subscription';
 
 export const useAddUserSubscriptionMutate = (
   callbacks?: useMutationCallbacks,
 ) => {
   return useMutation({
-    mutationFn: addSubscribe,
+    mutationFn: addUserSubscription,
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.spendingRecords.all,

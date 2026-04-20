@@ -1,8 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useSubScribe } from '@/store/use-subscribe-store';
-import SubscribeListFallback from '@/components/ui/fallback/subscribe-list-fallback';
 import { useMemo, useState } from 'react';
 import useDebounce from '@/hooks/use-debunce';
 import { Plus } from 'lucide-react';
@@ -11,6 +9,8 @@ import { useAddUserSubscriptionMutate } from '@/domains/subscription/user-subscr
 import useGetSubscriptionServices from '@/domains/subscription/services/hooks/queries/use-get-subscription-services';
 import SubscriptionServiceListSearchInput from './components/subscription-service-list-search-input';
 import SubscriptionServiceSelectableCard from './components/subscription-service-selectable-card';
+import UserSubscriptionListSkeleton from '@/domains/subscription/user-subscription/components/ui/subscribe-list-skeleton';
+import { useUserSubscriptionSelection } from '../../user-subscription/store/use-user-subscription-selection-store';
 
 function SubscriptionServiceListPage() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function SubscriptionServiceListPage() {
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
     useGetSubscriptionServices(debouncedValue);
 
-  const { addSubscriptions, resetSubscribe } = useSubScribe();
+  const { addSubscriptions, resetSubscribe } = useUserSubscriptionSelection();
 
   const { mutateAsync: addSubscribe, isPending: isAddSubscribePending } =
     useAddUserSubscriptionMutate();
@@ -55,16 +55,7 @@ function SubscriptionServiceListPage() {
   const onAddSubscribe = async () => {
     try {
       await Promise.all(
-        addSubscriptions.map((subscribe) =>
-          addSubscribe({
-            dutchPay: subscribe.dutchPay,
-            dutchPayAmount: subscribe.dutchPayAmount,
-            memo: subscribe.memo,
-            planId: subscribe.planId,
-            startDate: subscribe.startDate,
-            subscriptionId: subscribe.subscriptionId,
-          }),
-        ),
+        addSubscriptions.map((subscribe) => addSubscribe(subscribe)),
       );
 
       navigate('/', { replace: true });
@@ -83,7 +74,7 @@ function SubscriptionServiceListPage() {
       />
 
       <div className="scrollbar-hide flex flex-1 justify-center overflow-scroll">
-        {isGetSubscriptionsPending && <SubscribeListFallback />}
+        {isGetSubscriptionsPending && <UserSubscriptionListSkeleton />}
 
         {searchTerm &&
           sortedSubscriptions &&

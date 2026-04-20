@@ -13,7 +13,7 @@ import {
 } from '../../../../../components/ui/dialog';
 import { Button } from '../../../../../components/ui/button';
 import { Checkbox } from '../../../../../components/ui/checkbox';
-import { useGetAuthRole } from '@/store/use-auth-store';
+import { useGetAuthRole } from '@/domains/auth/store/use-auth-store';
 
 interface DeleteProfileButtonProps {
   onRequireLogin: () => void;

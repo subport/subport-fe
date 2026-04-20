@@ -1,5 +1,5 @@
-import useGuestLoginMutate from '@/hooks/mutations/use-guest-login-mutate';
-import { useGetAuthActions } from '@/store/use-auth-store';
+import useGuestLoginMutate from '@/domains/auth/hooks/use-guest-login-mutate';
+import { useGetAuthActions } from '@/domains/auth/store/use-auth-store';
 
 function GuestLoginButton() {
   const { setAuth } = useGetAuthActions();

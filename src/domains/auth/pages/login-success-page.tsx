@@ -1,5 +1,8 @@
 import { STORAGE_KEY } from '@/constants/storage-key';
-import { useGetAuthActions, useGetAuthRole } from '@/store/use-auth-store';
+import {
+  useGetAuthActions,
+  useGetAuthRole,
+} from '@/domains/auth/store/use-auth-store';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -50,7 +53,15 @@ function LoginSuccessPage() {
         );
       }
     }
-  }, [accessToken, clearAuth, isFirstLogin, navigate, redirectTo, role, setAuth]);
+  }, [
+    accessToken,
+    clearAuth,
+    isFirstLogin,
+    navigate,
+    redirectTo,
+    role,
+    setAuth,
+  ]);
 
   return null;
 }

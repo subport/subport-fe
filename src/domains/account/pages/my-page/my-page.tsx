@@ -11,7 +11,7 @@ import SendCommentIcon from '@/assets/icons/send-comment-icon.svg';
 import { ChevronRight } from 'lucide-react';
 import LogoutButton from '@/domains/account/pages/my-page/components/logout-button';
 import DeleteProfileButton from '@/domains/account/pages/my-page/components/delete-profile-button';
-import { useGetAuthRole } from '@/store/use-auth-store';
+import { useGetAuthRole } from '@/domains/auth/store/use-auth-store';
 import { Suspense, useState } from 'react';
 import LoginModal from '@/components/modal/login-modal';
 import MyPageProfileSummary from './components/my-page-profile-summary';

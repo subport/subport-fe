@@ -2,7 +2,10 @@ import { logout } from '@/domains/auth/api/auth';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ConfirmModal from '../../../../../components/modal/confirm-modal';
-import { useGetAuthActions, useGetAuthRole } from '@/store/use-auth-store';
+import {
+  useGetAuthActions,
+  useGetAuthRole,
+} from '@/domains/auth/store/use-auth-store';
 import { STORAGE_KEY } from '@/constants/storage-key';
 
 function LogoutButton({ children }: { children: React.ReactNode }) {

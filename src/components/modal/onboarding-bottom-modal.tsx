@@ -12,7 +12,10 @@ import OnBoardingNotiIcon from '@/assets/icons/onboarding-notification-icon.png'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useGetAuthActions, useGetAuthRole } from '@/store/use-auth-store';
+import {
+  useGetAuthActions,
+  useGetAuthRole,
+} from '@/domains/auth/store/use-auth-store';
 
 interface OnBoardingBottomModalProps {
   open: boolean;

@@ -1,5 +1,5 @@
 import { STORAGE_KEY } from '@/constants/storage-key';
-import { useGetAuthRole } from '@/store/use-auth-store';
+import { useGetAuthRole } from '@/domains/auth/store/use-auth-store';
 import { useLocation } from 'react-router-dom';
 
 function useMainPageOnboarding() {

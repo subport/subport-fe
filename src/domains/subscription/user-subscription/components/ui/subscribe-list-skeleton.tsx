@@ -1,4 +1,4 @@
-function SubscribeListSkeleton() {
+function UserSubscriptionListSkeleton() {
   return (
     <div className="flex flex-col gap-4">
       {Array.from({ length: 10 }).map((_, idx) => (
@@ -11,4 +11,4 @@ function SubscribeListSkeleton() {
   );
 }
 
-export default SubscribeListSkeleton;
+export default UserSubscriptionListSkeleton;

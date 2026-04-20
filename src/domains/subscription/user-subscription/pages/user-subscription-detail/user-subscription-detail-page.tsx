@@ -7,13 +7,13 @@ import ProccessBarCoin from '@/assets/icons/proccess-bar-icon.svg?react';
 import SettingsIcon from '@/assets/icons/settings-icon.svg?react';
 import WalletIcon from '@/assets/icons/wallet-icon.svg?react';
 import ConfirmModal from '@/components/modal/confirm-modal';
-import MemberSubscribeDetailSkeleton from '@/components/subscribe/member-subscribe/member-subscribe-detail-skeleton';
 import { ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import useGetUserSubscriptionById from '@/domains/subscription/user-subscription/hooks/queries/use-get-user-subscription-by-id';
 import UserSubscriptionDetailMemo from '@/domains/subscription/user-subscription/pages/user-subscription-detail/components/user-subscription-detail-memo';
 import useDeleteUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-delete-user-subscription-mutate';
 import type { UserSubscriptionSpendingRecord } from '../../types/api';
+import UserSubscriptionDetailSkeleton from '@/domains/subscription/user-subscription/components/ui/user-subscription-detail-skeleton';
 
 const formatDateKorean = (dateStr: string) => {
   const [y, m, d] = dateStr.split('-');
@@ -36,7 +36,7 @@ function UserSubscriptionDetailPage() {
     },
   });
 
-  if (isGetMemberSubscribePending) return <MemberSubscribeDetailSkeleton />;
+  if (isGetMemberSubscribePending) return <UserSubscriptionDetailSkeleton />;
   if (!subscribe) return <p>구독 정보를 불러오지 못했습니다.</p>;
   return (
     <>

@@ -20,6 +20,10 @@ function useUpdatedUserSubscriptionDutchPayMutate(
         queryKey: QUERY_KEY.userSubscription.lists,
       });
 
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.spendingRecords.all,
+      });
+
       callbacks?.onSuccess?.(data);
     },
   });

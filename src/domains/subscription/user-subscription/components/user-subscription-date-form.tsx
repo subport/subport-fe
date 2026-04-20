@@ -2,17 +2,17 @@ import DatePicker from '@/components/form/date-picker';
 import { Button } from '@/components/ui/button';
 import FieldWrapper from '@/components/ui/field-wrapper';
 
-type MemberSubscribeDateFormProps = {
+type UserSubscriptionDateFormProps = {
   onChange: (selectDate: Date) => void;
   onSubmit: () => void;
   lastPaymentDate: Date;
 };
 
-function MemberSubscribeDateForm({
+function UserSubscriptionDateForm({
   onChange,
   onSubmit,
   lastPaymentDate,
-}: MemberSubscribeDateFormProps) {
+}: UserSubscriptionDateFormProps) {
   return (
     <>
       <FieldWrapper label="결제 시작일" id="startDate">
@@ -38,4 +38,4 @@ function MemberSubscribeDateForm({
   );
 }
 
-export default MemberSubscribeDateForm;
+export default UserSubscriptionDateForm;

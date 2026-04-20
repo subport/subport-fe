@@ -1,5 +1,4 @@
 import AddUserSubscriptionForm from '@/domains/subscription/user-subscription/components/add-user-subscription-form';
-import MemberSubscribeDateForm from '@/components/subscribe/member-subscribe/member-subscribe-date-form';
 
 import { deleteComma } from '@/lib/utils';
 import { format, parse } from 'date-fns';
@@ -8,6 +7,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import useActivateUserSubscriptionMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-activate-user-subscription-mutate';
 import useGetUserSubscriptionById from '@/domains/subscription/user-subscription/hooks/queries/use-get-user-subscription-by-id';
+import UserSubscriptionDateForm from '@/domains/subscription/user-subscription/components/user-subscription-date-form';
 
 const VALID_REUSE = new Set(['previous', 'custom'] as const);
 type ReuseMode = 'previous' | 'custom';
@@ -102,7 +102,7 @@ function UserSubscriptionReactivatePage() {
 
       {reuse === 'previous' && (
         <div className="flex h-full flex-col justify-between">
-          <MemberSubscribeDateForm
+          <UserSubscriptionDateForm
             lastPaymentDate={parse(
               subscribe!.paymentDate.toString(),
               'yyyy-MM-dd',

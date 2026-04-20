@@ -1,6 +1,4 @@
-﻿import SubscribeListSkeleton from '@/components/subscribe/member-subscribe/subscribe-list-skeleton';
-
-import { Switch } from '@/components/ui/switch';
+﻿import { Switch } from '@/components/ui/switch';
 import { Suspense } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -14,6 +12,7 @@ import useMainPageOnboarding from './hooks/use-main-page-onboarding';
 import useMainPageFeedbackEntry from './hooks/use-main-page-feedback-entry';
 import UserSubscriptionListContainer from '../../user-subscription/components/user-subscription-list-container';
 import SubscriptionSortSelect from './components/subscription-sort-select';
+import UserSubscriptionListSkeleton from '@/domains/subscription/user-subscription/components/ui/subscribe-list-skeleton';
 
 function MainPage() {
   const { active, sortBy, changeSortBy, toggleActiveFilter } =
@@ -63,7 +62,7 @@ function MainPage() {
             </div>
           )}
 
-          <Suspense fallback={<SubscribeListSkeleton />}>
+          <Suspense fallback={<UserSubscriptionListSkeleton />}>
             <UserSubscriptionListContainer active={active} sortBy={sortBy} />
           </Suspense>
         </div>

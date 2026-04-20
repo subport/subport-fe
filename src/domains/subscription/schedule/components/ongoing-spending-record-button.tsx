@@ -85,7 +85,9 @@ function OngoingSpendingRecordButton({
         cancelText="아니요"
         confirmText="네"
         description="비활성화하면 저장된 구독 정보는 그대로 남아있습니다. 이후 다시 사용 가능합니다."
-        onConfirm={() => deActiveMemberSubscribe({ memberSubscribeId })}
+        onConfirm={() =>
+          deActiveMemberSubscribe({ userSubscriptionId: memberSubscribeId })
+        }
         title="비활성화 하시겠어요?"
       />
     </>

@@ -1,4 +1,4 @@
-import SubscribeListFallback from '../../../components/ui/fallback/subscribe-list-fallback';
+import UserSubscriptionListSkeleton from '@/domains/subscription/user-subscription/components/ui/subscribe-list-skeleton';
 import UserSubscriptionList from '@/domains/subscription/user-subscription/components/user-subscription-list';
 import useGetUserSubscription from '@/domains/subscription/user-subscription/hooks/use-get-user-subscriptions';
 import mappingUserSubscriptionList from '@/domains/subscription/user-subscription/model/mapper';
@@ -7,7 +7,7 @@ function MySubscriptionsListPage() {
   const { data: subscriptions, isPending: isGetSubscriptionsPending } =
     useGetUserSubscription({ active: true, sortBy: 'createdAt' });
 
-  if (isGetSubscriptionsPending) return <SubscribeListFallback />;
+  if (isGetSubscriptionsPending) return <UserSubscriptionListSkeleton />;
 
   if (!subscriptions)
     return (

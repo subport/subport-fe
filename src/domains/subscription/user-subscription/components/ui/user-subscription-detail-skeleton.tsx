@@ -1,4 +1,4 @@
-function MemberSubscribeDetailSkeleton() {
+function UserSubscriptionDetailSkeleton() {
   return (
     <div className="flex flex-col pt-5">
       <div className="bg-box-black mx-auto mb-4 size-15 animate-pulse rounded-lg"></div>
@@ -17,4 +17,4 @@ function MemberSubscribeDetailSkeleton() {
   );
 }
 
-export default MemberSubscribeDetailSkeleton;
+export default UserSubscriptionDetailSkeleton;

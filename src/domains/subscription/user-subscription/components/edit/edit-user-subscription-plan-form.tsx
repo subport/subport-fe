@@ -4,7 +4,7 @@ import useGetPlanList from '@/domains/subscription/plans/hooks/queries/use-get-p
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import useUpdatedUserSubscriptionPlanMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-plan-mutate.';
+import useUpdatedUserSubscriptionPlanMutate from '@/domains/subscription/user-subscription/hooks/mutations/use-updated-user-subscription-plan-mutate';
 
 function EditUserSubscrpitionPlanForm({
   subscribeId,
@@ -52,7 +52,7 @@ function EditUserSubscrpitionPlanForm({
   };
 
   return (
-    <section className="flex h-full flex-col justify-between">
+    <>
       <div className="scrollbar-hide flex-1 overflow-scroll">
         {!isGetPlansPending && plans && (
           <PlanSelectionList
@@ -68,7 +68,7 @@ function EditUserSubscrpitionPlanForm({
           저장하기
         </Button>
       </div>
-    </section>
+    </>
   );
 }
 

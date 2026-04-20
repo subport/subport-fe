@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-function MemberSubscribeEditLink() {
+function UserSubscriptionEditLink() {
   const { memberSubscribeId } = useParams();
 
   return (
@@ -13,4 +13,4 @@ function MemberSubscribeEditLink() {
   );
 }
 
-export default MemberSubscribeEditLink;
+export default UserSubscriptionEditLink;

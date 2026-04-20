@@ -23,7 +23,6 @@ function UserSubscriptionListContainer({
     subscriptions,
   );
 
-  console.log(userSubscriptionView);
   return (
     <>
       {active && userSubscriptionView.isEmpty && (

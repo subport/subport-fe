@@ -1,13 +1,39 @@
 import { client } from '@/api/client';
 import type {
+  AddUserSubscriptionReq,
   UserSubscribeSummary,
   UserSubscriptionActivateReq,
   UserSubscriptionByIdItem,
+  UserSubscriptionParams,
+  UserSubscriptionRes,
 } from '../types/api';
+
+export const addUserSubscription = async (
+  subscribeInfo: AddUserSubscriptionReq,
+) => {
+  const response = await client.post<{ id: number }>(
+    '/api/member-subscriptions',
+    subscribeInfo,
+  );
+
+  return response.data;
+};
 
 export const getUserSubscriptionMonthlySummary = async () => {
   const response = await client.get<UserSubscribeSummary>(
     '/api/member-subscriptions/monthly-summary',
+  );
+
+  return response.data;
+};
+
+export const getUserSubscriptions = async <P extends UserSubscriptionParams>(
+  params: P,
+) => {
+  const sortBy = params.active ? params.sortBy : ('name' as const);
+
+  const response = await client.get<UserSubscriptionRes<typeof sortBy>>(
+    `/api/member-subscriptions?active=${encodeURIComponent(params.active)}&sortBy=${sortBy}`,
   );
 
   return response.data;

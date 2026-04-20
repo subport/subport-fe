@@ -1,5 +1,8 @@
-import SubscribeCard from '@/components/subscribe/member-subscribe/subscribe-card';
 import type { UserSubscriptionSection } from '../types/view';
+import type { UserSubscriptionItem } from '../types/api';
+import { Link } from 'react-router-dom';
+import { cn, formatKRWInput } from '@/lib/utils';
+import SubscribeFallbackImage from '@/assets/subscribe-fallback-image.svg';
 
 interface UserSubscriptionListProps {
   active?: boolean;
@@ -25,7 +28,10 @@ function UserSubscriptionList({
             <ul className="flex flex-col gap-4">
               {section.items.map((item) => (
                 <li key={item.id}>
-                  <SubscribeCard subscribeInfo={item} unActive={!active} />
+                  <UserSubscriptionCard
+                    subscribeInfo={item}
+                    unActive={!active}
+                  />
                 </li>
               ))}
             </ul>
@@ -33,6 +39,53 @@ function UserSubscriptionList({
         </div>
       ))}
     </div>
+  );
+}
+
+function UserSubscriptionCard({
+  subscribeInfo,
+  unActive = false,
+}: {
+  subscribeInfo: UserSubscriptionItem;
+  unActive?: boolean;
+}) {
+  return (
+    <Link
+      to={`/member-subscribe/${subscribeInfo.id}`}
+      className="bg-box-black block rounded-xl p-5"
+    >
+      <div className="flex items-center gap-3">
+        <img
+          className="aspect-square w-12.5 overflow-hidden rounded-lg"
+          src={subscribeInfo.logoImageUrl || SubscribeFallbackImage}
+          alt={`${subscribeInfo.name} 이미지`}
+        />
+
+        <div className="flex w-full items-center justify-between">
+          <div className="text-sm font-medium">
+            <p>{subscribeInfo.name}</p>
+            {!unActive && (
+              <span>
+                {`${formatKRWInput(subscribeInfo.amount.toString())}원/${subscribeInfo.period}개월`}
+              </span>
+            )}
+          </div>
+
+          {!unActive && (
+            <div
+              className={cn(
+                subscribeInfo.daysUntilPayment <= 7
+                  ? 'bg-d-day-color-7day'
+                  : 'bg-d-day-color-default',
+                'flex w-13 items-center justify-center rounded-sm py-1 text-sm',
+              )}
+            >
+              {`d-${subscribeInfo.daysUntilPayment === 0 ? 'day' : subscribeInfo.daysUntilPayment}`}
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
   );
 }
 

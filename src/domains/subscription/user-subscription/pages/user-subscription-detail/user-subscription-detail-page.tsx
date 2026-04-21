@@ -277,9 +277,11 @@ function UserSubscriptionDetailPaymentSummanry({
           {dutchPay ? '다른 사람과 함께 사용 중이에요' : '혼자 사용 중이에요'}
         </div>
       </div>
-      <div className="bg-background-black flex items-center justify-center gap-2 rounded-lg px-4 py-2">
-        <img src={WalletIcon} className="size-8" />
-        <span className="text-sm">{`${formatKRWInput(actualPayment)}원`}</span>
+      <div className="bg-background-black inline-flex shrink-0 items-center justify-center gap-2 rounded-lg px-4 py-4 whitespace-nowrap">
+        <img src={WalletIcon} className="size-5 shrink-0" />
+        <span className="shrink-0 text-sm whitespace-nowrap">
+          {`${formatKRWInput(actualPayment)}원`}
+        </span>
       </div>
     </div>
   );

@@ -1,19 +1,25 @@
 import { client } from '@/shared/api/client';
 import type {
-  AddUserSubscriptionReq,
   UserSubscribeSummary,
   UserSubscriptionActivateReq,
   UserSubscriptionByIdItem,
   UserSubscriptionParams,
   UserSubscriptionRes,
 } from '../types/api';
+import { deleteComma } from '@/shared/lib/utils';
+import type { AddUserSubscriptionValues } from '../schemas/add-user-subscription-schema';
 
 export const addUserSubscription = async (
-  subscribeInfo: AddUserSubscriptionReq,
+  subscribeInfo: AddUserSubscriptionValues & { subscriptionId: number },
 ) => {
   const response = await client.post<{ id: number }>(
     '/api/member-subscriptions',
-    subscribeInfo,
+    {
+      ...subscribeInfo,
+      dutchPayAmount: subscribeInfo.dutchPay
+        ? Number(deleteComma(subscribeInfo.dutchPayAmount as string))
+        : null,
+    },
   );
 
   return response.data;

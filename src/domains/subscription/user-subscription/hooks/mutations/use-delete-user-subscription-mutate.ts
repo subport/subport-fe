@@ -11,7 +11,11 @@ function useDeleteUserSubscriptionMutate(callbacks?: useMutationCallbacks) {
     onSuccess: (data) => {
       callbacks?.onSuccess?.(data);
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.userSubscription.all,
+        queryKey: QUERY_KEY.userSubscription.lists,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEY.spendingRecords.all,
       });
     },
   });

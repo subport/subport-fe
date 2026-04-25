@@ -23,6 +23,10 @@ function useDeactivateUserSubscriptionMutate(
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.spendingRecords.all,
       });
+
+      queryClient.invalidateQueries({
+        queryKey : QUERY_KEY.userSubscription.monthlySummary
+      })
     },
   });
 }

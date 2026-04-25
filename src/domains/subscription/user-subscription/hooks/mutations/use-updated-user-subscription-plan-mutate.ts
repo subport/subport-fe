@@ -24,6 +24,10 @@ function useUpdatedUserSubscriptionPlanMutate(
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.spendingRecords.all,
       });
+    
+      queryClient.invalidateQueries({
+        queryKey : QUERY_KEY.userSubscription.monthlySummary
+      })
       callbacks?.onSuccess?.(data);
     },
   });

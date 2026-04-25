@@ -24,6 +24,10 @@ function useActivateUserSubscriptionMutate(
       queryClient.invalidateQueries({
         queryKey: QUERY_KEY.userSubscription.lists,
       });
+
+      queryClient.invalidateQueries({
+        queryKey : QUERY_KEY.userSubscription.monthlySummary
+      })
     },
   });
 }
